@@ -1,0 +1,440 @@
+openapi: 3.0.0
+info:
+    title: Durian Love Thailand API
+    description: >
+        API Specification derived from Frontend utilization.
+        Current implementation uses Mock Data (setTimeout).
+        This document serves as the contract for Backend implementation.
+    version: 1.0.0
+
+servers:
+    - url: http://localhost:3000/api/v1
+      description: Local Development Server
+
+components:
+    securitySchemes:
+        BearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+
+    schemas:
+        # --- Shared Enums ---
+        UserRole:
+            type: string
+            enum: ["owner", "admin", "user"]
+
+        OrchardType:
+            type: string
+            enum: ["sell", "tour", "cafe", "stay"]
+
+        DurianStatus:
+            type: string
+            enum: ["available", "low", "reserved", "out"]
+
+        # --- Models ---
+        User:
+            type: object
+            properties:
+                id:
+                    type: string
+                email:
+                    type: string
+                    format: email
+                name:
+                    type: string
+                role:
+                    $ref: "#/components/schemas/UserRole"
+
+        SocialMediaLinks:
+            type: object
+            properties:
+                line:
+                    type: string
+                facebook:
+                    type: string
+                instagram:
+                    type: string
+                tiktok:
+                    type: string
+                youtube:
+                    type: string
+
+        Accommodation:
+            type: object
+            required: [id, name, price, quantity, images]
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                price:
+                    type: number
+                quantity:
+                    type: number
+                images:
+                    type: array
+                    items:
+                        type: string
+
+        Package:
+            type: object
+            required: [id, name, price, duration, includes, startDate, endDate, images]
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                price:
+                    type: number
+                duration:
+                    type: number
+                    description: Duration in hours
+                includes:
+                    type: string
+                startDate:
+                    type: string
+                    format: date
+                endDate:
+                    type: string
+                    format: date
+                images:
+                    type: array
+                    items:
+                        type: string
+
+        Orchard:
+            type: object
+            required: [id, name, description, types, status, lat, lng, images, ownerId, address]
+            properties:
+                id:
+                    type: integer
+                name:
+                    type: string
+                description:
+                    type: string
+                history:
+                    type: string
+                types:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/OrchardType"
+                status:
+                    $ref: "#/components/schemas/DurianStatus"
+                lat:
+                    type: number
+                    format: float
+                lng:
+                    type: number
+                    format: float
+                images:
+                    type: array
+                    items:
+                        type: string
+                videos:
+                    type: array
+                    items:
+                        type: string
+                ownerId:
+                    type: string
+                address:
+                    type: string
+                phoneNumber:
+                    type: string
+                isMixedAgro:
+                    type: boolean
+                additionalCrops:
+                    type: array
+                    items:
+                        type: string
+                socialMedia:
+                    $ref: "#/components/schemas/SocialMediaLinks"
+                hasAccommodation:
+                    type: boolean
+                accommodations:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Accommodation"
+                hasPackage:
+                    type: boolean
+                packages:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/Package"
+
+        # --- Dropdown Responses ---
+        ServiceTypeResponse:
+            type: object
+            properties:
+                id:
+                    type: string
+
+        StatusResponse:
+            type: object
+            properties:
+                id:
+                    type: string
+
+        CropOption:
+            type: object
+            properties:
+                id:
+                    type: string
+                label:
+                    type: string
+                category:
+                    type: string
+                    enum: ["fruit", "vegetable"]
+
+tags:
+    - name: Auth
+      description: User authentication and session management
+    - name: Data
+      description: Master data references (enums, types)
+    - name: Orchard
+      description: Farm/Orchard management
+    - name: Routing
+      description: External routing services
+
+paths:
+    # --- Auth ---
+    /auth/login:
+        post:
+            tags: [Auth]
+            summary: Login user
+            description: Currently verifies against mock owner credentials.
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            required: [email, password]
+                            properties:
+                                email:
+                                    type: string
+                                password:
+                                    type: string
+            responses:
+                200:
+                    description: Login successful
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    user:
+                                        $ref: "#/components/schemas/User"
+                                    token:
+                                        type: string
+                                        example: "mock_token_123"
+                401:
+                    description: Invalid credentials
+
+    /auth/logout:
+        post:
+            tags: [Auth]
+            summary: Logout
+            responses:
+                200:
+                    description: Successfully logged out
+
+    /auth/me:
+        get:
+            tags: [Auth]
+            security:
+                - BearerAuth: []
+            summary: Get current logged-in user
+            description: >
+                In Frontend, this pulls from localStorage. 
+                Backend should verify Token and return User.
+            responses:
+                200:
+                    description: Current user data
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/User"
+                401:
+                    description: Not authenticated
+
+    # --- Data / Master Data ---
+    /data/service-types:
+        get:
+            tags: [Data]
+            summary: Get list of service types (Sell, Tour, Cafe, Stay)
+            responses:
+                200:
+                    description: List of service types
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/ServiceTypeResponse"
+
+    /data/statuses:
+        get:
+            tags: [Data]
+            summary: Get list of durian availability statuses
+            responses:
+                200:
+                    description: List of statuses
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/StatusResponse"
+
+    /data/crops:
+        get:
+            tags: [Data]
+            summary: Get list of additional crops
+            responses:
+                200:
+                    description: List of crops
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/CropOption"
+
+    # --- Orchard ---
+    /orchards:
+        get:
+            tags: [Orchard]
+            summary: Get all orchards
+            description: >
+                Frontend currently filters client-side. Backend SHOULD implement filtering/search params.
+            parameters:
+                - in: query
+                  name: ownerId
+                  schema:
+                      type: string
+                  description: Filter by owner ID
+                - in: query
+                  name: q
+                  schema:
+                      type: string
+                  description: Search query (name, description, address)
+                - in: query
+                  name: types
+                  schema:
+                      type: array
+                      items:
+                          type: string
+                  description: Filter by orchard types
+            responses:
+                200:
+                    description: List of orchards
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Orchard"
+
+        post:
+            tags: [Orchard]
+            security:
+                - BearerAuth: []
+            summary: Create new orchard
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            allOf:
+                                - $ref: "#/components/schemas/Orchard"
+                            # Omit ID as it is generated by server
+                            # Ideally use a separate CreateOrchardDTO
+            responses:
+                201:
+                    description: Created
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Orchard"
+
+    /orchards/{id}:
+        get:
+            tags: [Orchard]
+            summary: Get orchard by ID
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    description: Orchard details
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Orchard"
+                404:
+                    description: Not found
+
+        put:
+            tags: [Orchard]
+            security:
+                - BearerAuth: []
+            summary: Update orchard
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            description: Partial update allowed
+            responses:
+                200:
+                    description: Updated orchard
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Orchard"
+
+        delete:
+            tags: [Orchard]
+            security:
+                - BearerAuth: []
+            summary: Delete orchard
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: integer
+            responses:
+                200:
+                    description: Deleted successfully
+
+    # --- External Services ---
+    /external/osrm/route:
+        get:
+            tags: [Routing]
+            summary: (External) Calculate route between points
+            description: >
+                Called directly by Frontend to router.project-osrm.org.
+                Included for completeness.
+            parameters:
+                - in: query
+                  name: coordinates
+                  required: true
+                  schema:
+                      type: string
+                  description: "Format: lng1,lat1;lng2,lat2;..."
+            responses:
+                200:
+                    description: OSRM Route Response

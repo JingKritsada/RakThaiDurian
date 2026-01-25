@@ -1,0 +1,5 @@
+{
+	"name": "ทุเรียนรักไทย",
+	"description": "A directory web application for browsing and managing Durian orchards in Thailand, featuring filtering, owner dashboards, and accessibility settings.",
+	"requestFramePermissions": ["geolocation"]
+}
