@@ -1,7 +1,9 @@
 import React from "react";
+import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
+
 import { Orchard } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
-import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
+
 import { SocialLinks } from "./SocialLinks";
 
 interface CardProps {
@@ -24,20 +26,27 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 
 	return (
 		<div
-			onClick={onClick}
 			className={`
-        group flex flex-col sm:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
-        border ${isSelected ? "border-forest-500 ring-2 ring-forest-500 shadow-lg" : "border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-forest-200 dark:hover:border-forest-800"}
-        h-full min-h-[13rem] relative
-      `}
+				group flex flex-col sm:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
+				border ${isSelected ? "border-forest-500 ring-2 ring-forest-500 shadow-lg" : "border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-forest-200 dark:hover:border-forest-800"}
+				h-full min-h-[13rem] relative
+			`}
+			role="button"
+			tabIndex={0}
+			onClick={onClick}
+			onKeyDown={(e) => {
+				if (e.key === "Enter" || e.key === " ") {
+					onClick?.();
+				}
+			}}
 		>
 			{/* Image Section */}
 			<div className="w-full sm:w-[200px] aspect-video sm:aspect-auto sm:h-auto bg-slate-200 dark:bg-slate-700 relative shrink-0 overflow-hidden">
 				{coverImage ? (
 					<img
-						src={coverImage}
 						alt={orchard.name}
 						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+						src={coverImage}
 					/>
 				) : (
 					<div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -68,12 +77,12 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 							{orchard.name}
 						</h3>
 						{isSelected && (
-							<ChevronRight size={20} className="text-forest-500 shrink-0" />
+							<ChevronRight className="text-forest-500 shrink-0" size={20} />
 						)}
 					</div>
 
 					<div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 text-sm mb-3 min-w-0">
-						<MapPin size={16} className="shrink-0 text-forest-600" />
+						<MapPin className="shrink-0 text-forest-600" size={16} />
 						<span className="truncate">{orchard.address}</span>
 					</div>
 
@@ -86,6 +95,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 					<div className="flex flex-wrap gap-2">
 						{orchard.types.map((typeId) => {
 							const typeInfo = getServiceType(typeId);
+
 							return typeInfo ? (
 								<span
 									key={typeId}
@@ -99,11 +109,17 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 
 					{/* Social Icons in Card */}
 					{orchard.socialMedia && (
-						<div className="self-end sm:self-auto" onClick={(e) => e.stopPropagation()}>
+						<div
+							className="self-end sm:self-auto"
+							role="button"
+							tabIndex={0}
+							onClick={(e) => e.stopPropagation()}
+							onKeyDown={(e) => e.stopPropagation()}
+						>
 							<SocialLinks
-								links={orchard.socialMedia}
 								className="flex gap-1.5"
 								itemClassName="w-7 h-7"
+								links={orchard.socialMedia}
 							/>
 						</div>
 					)}

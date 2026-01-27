@@ -1,8 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Accommodation } from "../interface/orchardInterface";
-import { useAlert } from "../context/AlertContext";
-import { Button } from "./Button";
-import { InputField } from "./FormInputs";
 import {
 	Plus,
 	Trash2,
@@ -14,6 +10,12 @@ import {
 	Upload,
 	Edit2,
 } from "lucide-react";
+
+import { Accommodation } from "../interface/orchardInterface";
+import { useAlert } from "../context/AlertContext";
+
+import { Button } from "./Button";
+import { InputField } from "./FormInputs";
 
 interface AccommodationManagerProps {
 	accommodations: Accommodation[];
@@ -43,6 +45,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 		if (!newItem.name || isNaN(priceNum) || priceNum <= 0) {
 			showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุชื่อที่พักและราคาให้ถูกต้อง", "warning");
+
 			return;
 		}
 
@@ -100,7 +103,10 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
-		if (!files) return;
+
+		if (!files) {
+			return;
+		}
 
 		const MAX_SIZE_MB = 10;
 		const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
@@ -112,10 +118,12 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 					`ไฟล์ ${file.name} มีขนาดใหญ่เกิน ${MAX_SIZE_MB}MB`,
 					"warning"
 				);
+
 				return;
 			}
 
 			const reader = new FileReader();
+
 			reader.readAsDataURL(file);
 			reader.onload = () => {
 				if (reader.result && typeof reader.result === "string") {
@@ -141,6 +149,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 	const formatNumberOnBlur = (field: "price" | "quantity") => {
 		const val = parseFloat(newItem[field]);
+
 		if (!isNaN(val)) {
 			setNewItem((prev) => ({ ...prev, [field]: val.toString() }));
 		}
@@ -161,9 +170,9 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 							<div className="w-24 h-24 shrink-0 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
 								{item.images.length > 0 ? (
 									<img
-										src={item.images[0]}
 										alt={item.name}
 										className="w-full h-full object-cover"
+										src={item.images[0]}
 									/>
 								) : (
 									<div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -190,18 +199,18 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 							<div className="absolute top-2 right-2 flex gap-1">
 								<button
-									type="button"
-									onClick={() => handleEdit(item)}
 									className="p-1.5 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors"
 									title="แก้ไข"
+									type="button"
+									onClick={() => handleEdit(item)}
 								>
 									<Edit2 size={16} />
 								</button>
 								<button
-									type="button"
-									onClick={() => handleDelete(item.id)}
 									className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
 									title="ลบ"
+									type="button"
+									onClick={() => handleDelete(item.id)}
 								>
 									<Trash2 size={16} />
 								</button>
@@ -214,12 +223,12 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 			{/* Add/Edit Section */}
 			{!isAdding ? (
 				<button
+					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium"
 					type="button"
 					onClick={() => {
 						resetForm();
 						setIsAdding(true);
 					}}
-					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium"
 				>
 					<Plus size={20} /> เพิ่มประเภทที่พัก
 				</button>
@@ -229,20 +238,20 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 						<h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
 							{editingId ? (
 								<>
-									<Edit2 size={18} className="text-forest-600" />{" "}
+									<Edit2 className="text-forest-600" size={18} />{" "}
 									แก้ไขข้อมูลห้องพัก
 								</>
 							) : (
 								<>
-									<Plus size={18} className="text-forest-600" />{" "}
+									<Plus className="text-forest-600" size={18} />{" "}
 									เพิ่มข้อมูลห้องพัก
 								</>
 							)}
 						</h4>
 						<button
+							className="text-slate-400 hover:text-slate-600"
 							type="button"
 							onClick={resetForm}
-							className="text-slate-400 hover:text-slate-600"
 						>
 							<X size={20} />
 						</button>
@@ -250,40 +259,40 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 					<div className="space-y-4">
 						<InputField
+							icon={Bed}
 							label="ชื่อประเภทที่พัก"
 							placeholder="เช่น บ้านไม้ไผ่ริมน้ำ, เต็นท์กระโจม"
 							value={newItem.name}
 							onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-							icon={Bed}
 						/>
 
 						<div className="grid grid-cols-2 gap-4">
 							<InputField
-								label="ราคาต่อคืน (บาท)"
-								type="number"
-								placeholder="0"
-								value={newItem.price}
-								onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-								onBlur={() => formatNumberOnBlur("price")}
 								icon={Banknote}
+								label="ราคาต่อคืน (บาท)"
+								placeholder="0"
+								type="number"
+								value={newItem.price}
+								onBlur={() => formatNumberOnBlur("price")}
+								onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
 							/>
 							<InputField
+								icon={Users}
 								label="จำนวนห้องที่มี"
-								type="number"
 								placeholder="1"
+								type="number"
 								value={newItem.quantity}
+								onBlur={() => formatNumberOnBlur("quantity")}
 								onChange={(e) =>
 									setNewItem({ ...newItem, quantity: e.target.value })
 								}
-								onBlur={() => formatNumberOnBlur("quantity")}
-								icon={Users}
 							/>
 						</div>
 
 						<div>
-							<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+							<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
 								รูปตัวอย่างห้องพัก
-							</label>
+							</span>
 							<p className="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-1">
 								รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 							</p>
@@ -294,23 +303,23 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 										className="w-20 h-20 rounded-lg overflow-hidden relative group"
 									>
 										<img
-											src={img}
 											alt="preview"
 											className="w-full h-full object-cover"
+											src={img}
 										/>
 										<button
+											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
 											type="button"
 											onClick={() => removeNewItemImage(idx)}
-											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
 										>
 											<X size={12} />
 										</button>
 									</div>
 								))}
 								<button
+									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors"
 									type="button"
 									onClick={() => fileInputRef.current?.click()}
-									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors"
 								>
 									<Upload size={16} />
 									<span className="text-[10px] mt-1">เพิ่มรูป</span>
@@ -318,24 +327,24 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 							</div>
 							<input
 								ref={fileInputRef}
-								type="file"
 								multiple
 								accept="image/*"
 								className="hidden"
+								type="file"
 								onChange={handleImageUpload}
 							/>
 						</div>
 
 						<div className="pt-2 flex justify-end gap-2">
 							<Button
+								className="!px-4"
 								type="button"
 								variant="ghost"
 								onClick={resetForm}
-								className="!px-4"
 							>
 								ยกเลิก
 							</Button>
-							<Button type="button" onClick={handleSave} className="!px-6">
+							<Button className="!px-6" type="button" onClick={handleSave}>
 								{editingId ? "บันทึกการแก้ไข" : "ยืนยันเพิ่ม"}
 							</Button>
 						</div>

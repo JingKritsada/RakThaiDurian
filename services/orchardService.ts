@@ -31,6 +31,7 @@ export const orchardService = {
 		return new Promise((resolve) => {
 			setTimeout(() => {
 				const newOrchard = { ...orchard, id: Date.now() };
+
 				ORCHARDS_DB = [newOrchard, ...ORCHARDS_DB];
 				resolve(newOrchard);
 			}, 800);
@@ -41,6 +42,7 @@ export const orchardService = {
 		return new Promise((resolve, reject) => {
 			setTimeout(() => {
 				const index = ORCHARDS_DB.findIndex((o) => o.id === id);
+
 				if (index !== -1) {
 					ORCHARDS_DB[index] = { ...ORCHARDS_DB[index], ...data };
 					resolve(ORCHARDS_DB[index]);

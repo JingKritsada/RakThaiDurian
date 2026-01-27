@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { X, ArrowUpDown, Check, MapPin, RefreshCw } from "lucide-react";
+
 import { OrchardType } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
-import { X, ArrowUpDown, Check, MapPin, RefreshCw } from "lucide-react";
+
 import { Button } from "./Button";
 
 interface FilterSheetProps {
@@ -10,6 +12,7 @@ interface FilterSheetProps {
 	currentSort: "default" | "nearest";
 	currentFilters: OrchardType[];
 	onApply: (sort: "default" | "nearest", filters: OrchardType[]) => void;
+	onReset?: () => void;
 }
 
 export const FilterSheet: React.FC<FilterSheetProps> = ({
@@ -18,6 +21,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 	currentSort,
 	currentFilters,
 	onApply,
+	onReset,
 }) => {
 	const { serviceTypes, isLoading } = useMasterData();
 	const [tempSort, setTempSort] = useState<"default" | "nearest">(currentSort);
@@ -47,6 +51,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 	const handleLocalReset = () => {
 		setTempSort("default");
 		setTempFilters([]);
+		if (onReset) onReset();
 	};
 
 	if (!isOpen) return null;
@@ -56,7 +61,12 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 			{/* Backdrop */}
 			<div
 				className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+				role="button"
+				tabIndex={0}
 				onClick={onClose}
+				onKeyDown={(e) => {
+					if (e.key === "Escape") onClose();
+				}}
 			/>
 
 			{/* Modal Content */}
@@ -67,8 +77,8 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 						ตัวกรองและจัดเรียง
 					</h3>
 					<button
-						onClick={onClose}
 						className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+						onClick={onClose}
 					>
 						<X size={24} />
 					</button>
@@ -108,10 +118,10 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 									</div>
 								</div>
 								<input
-									type="radio"
-									name="sort"
-									className="hidden"
 									checked={tempSort === "default"}
+									className="hidden"
+									name="sort"
+									type="radio"
 									onChange={() => setTempSort("default")}
 								/>
 								{tempSort === "default" && <CheckCircleIcon />}
@@ -143,10 +153,10 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 									</div>
 								</div>
 								<input
-									type="radio"
-									name="sort"
-									className="hidden"
 									checked={tempSort === "nearest"}
+									className="hidden"
+									name="sort"
+									type="radio"
 									onChange={() => setTempSort("nearest")}
 								/>
 								{tempSort === "nearest" && <CheckCircleIcon />}
@@ -161,15 +171,15 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 						</h4>
 
 						{isLoading ? (
-							<div className="animate-pulse h-20 bg-slate-200 rounded-xl"></div>
+							<div className="animate-pulse h-20 bg-slate-200 rounded-xl" />
 						) : (
 							<div className="grid grid-cols-2 gap-3">
 								{serviceTypes.map((type) => {
 									const isSelected = tempFilters.includes(type.id as OrchardType);
+
 									return (
 										<button
 											key={type.id}
-											onClick={() => toggleFilter(type.id as OrchardType)}
 											className={`
                         relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-24
                         ${
@@ -178,6 +188,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 								: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
 						}
                       `}
+											onClick={() => toggleFilter(type.id as OrchardType)}
 										>
 											{isSelected && (
 												<div className="absolute top-2 right-2 text-forest-600">
@@ -199,15 +210,15 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 				<div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-b-3xl">
 					<div className="flex gap-3">
 						<Button
+							className="flex-1 !py-3 !rounded-xl"
 							variant="secondary"
 							onClick={handleLocalReset}
-							className="flex-1 !py-3 !rounded-xl"
 						>
-							<RefreshCw size={18} className="mr-2" /> ล้างค่า
+							<RefreshCw className="mr-2" size={18} /> ล้างค่า
 						</Button>
 						<Button
-							onClick={handleApply}
 							className="flex-[2] !py-3 !rounded-xl !text-lg shadow-lg shadow-forest-900/20"
+							onClick={handleApply}
 						>
 							ดูผลลัพธ์
 						</Button>

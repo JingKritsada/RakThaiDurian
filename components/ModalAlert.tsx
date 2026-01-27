@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from "lucide-react";
+
 import { Button } from "./Button";
 
 export type AlertType = "success" | "error" | "warning" | "info";
@@ -47,13 +48,18 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 		<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
 			<div
 				className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
+				role="button"
+				tabIndex={0}
 				onClick={onClose}
+				onKeyDown={(e) => {
+					if (e.key === "Escape") onClose();
+				}}
 			/>
 
 			<div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-sm w-full p-6 transform scale-100 transition-all animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-700">
 				<button
-					onClick={onClose}
 					className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+					onClick={onClose}
 				>
 					<X size={20} />
 				</button>
@@ -73,24 +79,24 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 						{isConfirm ? (
 							<>
 								<Button
+									className="flex-1 !rounded-xl"
 									variant="secondary"
 									onClick={onClose}
-									className="flex-1 !rounded-xl"
 								>
 									{cancelText}
 								</Button>
 								<Button
+									className={`flex-1 !rounded-xl ${type === "error" ? "!bg-red-600 hover:!bg-red-700" : ""}`}
 									onClick={() => {
 										if (onConfirm) onConfirm();
 										onClose();
 									}}
-									className={`flex-1 !rounded-xl ${type === "error" ? "!bg-red-600 hover:!bg-red-700" : ""}`}
 								>
 									{confirmText}
 								</Button>
 							</>
 						) : (
-							<Button onClick={onClose} className="w-full !rounded-xl">
+							<Button className="w-full !rounded-xl" onClick={onClose}>
 								{confirmText}
 							</Button>
 						)}

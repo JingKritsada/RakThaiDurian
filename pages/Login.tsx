@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Lock, Mail, AlertCircle, Eye, EyeOff } from "lucide-react";
+
 import { useAuth } from "../context/AuthContext";
 import { Button } from "../components/Button";
 import { InputField } from "../components/FormInputs";
-import { Lock, Mail, AlertCircle, Eye, EyeOff } from "lucide-react";
 
 export const Login: React.FC = () => {
 	const [email, setEmail] = useState("owner@durian.com");
@@ -25,6 +26,7 @@ export const Login: React.FC = () => {
 			navigate("/owner");
 		} catch (err: unknown) {
 			const error = err as Error;
+
 			setError(error.message || "ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง");
 		} finally {
 			setIsSubmitting(false);
@@ -54,42 +56,42 @@ export const Login: React.FC = () => {
 						</div>
 					)}
 
-					<form onSubmit={handleSubmit} className="space-y-6 mb-0">
+					<form className="space-y-6 mb-0" onSubmit={handleSubmit}>
 						<InputField
+							required
+							icon={Mail}
 							label="ที่อยู่อีเมล (Email Address)"
 							placeholder="ระบุอีเมลของคุณ"
 							type="email"
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
-							icon={Mail}
-							required
 						/>
 
 						<InputField
+							required
+							icon={Lock}
 							label="รหัสผ่าน (Password)"
 							placeholder="ระบุรหัสผ่าน"
-							type={showPassword ? "text" : "password"}
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-							icon={Lock}
-							required
 							suffix={
 								<button
-									type="button"
-									onClick={() => setShowPassword(!showPassword)}
 									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none transition-colors"
 									tabIndex={-1}
+									type="button"
+									onClick={() => setShowPassword(!showPassword)}
 								>
 									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
 								</button>
 							}
+							type={showPassword ? "text" : "password"}
+							value={password}
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 
 						<div className="pt-2">
 							<Button
-								type="submit"
 								className="w-full justify-center py-3.5 text-lg shadow-lg shadow-forest-900/20"
 								isLoading={isSubmitting}
+								type="submit"
 							>
 								เข้าสู่ระบบ
 							</Button>

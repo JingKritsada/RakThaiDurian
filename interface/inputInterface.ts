@@ -2,9 +2,10 @@ import { InputHTMLAttributes, TextareaHTMLAttributes, ElementType, ReactNode } f
 import { LucideIcon } from "lucide-react";
 
 export interface BaseFieldProps {
-	label: string;
+	label?: string;
 	error?: string;
 	className?: string;
+	inputClassName?: string;
 }
 
 export interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement>, BaseFieldProps {

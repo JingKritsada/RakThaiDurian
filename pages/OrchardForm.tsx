@@ -1,26 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { orchardService } from "../services/orchardService";
-import { useAuth } from "../context/AuthContext";
-import { useMasterData } from "../context/MasterDataContext";
-import { useAlert } from "../context/AlertContext";
-import {
-	OrchardType,
-	DurianStatus,
-	SocialMediaLinks,
-	Accommodation,
-	Package,
-} from "../interface/orchardInterface";
-import { Button } from "../components/Button";
-import { LocationPicker } from "../components/LocationPicker";
-import {
-	InputField,
-	TextAreaField,
-	ToggleSwitch,
-	MultiSelectField,
-} from "../components/FormInputs";
-import { AccommodationManager } from "../components/AccommodationManager";
-import { PackageManager } from "../components/PackageManager";
 import {
 	ArrowLeft,
 	Save,
@@ -45,6 +24,28 @@ import {
 	Map as MapIcon,
 	ArrowRight,
 } from "lucide-react";
+
+import { orchardService } from "../services/orchardService";
+import { useAuth } from "../context/AuthContext";
+import { useMasterData } from "../context/MasterDataContext";
+import { useAlert } from "../context/AlertContext";
+import {
+	OrchardType,
+	DurianStatus,
+	SocialMediaLinks,
+	Accommodation,
+	Package,
+} from "../interface/orchardInterface";
+import { Button } from "../components/Button";
+import { LocationPicker } from "../components/LocationPicker";
+import {
+	InputField,
+	TextAreaField,
+	ToggleSwitch,
+	MultiSelectField,
+} from "../components/FormInputs";
+import { AccommodationManager } from "../components/AccommodationManager";
+import { PackageManager } from "../components/PackageManager";
 import { LineIcon, TiktokIcon } from "../utils/icons";
 
 type TabType = "general" | "location" | "media" | "services";
@@ -101,10 +102,12 @@ export const OrchardForm: React.FC = () => {
 			const loadOrchard = async () => {
 				try {
 					const orchard = await orchardService.getOrchardById(parseInt(id));
+
 					if (orchard) {
 						if (user && orchard.ownerId !== user.id) {
 							showAlert("ข้อผิดพลาด", "คุณไม่มีสิทธิ์แก้ไขข้อมูลสวนนี้", "error");
 							navigate("/owner");
+
 							return;
 						}
 
@@ -138,12 +141,13 @@ export const OrchardForm: React.FC = () => {
 						showAlert("ไม่พบข้อมูล", "ไม่พบข้อมูลสวนที่คุณต้องการแก้ไข", "error");
 						navigate("/owner");
 					}
-				} catch (e) {
-					console.error(e);
+				} catch {
+					// Error loading orchard
 				} finally {
 					setLoadingData(false);
 				}
 			};
+
 			loadOrchard();
 		}
 	}, [id, isEditMode, navigate, user, showAlert]);
@@ -171,6 +175,7 @@ export const OrchardForm: React.FC = () => {
 	const handleSetCurrentLocation = () => {
 		if (!navigator.geolocation) {
 			showAlert("ข้อผิดพลาด", "เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง", "error");
+
 			return;
 		}
 
@@ -185,7 +190,11 @@ export const OrchardForm: React.FC = () => {
 				setIsLocating(false);
 			},
 			(error) => {
-				console.error(error);
+				// console.error(error);
+				if (error.code) {
+					// silence
+				}
+
 				showAlert(
 					"ข้อผิดพลาด",
 					"ไม่สามารถระบุตำแหน่งได้ กรุณาตรวจสอบการอนุญาตใช้งาน GPS",
@@ -198,6 +207,7 @@ export const OrchardForm: React.FC = () => {
 
 	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
+
 		if (!files) return;
 
 		const MAX_SIZE_MB = 10;
@@ -210,10 +220,12 @@ export const OrchardForm: React.FC = () => {
 					`ไฟล์ ${file.name} มีขนาดใหญ่เกิน ${MAX_SIZE_MB}MB`,
 					"warning"
 				);
+
 				return;
 			}
 
 			const reader = new FileReader();
+
 			reader.readAsDataURL(file);
 			reader.onload = () => {
 				if (reader.result && typeof reader.result === "string") {
@@ -241,6 +253,7 @@ export const OrchardForm: React.FC = () => {
 		if (tempVideoUrl.trim() === "") return;
 		if (formData.videos.includes(tempVideoUrl)) {
 			showAlert("ข้อมูลซ้ำ", "ลิงก์วิดีโอนี้ถูกเพิ่มไปแล้ว", "info");
+
 			return;
 		}
 
@@ -270,24 +283,29 @@ export const OrchardForm: React.FC = () => {
 		if (activeTab === "general") {
 			if (!formData.name.trim()) {
 				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุชื่อสวนทุเรียน", "warning");
+
 				return;
 			}
 			if (!formData.description.trim()) {
 				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุรายละเอียดและจุดเด่น", "warning");
+
 				return;
 			}
 		} else if (activeTab === "location") {
 			if (!formData.address.trim()) {
 				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุที่อยู่", "warning");
+
 				return;
 			}
 			if (formData.lat === 0 || formData.lng === 0) {
 				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุตำแหน่งพิกัดบนแผนที่", "warning");
+
 				return;
 			}
 		}
 
 		const currentIndex = TABS.indexOf(activeTab);
+
 		if (currentIndex < TABS.length - 1) {
 			setActiveTab(TABS[currentIndex + 1]);
 			window.scrollTo({ top: 0, behavior: "smooth" });
@@ -296,6 +314,7 @@ export const OrchardForm: React.FC = () => {
 
 	const handleBack = () => {
 		const currentIndex = TABS.indexOf(activeTab);
+
 		if (currentIndex > 0) {
 			setActiveTab(TABS[currentIndex - 1]);
 			window.scrollTo({ top: 0, behavior: "smooth" });
@@ -309,6 +328,7 @@ export const OrchardForm: React.FC = () => {
 		// Additional validation check before submit
 		if (!formData.name || !formData.description || !formData.address || formData.lat === 0) {
 			showAlert("ข้อมูลไม่ครบถ้วน", "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน", "warning");
+
 			return;
 		}
 
@@ -347,8 +367,7 @@ export const OrchardForm: React.FC = () => {
 
 			showAlert("สำเร็จ", "บันทึกข้อมูลสวนเรียบร้อยแล้ว", "success");
 			navigate("/owner");
-		} catch (error) {
-			console.error(error);
+		} catch {
 			showAlert("ข้อผิดพลาด", "เกิดข้อผิดพลาดในการบันทึกข้อมูล", "error");
 		} finally {
 			setIsLoading(false);
@@ -365,8 +384,6 @@ export const OrchardForm: React.FC = () => {
 		icon: React.ElementType;
 	}) => (
 		<button
-			type="button"
-			onClick={() => setActiveTab(id)}
 			className={`
         flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-xl transition-all whitespace-nowrap
         ${
@@ -375,6 +392,8 @@ export const OrchardForm: React.FC = () => {
 				: "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700"
 		}
       `}
+			type="button"
+			onClick={() => setActiveTab(id)}
 		>
 			<Icon size={18} />
 			<span>{label}</span>
@@ -384,7 +403,7 @@ export const OrchardForm: React.FC = () => {
 	if (loadingData || isMasterDataLoading) {
 		return (
 			<div className="flex justify-center items-center min-h-[50vh]">
-				<div className="animate-spin rounded-full h-12 w-12 border-4 border-forest-500 border-t-transparent"></div>
+				<div className="animate-spin rounded-full h-12 w-12 border-4 border-forest-500 border-t-transparent" />
 			</div>
 		);
 	}
@@ -395,17 +414,17 @@ export const OrchardForm: React.FC = () => {
 				{/* Header */}
 				<div className="mb-6">
 					<Button
+						className="pl-0 hover:bg-transparent text-slate-500 hover:text-forest-700 mb-2"
 						variant="ghost"
 						onClick={() => navigate("/owner")}
-						className="pl-0 hover:bg-transparent text-slate-500 hover:text-forest-700 mb-2"
 					>
 						{isEditMode ? (
 							<>
-								<ArrowLeft size={20} className="mr-1" /> ย้อนกลับ
+								<ArrowLeft className="mr-1" size={20} /> ย้อนกลับ
 							</>
 						) : (
 							<>
-								<X size={20} className="mr-1" /> ยกเลิก
+								<X className="mr-1" size={20} /> ยกเลิก
 							</>
 						)}
 					</Button>
@@ -424,14 +443,14 @@ export const OrchardForm: React.FC = () => {
 				{/* Tab Navigation */}
 				<div className="mb-6 overflow-x-auto pb-2 scrollbar-hide">
 					<div className="flex gap-2 min-w-max">
-						<TabButton id="general" label="ข้อมูลทั่วไป" icon={Info} />
-						<TabButton id="location" label="ที่ตั้ง & แผนที่" icon={MapIcon} />
-						<TabButton id="media" label="รูปภาพ & สื่อ" icon={Image} />
-						<TabButton id="services" label="บริการเสริม" icon={Layers} />
+						<TabButton icon={Info} id="general" label="ข้อมูลทั่วไป" />
+						<TabButton icon={MapIcon} id="location" label="ที่ตั้ง & แผนที่" />
+						<TabButton icon={Image} id="media" label="รูปภาพ & สื่อ" />
+						<TabButton icon={Layers} id="services" label="บริการเสริม" />
 					</div>
 				</div>
 
-				<form onSubmit={handleSubmit} className="space-y-6">
+				<form className="space-y-6" onSubmit={handleSubmit}>
 					{/* Tab 1: General Information */}
 					{activeTab === "general" && (
 						<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8 animate-in slide-in-from-left-2 duration-300">
@@ -441,19 +460,14 @@ export const OrchardForm: React.FC = () => {
 
 							{/* Status Section */}
 							<div className="mb-8">
-								<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 ml-1">
+								<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 ml-1">
 									สถานะผลผลิตปัจจุบัน
-								</label>
+								</span>
 								<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
 									{statuses.map((statusOption) => (
 										<div
 											key={statusOption.id}
-											onClick={() =>
-												setFormData({
-													...formData,
-													status: statusOption.id as DurianStatus,
-												})
-											}
+											aria-checked={formData.status === statusOption.id}
 											className={`
                                 cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center text-center transition-all h-full
                                 ${
@@ -462,11 +476,27 @@ export const OrchardForm: React.FC = () => {
 										: "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
 								}
                             `}
+											role="radio"
+											tabIndex={0}
+											onClick={() =>
+												setFormData({
+													...formData,
+													status: statusOption.id as DurianStatus,
+												})
+											}
+											onKeyDown={(e) => {
+												if (e.key === "Enter" || e.key === " ") {
+													setFormData({
+														...formData,
+														status: statusOption.id as DurianStatus,
+													});
+												}
+											}}
 										>
 											<div className="flex flex-col items-center gap-2">
 												<div
 													className={`w-3 h-3 rounded-full ${statusOption.color.split(" ")[0]}`}
-												></div>
+												/>
 												<span
 													className={`font-semibold text-sm ${formData.status === statusOption.id ? "text-forest-700 dark:text-forest-400" : "text-slate-600 dark:text-slate-400"}`}
 												>
@@ -480,17 +510,18 @@ export const OrchardForm: React.FC = () => {
 
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 								<InputField
+									required
+									icon={Home}
 									label="ชื่อสวนทุเรียน"
 									placeholder="เช่น สวนทุเรียนลุงสมหมาย"
 									value={formData.name}
 									onChange={(e) =>
 										setFormData({ ...formData, name: e.target.value })
 									}
-									icon={Home}
-									required
 								/>
 
 								<InputField
+									icon={Phone}
 									label="เบอร์โทรศัพท์ติดต่อ"
 									placeholder="08X-XXX-XXXX"
 									type="tel"
@@ -498,13 +529,15 @@ export const OrchardForm: React.FC = () => {
 									onChange={(e) =>
 										setFormData({ ...formData, phoneNumber: e.target.value })
 									}
-									icon={Phone}
 								/>
 
 								<div className="col-span-1 md:col-span-2">
 									<TextAreaField
+										required
+										icon={AlignLeft}
 										label="รายละเอียดและจุดเด่น"
 										placeholder="บรรยายความพิเศษของสวน พันธุ์ทุเรียนที่มี ฯลฯ"
+										rows={3}
 										value={formData.description}
 										onChange={(e) =>
 											setFormData({
@@ -512,34 +545,33 @@ export const OrchardForm: React.FC = () => {
 												description: e.target.value,
 											})
 										}
-										rows={3}
-										icon={AlignLeft}
-										required
 									/>
 								</div>
 
 								<div className="col-span-1 md:col-span-2">
 									<TextAreaField
+										icon={BookOpen}
 										label="ประวัติความเป็นมา (Story)"
 										placeholder="เล่าเรื่องราวความเป็นมาของสวน แรงบันดาลใจ หรือจุดเริ่มต้น..."
+										rows={3}
 										value={formData.history}
 										onChange={(e) =>
 											setFormData({ ...formData, history: e.target.value })
 										}
-										rows={3}
-										icon={BookOpen}
 									/>
 								</div>
 
 								<div className="col-span-1 md:col-span-2 mt-2">
-									<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-4 ml-1">
+									<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-4 ml-1">
 										ประเภทบริการ (เลือกได้มากกว่า 1 ข้อ)
-									</label>
+									</span>
 									<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
 										{serviceTypes.map((type) => (
 											<div
 												key={type.id}
-												onClick={() => toggleType(type.id as OrchardType)}
+												aria-checked={selectedTypes.includes(
+													type.id as OrchardType
+												)}
 												className={`
                             cursor-pointer rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 text-center transition-all
                             ${
@@ -548,6 +580,13 @@ export const OrchardForm: React.FC = () => {
 									: "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-forest-200"
 							}
                           `}
+												role="checkbox"
+												tabIndex={0}
+												onClick={() => toggleType(type.id as OrchardType)}
+												onKeyDown={(e) => {
+													if (e.key === "Enter" || e.key === " ")
+														toggleType(type.id as OrchardType);
+												}}
 											>
 												<span className="font-semibold text-sm">
 													{type.label}
@@ -570,15 +609,15 @@ export const OrchardForm: React.FC = () => {
 							<div className="grid grid-cols-1 gap-6">
 								<div>
 									<TextAreaField
+										required
+										icon={MapPin}
 										label="ที่อยู่ / สถานที่ตั้ง (ข้อความ)"
 										placeholder="บ้านเลขที่, หมู่, ตำบล, อำเภอ, จังหวัด..."
+										rows={3}
 										value={formData.address}
 										onChange={(e) =>
 											setFormData({ ...formData, address: e.target.value })
 										}
-										rows={3}
-										icon={MapPin}
-										required
 									/>
 								</div>
 
@@ -593,13 +632,13 @@ export const OrchardForm: React.FC = () => {
 										</label>
 
 										<button
+											className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-white dark:bg-slate-800 text-forest-700 dark:text-forest-300 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600 hover:border-forest-500 transition-all disabled:opacity-50"
+											disabled={isLocating}
 											type="button"
 											onClick={handleSetCurrentLocation}
-											disabled={isLocating}
-											className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-white dark:bg-slate-800 text-forest-700 dark:text-forest-300 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600 hover:border-forest-500 transition-all disabled:opacity-50"
 										>
 											{isLocating ? (
-												<div className="animate-spin rounded-full h-4 w-4 border-2 border-forest-600 border-t-transparent"></div>
+												<div className="animate-spin rounded-full h-4 w-4 border-2 border-forest-600 border-t-transparent" />
 											) : (
 												<Locate size={16} />
 											)}
@@ -639,9 +678,9 @@ export const OrchardForm: React.FC = () => {
 							<div className="space-y-8">
 								{/* Images */}
 								<div>
-									<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+									<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
 										รูปภาพบรรยากาศสวน
-									</label>
+									</span>
 									<p className="text-xs text-slate-500 dark:text-slate-400 mb-4 ml-1">
 										รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป
 										ไม่จำกัดจำนวน
@@ -654,15 +693,15 @@ export const OrchardForm: React.FC = () => {
 												className="relative group aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200"
 											>
 												<img
-													src={img}
 													alt={`Preview ${index}`}
 													className="w-full h-full object-cover"
+													src={img}
 												/>
 												<button
-													type="button"
-													onClick={() => removeImage(index)}
 													className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
 													title="ลบรูปภาพ"
+													type="button"
+													onClick={() => removeImage(index)}
 												>
 													<X size={14} />
 												</button>
@@ -670,9 +709,9 @@ export const OrchardForm: React.FC = () => {
 										))}
 
 										<button
+											className="aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
 											type="button"
 											onClick={() => imageInputRef.current?.click()}
-											className="aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
 										>
 											<div className="p-3 bg-white dark:bg-slate-800 rounded-full shadow-sm">
 												<Upload size={20} />
@@ -682,10 +721,10 @@ export const OrchardForm: React.FC = () => {
 									</div>
 									<input
 										ref={imageInputRef}
-										type="file"
 										multiple
 										accept="image/*"
 										className="hidden"
+										type="file"
 										onChange={handleImageUpload}
 									/>
 								</div>
@@ -704,9 +743,9 @@ export const OrchardForm: React.FC = () => {
 
 									<div className="flex gap-2 mb-4">
 										<input
-											type="text"
-											placeholder="วางลิงก์วิดีโอที่นี่..."
 											className="flex-grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm focus:border-forest-500 focus:ring-2 focus:ring-forest-200 outline-none"
+											placeholder="วางลิงก์วิดีโอที่นี่..."
+											type="text"
 											value={tempVideoUrl}
 											onChange={(e) => setTempVideoUrl(e.target.value)}
 											onKeyDown={(e) => {
@@ -717,10 +756,10 @@ export const OrchardForm: React.FC = () => {
 											}}
 										/>
 										<Button
-											type="button"
-											onClick={handleAddVideo}
 											className="!px-4"
 											disabled={!tempVideoUrl}
+											type="button"
+											onClick={handleAddVideo}
 										>
 											<Plus size={20} /> เพิ่ม
 										</Button>
@@ -738,18 +777,18 @@ export const OrchardForm: React.FC = () => {
 															<Youtube size={16} />
 														</div>
 														<a
-															href={video}
-															target="_blank"
-															rel="noreferrer"
 															className="text-sm text-slate-600 dark:text-slate-300 truncate hover:text-blue-500 hover:underline"
+															href={video}
+															rel="noreferrer"
+															target="_blank"
 														>
 															{video}
 														</a>
 													</div>
 													<button
+														className="text-slate-400 hover:text-red-500 transition-colors p-1"
 														type="button"
 														onClick={() => handleRemoveVideo(index)}
-														className="text-slate-400 hover:text-red-500 transition-colors p-1"
 													>
 														<Trash2 size={18} />
 													</button>
@@ -772,49 +811,49 @@ export const OrchardForm: React.FC = () => {
 									</div>
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 										<InputField
+											icon={LineIcon}
 											label="Line (Link to Profile)"
 											placeholder="https://line.me/ti/p/~yourid"
 											value={formData.socialMedia.line}
 											onChange={(e) =>
 												handleSocialChange("line", e.target.value)
 											}
-											icon={LineIcon}
 										/>
 										<InputField
+											icon={Facebook}
 											label="Facebook (URL)"
 											placeholder="https://facebook.com/yourpage"
 											value={formData.socialMedia.facebook}
 											onChange={(e) =>
 												handleSocialChange("facebook", e.target.value)
 											}
-											icon={Facebook}
 										/>
 										<InputField
+											icon={Instagram}
 											label="Instagram (URL)"
 											placeholder="https://instagram.com/yourprofile"
 											value={formData.socialMedia.instagram}
 											onChange={(e) =>
 												handleSocialChange("instagram", e.target.value)
 											}
-											icon={Instagram}
 										/>
 										<InputField
+											icon={TiktokIcon}
 											label="TikTok (URL)"
 											placeholder="https://tiktok.com/@yourprofile"
 											value={formData.socialMedia.tiktok}
 											onChange={(e) =>
 												handleSocialChange("tiktok", e.target.value)
 											}
-											icon={TiktokIcon}
 										/>
 										<InputField
+											icon={Youtube}
 											label="YouTube (URL)"
 											placeholder="https://youtube.com/c/yourchannel"
 											value={formData.socialMedia.youtube}
 											onChange={(e) =>
 												handleSocialChange("youtube", e.target.value)
 											}
-											icon={Youtube}
 										/>
 									</div>
 									<p className="text-xs text-slate-500 mt-2 ml-1">
@@ -837,9 +876,9 @@ export const OrchardForm: React.FC = () => {
 								{/* Mixed Agriculture */}
 								<div className="space-y-4">
 									<ToggleSwitch
-										label="เป็นสวนเกษตรผสมผสาน"
-										description="หากสวนของคุณมีการปลูกพืชผักหรือผลไม้อื่นๆ แซมในสวนทุเรียน"
 										checked={formData.isMixedAgro}
+										description="หากสวนของคุณมีการปลูกพืชผักหรือผลไม้อื่นๆ แซมในสวนทุเรียน"
+										label="เป็นสวนเกษตรผสมผสาน"
 										onChange={(val) =>
 											setFormData({ ...formData, isMixedAgro: val })
 										}
@@ -849,8 +888,8 @@ export const OrchardForm: React.FC = () => {
 										<div className="animate-in slide-in-from-top-2 fade-in duration-300 pl-4 border-l-4 border-forest-100 dark:border-forest-900/50">
 											<MultiSelectField
 												label="พืชที่ปลูกเพิ่มเติม (ผัก/ผลไม้)"
-												placeholder="เลือกพืชที่ปลูกในสวน..."
 												options={cropOptions}
+												placeholder="เลือกพืชที่ปลูกในสวน..."
 												value={formData.additionalCrops}
 												onChange={(val) =>
 													setFormData({
@@ -869,9 +908,9 @@ export const OrchardForm: React.FC = () => {
 								{/* Accommodation */}
 								<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
 									<ToggleSwitch
-										label="มีบริการที่พัก/โฮมสเตย์"
-										description="เปิดให้บริหารที่พักแก่นักท่องเที่ยว"
 										checked={formData.hasAccommodation}
+										description="เปิดให้บริหารที่พักแก่นักท่องเที่ยว"
+										label="มีบริการที่พัก/โฮมสเตย์"
 										onChange={(val) =>
 											setFormData({ ...formData, hasAccommodation: val })
 										}
@@ -895,9 +934,9 @@ export const OrchardForm: React.FC = () => {
 								{/* Packages */}
 								<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
 									<ToggleSwitch
-										label="มีแพ็กเกจท่องเที่ยว/กิจกรรม"
-										description="กิจกรรมบุฟเฟต์, Workshop หรือแพ็กเกจท่องเที่ยว"
 										checked={formData.hasPackage}
+										description="กิจกรรมบุฟเฟต์, Workshop หรือแพ็กเกจท่องเที่ยว"
+										label="มีแพ็กเกจท่องเที่ยว/กิจกรรม"
 										onChange={(val) =>
 											setFormData({ ...formData, hasPackage: val })
 										}
@@ -923,19 +962,19 @@ export const OrchardForm: React.FC = () => {
 						{isEditMode ? (
 							<>
 								<Button
-									variant="secondary"
-									type="button"
-									onClick={() => navigate("/owner")}
 									className="w-full sm:w-auto order-2 sm:order-1"
+									type="button"
+									variant="secondary"
+									onClick={() => navigate("/owner")}
 								>
 									ยกเลิก
 								</Button>
 								<Button
-									type="submit"
-									isLoading={isLoading}
 									className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20"
+									isLoading={isLoading}
+									type="submit"
 								>
-									<Save size={20} className="mr-2" /> บันทึกข้อมูลสวน
+									<Save className="mr-2" size={20} /> บันทึกข้อมูลสวน
 								</Button>
 							</>
 						) : (
@@ -943,32 +982,32 @@ export const OrchardForm: React.FC = () => {
 								{/* Hide back button on first tab */}
 								{activeTab !== "general" && (
 									<Button
-										variant="secondary"
-										type="button"
-										onClick={handleBack}
 										className="w-full sm:w-auto order-2 sm:order-1"
+										type="button"
+										variant="secondary"
+										onClick={handleBack}
 									>
-										<ArrowLeft size={20} className="mr-2" /> ย้อนกลับ
+										<ArrowLeft className="mr-2" size={20} /> ย้อนกลับ
 									</Button>
 								)}
 
 								{activeTab !== "services" ? (
 									<Button
 										key="next-btn"
+										className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20 !bg-forest-800"
 										type="button"
 										onClick={handleNext}
-										className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20 !bg-forest-800"
 									>
-										ถัดไป <ArrowRight size={20} className="ml-2" />
+										ถัดไป <ArrowRight className="ml-2" size={20} />
 									</Button>
 								) : (
 									<Button
 										key="save-btn"
-										type="submit"
-										isLoading={isLoading}
 										className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20"
+										isLoading={isLoading}
+										type="submit"
 									>
-										<Save size={20} className="mr-2" /> บันทึกข้อมูลสวน
+										<Save className="mr-2" size={20} /> บันทึกข้อมูลสวน
 									</Button>
 								)}
 							</>

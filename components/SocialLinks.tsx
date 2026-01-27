@@ -1,5 +1,6 @@
 import React from "react";
 import { Facebook, Instagram, Youtube } from "lucide-react";
+
 import { SocialMediaLinks } from "../interface/orchardInterface";
 import { LineIcon, TiktokIcon } from "../utils/icons";
 
@@ -63,10 +64,10 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 			{validItems.map((item) => (
 				<a
 					key={item.key}
-					href={item.url}
-					target="_blank"
-					rel="noopener noreferrer"
 					className={`flex items-center justify-center w-8 h-8 rounded-full shadow-sm hover:scale-110 transition-transform ${item.color} ${itemClassName}`}
+					href={item.url}
+					rel="noopener noreferrer"
+					target="_blank"
 					title={item.label}
 				>
 					<item.icon className="w-4 h-4" />

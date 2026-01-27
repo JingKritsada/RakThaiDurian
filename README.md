@@ -1,19 +1,67 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Durian Love Thailand
 
-# Run and deploy your AI Studio app
+## 1. Technologies used
 
-This contains everything you need to run your app locally.
+This project is built using the following modern web technologies:
 
-View your app in AI Studio: https://ai.studio/apps/drive/1jF8oaVPtDAzJJnc9-nFgbcPqy-2C3Gti
+- **[React](https://react.dev/)** (v19) - The library for web and native user interfaces.
+- **[TypeScript](https://www.typescriptlang.org/)** - A strongly typed programming language that builds on JavaScript.
+- **[Vite](https://vitejs.dev/)** - Next Generation Frontend Tooling for fast development and build.
+- **[React Router](https://reactrouter.com/)** (v7) - The standard routing library for React.
+- **[Leaflet](https://leafletjs.com/)** & **[React Leaflet](https://react-leaflet.js.org/)** - Open-source JavaScript library for mobile-friendly interactive maps.
+- **[Lucide React](https://lucide.dev/)** - Beautiful & consistent icons.
+- **ESLint** & **Prettier** - For maintaining code quality and consistent formatting.
 
-## Run Locally
+## 2. How to use
 
-**Prerequisites:** Node.js
+Follow these steps to set up and run the project strictly on your local machine.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### How to set up npm / pnpm
+
+You need to have **Node.js** installed on your system.
+Check your installation by running:
+
+```bash
+node -v
+```
+
+This project works with **npm** (bundled with Node.js) or **pnpm**.
+If you would like to use `pnpm` (recommended for faster installation), install it globally:
+
+```bash
+npm install -g pnpm
+```
+
+### How to install dependency
+
+Clone the repository and navigate to the project folder. Then, install the dependencies using your preferred package manager:
+
+**Using npm:**
+
+```bash
+npm install
+```
+
+**Using pnpm:**
+
+```bash
+pnpm install
+```
+
+### How to run locally
+
+Once the installation is complete, you can start the local development server:
+
+**Using npm:**
+
+```bash
+npm run dev
+```
+
+**Using pnpm:**
+
+```bash
+pnpm dev
+```
+
+The application will typically be accessible at `http://localhost:3000`.

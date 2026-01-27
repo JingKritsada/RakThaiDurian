@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
 import { ServiceTypeOption, StatusOption, CropOption } from "../interface/dropdownInterface";
 import { dropdownService } from "../services/dropdownService";
 import {
@@ -38,6 +39,7 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 
 				const hydratedServiceTypes: ServiceTypeOption[] = typesData.map((item) => {
 					const id = item.id as OrchardType;
+
 					return {
 						id: item.id,
 						label: ORCHARD_TYPE_LABELS[id] || item.id,
@@ -47,6 +49,7 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 
 				const hydratedStatuses: StatusOption[] = statusesData.map((item) => {
 					const id = item.id as DurianStatus;
+
 					return {
 						id: item.id,
 						label: STATUS_LABELS[id] || item.id,
@@ -58,8 +61,8 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 				setServiceTypes(hydratedServiceTypes);
 				setStatuses(hydratedStatuses);
 				setCropOptions(cropsData);
-			} catch (error) {
-				console.error("Failed to load master data", error);
+			} catch {
+				// Failed to load master data
 			} finally {
 				setIsLoading(false);
 			}
@@ -91,6 +94,8 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 
 export const useMasterData = () => {
 	const context = useContext(MasterDataContext);
+
 	if (!context) throw new Error("useMasterData must be used within a MasterDataProvider");
+
 	return context;
 };

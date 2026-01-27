@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
 import { Theme, FontSize } from "../interface/themeInterface";
 
 interface ThemeContextType {
@@ -14,11 +15,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 	// Initialize from local storage or default
 	const [theme, setThemeState] = useState<Theme>(() => {
 		const saved = localStorage.getItem("theme");
+
 		return (saved as Theme) || "system";
 	});
 
 	const [fontSize, setFontSizeState] = useState<FontSize>(() => {
 		const saved = localStorage.getItem("fontSize");
+
 		return (saved as FontSize) || "medium";
 	});
 
@@ -58,6 +61,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 	useEffect(() => {
 		const root = window.document.documentElement;
 		let sizeValue = "14px";
+
 		if (fontSize === "small") sizeValue = "12px";
 		if (fontSize === "large") sizeValue = "16px";
 
@@ -69,6 +73,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 		setThemeState((prev) => {
 			if (prev === "light") return "dark";
 			if (prev === "dark") return "system";
+
 			return "light";
 		});
 	};
@@ -86,6 +91,8 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
 export const useTheme = () => {
 	const context = useContext(ThemeContext);
+
 	if (!context) throw new Error("useTheme must be used within a ThemeProvider");
+
 	return context;
 };

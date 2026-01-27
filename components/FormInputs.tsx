@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, X, Check } from "lucide-react";
+
 import {
 	InputFieldProps,
 	TextAreaFieldProps,
@@ -13,33 +14,41 @@ export const InputField: React.FC<InputFieldProps> = ({
 	label,
 	error,
 	className = "",
+	inputClassName = "",
 	icon: Icon,
 	suffix,
 	...props
 }) => {
 	return (
 		<div className={className}>
-			<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
-				{label} {props.required && <span className="text-red-500">*</span>}
-			</label>
+			{label && (
+				<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+					{label} {props.required && <span className="text-red-500">*</span>}
+				</label>
+			)}
+
 			<div className="relative">
 				<input
 					className={`
-            w-full h-[54px] py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none
-            ${Icon ? "pl-12" : "pl-4"}
-            ${suffix ? "pr-12" : "pr-4"}
-            ${
-				error
-					? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-					: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
-			}
-            [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
-          `}
+						${
+							inputClassName
+								? inputClassName
+								: "w-full h-[48px] py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none"
+						}
+						${Icon ? "pl-12" : "pl-4"}
+						${suffix ? "pr-12" : "pr-4"}
+						${
+							error
+								? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
+								: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
+						}
+            			[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+          			`}
 					{...props}
 				/>
-				{Icon && <Icon className="absolute left-3 top-[17px] text-slate-400" size={20} />}
+				{Icon && <Icon className="absolute left-4 top-[14px] text-slate-400" size={20} />}
 				{suffix && (
-					<div className="absolute right-3 top-[15px] text-slate-400">{suffix}</div>
+					<div className="absolute right-4 top-[14px] text-slate-400">{suffix}</div>
 				)}
 			</div>
 			{error && <p className="text-red-500 text-xs mt-1 ml-1">{error}</p>}
@@ -51,6 +60,7 @@ export const TextAreaField: React.FC<TextAreaFieldProps> = ({
 	label,
 	error,
 	className = "",
+	inputClassName = "",
 	icon: Icon,
 	...props
 }) => {
@@ -62,17 +72,21 @@ export const TextAreaField: React.FC<TextAreaFieldProps> = ({
 			<div className="relative">
 				<textarea
 					className={`
-            w-full p-4 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none resize-none
-            ${Icon ? "pl-12" : ""}
-            ${
-				error
-					? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-					: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
-			}
-          `}
+						${
+							inputClassName
+								? inputClassName
+								: "w-full p-4 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none resize-none"
+						}
+						${Icon ? "pl-12" : ""}
+						${
+							error
+								? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
+								: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
+						}
+					`}
 					{...props}
 				/>
-				{Icon && <Icon className="absolute left-3 top-3.5 text-slate-400" size={20} />}
+				{Icon && <Icon className="absolute left-4 top-4 text-slate-400" size={20} />}
 			</div>
 			{error && <p className="text-red-500 text-xs mt-1 ml-1">{error}</p>}
 		</div>
@@ -99,12 +113,12 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 				)}
 			</div>
 			<button
-				type="button"
-				onClick={() => onChange(!checked)}
 				className={`
           relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2
           ${checked ? "bg-forest-600" : "bg-slate-200 dark:bg-slate-600"}
         `}
+				type="button"
+				onClick={() => onChange(!checked)}
 			>
 				<span className="sr-only">Use setting</span>
 				<span
@@ -138,7 +152,9 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 				setIsOpen(false);
 			}
 		};
+
 		document.addEventListener("mousedown", handleClickOutside);
+
 		return () => document.removeEventListener("mousedown", handleClickOutside);
 	}, []);
 
@@ -153,14 +169,13 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 	const selectedOptions = options.filter((opt) => value.includes(opt.id));
 
 	return (
-		<div className={className} ref={containerRef}>
+		<div ref={containerRef} className={className}>
 			<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
 				{label}
 			</label>
 
 			<div className="relative">
 				<div
-					onClick={() => setIsOpen(!isOpen)}
 					className={`
             w-full min-h-[54px] px-3 py-2 rounded-xl border bg-white dark:bg-slate-700 cursor-pointer flex items-center justify-between flex-wrap gap-2
             ${
@@ -170,6 +185,12 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 			}
             ${isOpen ? "ring-2 ring-forest-200 border-forest-500" : ""}
           `}
+					role="button"
+					tabIndex={0}
+					onClick={() => setIsOpen(!isOpen)}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") setIsOpen(!isOpen);
+					}}
 				>
 					{selectedOptions.length > 0 ? (
 						<div className="flex flex-wrap gap-2">
@@ -180,12 +201,12 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 								>
 									{opt.label}
 									<button
+										className="ml-1.5 hover:text-forest-900 focus:outline-none"
 										type="button"
 										onClick={(e) => {
 											e.stopPropagation();
 											handleSelect(opt.id);
 										}}
-										className="ml-1.5 hover:text-forest-900 focus:outline-none"
 									>
 										<X size={14} />
 									</button>
@@ -195,7 +216,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 					) : (
 						<span className="text-slate-400 px-1">{placeholder}</span>
 					)}
-					<ChevronDown size={20} className="text-slate-400 shrink-0 ml-auto" />
+					<ChevronDown className="text-slate-400 shrink-0 ml-auto" size={20} />
 				</div>
 
 				{/* Dropdown Menu */}
@@ -205,10 +226,11 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 							<div className="p-1">
 								{options.map((option) => {
 									const isSelected = value.includes(option.id);
+
 									return (
 										<div
 											key={option.id}
-											onClick={() => handleSelect(option.id)}
+											aria-selected={isSelected}
 											className={`
                         flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer text-sm mb-0.5
                         ${
@@ -217,12 +239,19 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 								: "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
 						}
                       `}
+											role="option"
+											tabIndex={0}
+											onClick={() => handleSelect(option.id)}
+											onKeyDown={(e) => {
+												if (e.key === "Enter" || e.key === " ")
+													handleSelect(option.id);
+											}}
 										>
 											<span>{option.label}</span>
 											{isSelected && (
 												<Check
-													size={16}
 													className="text-forest-600 dark:text-forest-400"
+													size={16}
 												/>
 											)}
 										</div>

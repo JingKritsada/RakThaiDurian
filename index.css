@@ -1,0 +1,96 @@
+body {
+	font-family: "Anuphan", sans-serif;
+	letter-spacing: 0.25px;
+	background-color: #f9fafb;
+}
+.dark body {
+	background-color: #0f172a;
+}
+
+/* Leaflet specific overrides for dark mode */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #1e293b;
+	font-family: "Anuphan", sans-serif;
+	border-radius: 12px;
+}
+.dark .leaflet-popup-content-wrapper,
+.dark .leaflet-popup-tip {
+	background: #1e293b;
+	color: #f1f5f9;
+}
+.leaflet-container {
+	z-index: 0;
+	font-family: "Anuphan", sans-serif;
+}
+
+/* Custom Popup Styles - Fixes & Improvements */
+.custom-popup .leaflet-popup-content-wrapper {
+	padding: 0;
+	border-radius: 16px;
+	overflow: hidden;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(8px);
+	box-shadow:
+		0 10px 25px -5px rgba(0, 0, 0, 0.1),
+		0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.custom-popup .leaflet-popup-content {
+	margin: 0 !important;
+	width: auto !important;
+}
+
+.custom-popup .leaflet-popup-tip {
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(8px);
+}
+
+.dark .custom-popup .leaflet-popup-content-wrapper {
+	background: rgba(15, 23, 42, 0.95); /* Dark slate */
+	color: #f1f5f9;
+	border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.dark .custom-popup .leaflet-popup-tip {
+	background: rgba(15, 23, 42, 0.95);
+}
+
+/* Override default link colors globally and for Leaflet container */
+a,
+.leaflet-container a {
+	color: inherit;
+	text-decoration: none;
+}
+input[type="date"] {
+	-webkit-appearance: none;
+	appearance: none;
+}
+
+@font-face {
+	font-family: "SaoChingCha";
+	src: url("./assets/fonts/SaoChingCha/SaoChingcha-Regular.otf") format("opentype");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "SaoChingCha";
+	src: url("./assets/fonts/SaoChingCha/SaoChingcha-Bold.otf") format("opentype");
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* Apply to all headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+	font-family: "SaoChingCha", sans-serif;
+}

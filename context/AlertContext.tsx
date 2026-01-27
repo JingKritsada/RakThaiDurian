@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from "react";
+
 import { ModalAlert, AlertType } from "../components/ModalAlert";
 
 interface AlertState {
@@ -86,6 +87,8 @@ export const AlertProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
 export const useAlert = () => {
 	const context = useContext(AlertContext);
+
 	if (!context) throw new Error("useAlert must be used within an AlertProvider");
+
 	return context;
 };

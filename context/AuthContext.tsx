@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+
 import { User } from "../interface/userInterface";
 import { userService } from "../services/userService";
 
@@ -17,6 +18,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 	const login = async (email: string, pass: string) => {
 		const loggedInUser = await userService.login(email, pass);
+
 		setUser(loggedInUser);
 	};
 
@@ -34,6 +36,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
 export const useAuth = () => {
 	const context = useContext(AuthContext);
+
 	if (!context) throw new Error("useAuth must be used within a AuthProvider");
+
 	return context;
 };

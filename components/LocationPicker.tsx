@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 import L from "leaflet";
+
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "../utils/leafletFix";
 
 interface LocationPickerProps {
 	lat: number;
@@ -15,18 +16,22 @@ const MapEvents = ({ onChange }: { onChange: (lat: number, lng: number) => void 
 			onChange(e.latlng.lat, e.latlng.lng);
 		},
 	});
+
 	return null;
 };
 
 // Fix for map not rendering tiles correctly in some layouts
 const MapInvalidator = () => {
 	const map = useMap();
+
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			map.invalidateSize();
 		}, 200);
+
 		return () => clearTimeout(timer);
 	}, [map]);
+
 	return null;
 };
 
@@ -56,11 +61,13 @@ const CurrentLocationHandler = ({
 // Component to update map view when coordinates change
 const MapUpdater = ({ lat, lng }: { lat: number; lng: number }) => {
 	const map = useMap();
+
 	useEffect(() => {
 		if (lat !== 0 && lng !== 0) {
 			map.flyTo([lat, lng], 15);
 		}
 	}, [lat, lng, map]);
+
 	return null;
 };
 
@@ -85,19 +92,19 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 		<div className="h-64 w-full rounded-lg overflow-hidden border border-slate-300 dark:border-slate-600 relative z-0">
 			<MapContainer
 				center={center}
-				zoom={lat && lng ? 13 : 6}
 				style={{ height: "100%", width: "100%" }}
+				zoom={lat && lng ? 13 : 6}
 			>
 				<MapInvalidator />
 				<MapUpdater lat={lat} lng={lng} />
 				<TileLayer
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					attribution="&copy; OpenStreetMap"
+					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
 				<MapEvents onChange={onChange} />
 				<CurrentLocationHandler hasLocation={hasValidLocation} onFound={onChange} />
 
-				{lat !== 0 && lng !== 0 && <Marker position={[lat, lng]} icon={customIcon} />}
+				{lat !== 0 && lng !== 0 && <Marker icon={customIcon} position={[lat, lng]} />}
 			</MapContainer>
 			<div className="absolute bottom-2 right-2 bg-white/80 dark:bg-slate-800/80 p-1 text-xs rounded z-[400] pointer-events-none">
 				แตะที่แผนที่เพื่อปักหมุด

@@ -1,8 +1,4 @@
 import React, { useState, useRef } from "react";
-import { Package } from "../interface/orchardInterface";
-import { useAlert } from "../context/AlertContext";
-import { Button } from "./Button";
-import { InputField, TextAreaField } from "./FormInputs";
 import {
 	Plus,
 	Trash2,
@@ -15,6 +11,12 @@ import {
 	CheckCircle,
 	Edit2,
 } from "lucide-react";
+
+import { Package } from "../interface/orchardInterface";
+import { useAlert } from "../context/AlertContext";
+
+import { Button } from "./Button";
+import { InputField, TextAreaField } from "./FormInputs";
 
 interface PackageManagerProps {
 	packages: Package[];
@@ -54,11 +56,13 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 				"กรุณากรอกข้อมูลให้ครบถ้วน (ชื่อ, ราคา, วันที่)",
 				"warning"
 			);
+
 			return;
 		}
 
 		if (new Date(newItem.startDate) > new Date(newItem.endDate)) {
 			showAlert("วันที่ไม่ถูกต้อง", "วันที่เริ่มต้นต้องมาก่อนวันที่สิ้นสุด", "warning");
+
 			return;
 		}
 
@@ -127,6 +131,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 
 	const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const files = e.target.files;
+
 		if (!files) return;
 
 		const MAX_SIZE_MB = 10;
@@ -139,10 +144,12 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 					`ไฟล์ ${file.name} มีขนาดใหญ่เกิน ${MAX_SIZE_MB}MB`,
 					"warning"
 				);
+
 				return;
 			}
 
 			const reader = new FileReader();
+
 			reader.readAsDataURL(file);
 			reader.onload = () => {
 				if (reader.result && typeof reader.result === "string") {
@@ -168,6 +175,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 
 	const formatDate = (dateStr: string) => {
 		if (!dateStr) return "-";
+
 		return new Date(dateStr).toLocaleDateString("th-TH", {
 			day: "numeric",
 			month: "short",
@@ -177,6 +185,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 
 	const formatNumberOnBlur = (field: "price" | "duration") => {
 		const val = parseFloat(newItem[field]);
+
 		if (!isNaN(val)) {
 			setNewItem((prev) => ({ ...prev, [field]: val.toString() }));
 		}
@@ -198,9 +207,9 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 								<div className="w-20 h-20 shrink-0 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
 									{item.images.length > 0 ? (
 										<img
-											src={item.images[0]}
 											alt={item.name}
 											className="w-full h-full object-cover"
+											src={item.images[0]}
 										/>
 									) : (
 										<div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -224,7 +233,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 								</div>
 							</div>
 							<div className="text-xs bg-slate-50 dark:bg-slate-700/50 p-2 rounded-lg text-slate-600 dark:text-slate-300 flex items-center gap-2">
-								<Calendar size={12} className="shrink-0" />
+								<Calendar className="shrink-0" size={12} />
 								<span>
 									{formatDate(item.startDate)} - {formatDate(item.endDate)}
 								</span>
@@ -232,18 +241,18 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 
 							<div className="absolute top-2 right-2 flex gap-1">
 								<button
-									type="button"
-									onClick={() => handleEdit(item)}
 									className="p-1.5 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors"
 									title="แก้ไข"
+									type="button"
+									onClick={() => handleEdit(item)}
 								>
 									<Edit2 size={16} />
 								</button>
 								<button
-									type="button"
-									onClick={() => handleDelete(item.id)}
 									className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
 									title="ลบ"
+									type="button"
+									onClick={() => handleDelete(item.id)}
 								>
 									<Trash2 size={16} />
 								</button>
@@ -256,12 +265,12 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 			{/* Add/Edit Section */}
 			{!isAdding ? (
 				<button
+					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium"
 					type="button"
 					onClick={() => {
 						resetForm();
 						setIsAdding(true);
 					}}
-					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium"
 				>
 					<Plus size={20} /> เพิ่มแพ็กเกจ/กิจกรรม
 				</button>
@@ -271,20 +280,20 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 						<h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
 							{editingId ? (
 								<>
-									<Edit2 size={18} className="text-forest-600" />{" "}
+									<Edit2 className="text-forest-600" size={18} />{" "}
 									แก้ไขข้อมูลแพ็กเกจ
 								</>
 							) : (
 								<>
-									<Plus size={18} className="text-forest-600" />{" "}
+									<Plus className="text-forest-600" size={18} />{" "}
 									เพิ่มข้อมูลแพ็กเกจ
 								</>
 							)}
 						</h4>
 						<button
+							className="text-slate-400 hover:text-slate-600"
 							type="button"
 							onClick={resetForm}
-							className="text-slate-400 hover:text-slate-600"
 						>
 							<X size={20} />
 						</button>
@@ -292,70 +301,70 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 
 					<div className="space-y-4">
 						<InputField
+							icon={Ticket}
 							label="ชื่อกิจกรรม"
 							placeholder="เช่น บุฟเฟต์ทุเรียนอิ่มไม่อั้น, Workshop ทำทุเรียนกวน"
 							value={newItem.name}
 							onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-							icon={Ticket}
 						/>
 
 						<div className="grid grid-cols-2 gap-4">
 							<InputField
-								label="ราคาต่อคน (บาท)"
-								type="number"
-								placeholder="0"
-								value={newItem.price}
-								onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
-								onBlur={() => formatNumberOnBlur("price")}
 								icon={Banknote}
+								label="ราคาต่อคน (บาท)"
+								placeholder="0"
+								type="number"
+								value={newItem.price}
+								onBlur={() => formatNumberOnBlur("price")}
+								onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
 							/>
 							<InputField
+								icon={Clock}
 								label="ระยะเวลา (ชั่วโมง)"
-								type="number"
 								placeholder="1"
+								type="number"
 								value={newItem.duration}
+								onBlur={() => formatNumberOnBlur("duration")}
 								onChange={(e) =>
 									setNewItem({ ...newItem, duration: e.target.value })
 								}
-								onBlur={() => formatNumberOnBlur("duration")}
-								icon={Clock}
 							/>
 						</div>
 
 						<TextAreaField
+							icon={CheckCircle}
 							label="สิ่งที่ได้รับ (Includes)"
 							placeholder="รายละเอียดสิ่งที่รวมในแพ็กเกจ..."
+							rows={3}
 							value={newItem.includes}
 							onChange={(e) => setNewItem({ ...newItem, includes: e.target.value })}
-							rows={3}
-							icon={CheckCircle}
 						/>
 
 						<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 							<InputField
+								icon={Calendar}
 								label="เริ่มวันที่"
 								type="date"
 								value={newItem.startDate}
 								onChange={(e) =>
 									setNewItem({ ...newItem, startDate: e.target.value })
 								}
-								icon={Calendar}
 							/>
 							<InputField
+								icon={Calendar}
 								label="ถึงวันที่"
 								type="date"
 								value={newItem.endDate}
 								onChange={(e) =>
 									setNewItem({ ...newItem, endDate: e.target.value })
 								}
-								icon={Calendar}
 							/>
 						</div>
 
 						<div>
-							<label className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+							<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
 								รูปตัวอย่างกิจกรรม
-							</label>
+							</span>
 							<p className="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-1">
 								รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 							</p>
@@ -366,23 +375,23 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 										className="w-20 h-20 rounded-lg overflow-hidden relative group"
 									>
 										<img
-											src={img}
 											alt="preview"
 											className="w-full h-full object-cover"
+											src={img}
 										/>
 										<button
+											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
 											type="button"
 											onClick={() => removeNewItemImage(idx)}
-											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
 										>
 											<X size={12} />
 										</button>
 									</div>
 								))}
 								<button
+									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors"
 									type="button"
 									onClick={() => fileInputRef.current?.click()}
-									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors"
 								>
 									<Upload size={16} />
 									<span className="text-[10px] mt-1">เพิ่มรูป</span>
@@ -390,24 +399,24 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 							</div>
 							<input
 								ref={fileInputRef}
-								type="file"
 								multiple
 								accept="image/*"
 								className="hidden"
+								type="file"
 								onChange={handleImageUpload}
 							/>
 						</div>
 
 						<div className="pt-2 flex justify-end gap-2">
 							<Button
+								className="!px-4"
 								type="button"
 								variant="ghost"
 								onClick={resetForm}
-								className="!px-4"
 							>
 								ยกเลิก
 							</Button>
-							<Button type="button" onClick={handleSave} className="!px-6">
+							<Button className="!px-6" type="button" onClick={handleSave}>
 								{editingId ? "บันทึกการแก้ไข" : "ยืนยันเพิ่ม"}
 							</Button>
 						</div>

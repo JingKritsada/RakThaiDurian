@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
+
 import { orchardService } from "../services/orchardService";
 import { useAuth } from "../context/AuthContext";
 import { useAlert } from "../context/AlertContext";
 import { Orchard } from "../interface/orchardInterface";
 import { Button } from "../components/Button";
 import { Card } from "../components/Card";
-import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
 
 export const OwnerDashboard: React.FC = () => {
 	const { user } = useAuth();
@@ -18,6 +19,7 @@ export const OwnerDashboard: React.FC = () => {
 		if (!user) return;
 		setIsLoading(true);
 		const data = await orchardService.getOrchardsByOwner(user.id);
+
 		setOrchards(data);
 		setIsLoading(false);
 	}, [user]);
@@ -38,8 +40,7 @@ export const OwnerDashboard: React.FC = () => {
 					await orchardService.deleteOrchard(id);
 					showAlert("สำเร็จ", "ลบข้อมูลสวนเรียบร้อยแล้ว", "success");
 					loadData();
-				} catch (error) {
-					console.error(error);
+				} catch {
 					showAlert("ข้อผิดพลาด", "ไม่สามารถลบข้อมูลสวนได้", "error");
 				}
 			},
@@ -53,7 +54,7 @@ export const OwnerDashboard: React.FC = () => {
 		<div className="h-full overflow-y-auto">
 			<div className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
 				<div className="bg-forest-900 rounded-3xl p-8 mb-10 text-white shadow-xl relative overflow-hidden">
-					<div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+					<div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16" />
 					<div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
 						<div>
 							<h1 className="text-3xl font-bold mb-2">ระบบจัดการสวน</h1>
@@ -63,7 +64,7 @@ export const OwnerDashboard: React.FC = () => {
 						</div>
 						<Link to="/owner/add">
 							<button className="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-xl font-bold flex items-center shadow-lg transition-transform transform hover:scale-105 whitespace-nowrap">
-								<Plus size={22} className="mr-2" />
+								<Plus className="mr-2" size={22} />
 								ลงทะเบียนสวนใหม่
 							</button>
 						</Link>
@@ -76,13 +77,13 @@ export const OwnerDashboard: React.FC = () => {
 							<div
 								key={i}
 								className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse"
-							></div>
+							/>
 						))}
 					</div>
 				) : orchards.length === 0 ? (
 					<div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-800 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
 						<div className="bg-forest-50 dark:bg-forest-900/30 p-6 rounded-full mb-6">
-							<Sprout size={48} className="text-forest-600 dark:text-forest-400" />
+							<Sprout className="text-forest-600 dark:text-forest-400" size={48} />
 						</div>
 						<h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
 							ยังไม่มีข้อมูลสวนในระบบ
@@ -117,8 +118,8 @@ export const OwnerDashboard: React.FC = () => {
 										</button>
 									</Link>
 									<button
-										onClick={() => handleDelete(orchard.id)}
 										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-sm whitespace-nowrap"
+										onClick={() => handleDelete(orchard.id)}
 									>
 										<Trash2 size={16} /> ลบ
 									</button>

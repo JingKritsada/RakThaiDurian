@@ -1,43 +1,41 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 
+import { ErrorPage } from "../pages/ErrorPage";
+
 interface Props {
-	children: ReactNode;
+	children?: ReactNode;
 }
 
 interface State {
 	hasError: boolean;
 	error: Error | null;
-	errorInfo: ErrorInfo | null;
 }
 
 export class ErrorBoundary extends Component<Props, State> {
 	public state: State = {
 		hasError: false,
 		error: null,
-		errorInfo: null,
 	};
 
 	public static getDerivedStateFromError(error: Error): State {
-		return { hasError: true, error, errorInfo: null };
+		// Update state so the next render will show the fallback UI.
+		return { hasError: true, error };
 	}
 
 	public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+		// eslint-disable-next-line no-console
 		console.error("Uncaught error:", error, errorInfo);
-		this.setState({ errorInfo });
 	}
 
+	public resetError = () => {
+		this.setState({ hasError: false, error: null });
+		// Optionally perform other reset logic here (e.g. redirect)
+		window.location.reload();
+	};
+
 	public render() {
-		if (this.state.hasError) {
-			return (
-				<div style={{ padding: "20px", color: "red", backgroundColor: "#ffe6e6" }}>
-					<h1>Something went wrong.</h1>
-					<details style={{ whiteSpace: "pre-wrap" }}>
-						{this.state.error && this.state.error.toString()}
-						<br />
-						{this.state.errorInfo && this.state.errorInfo.componentStack}
-					</details>
-				</div>
-			);
+		if (this.state.hasError && this.state.error) {
+			return <ErrorPage error={this.state.error} reset={this.resetError} />;
 		}
 
 		return this.props.children;

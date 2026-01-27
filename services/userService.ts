@@ -29,11 +29,12 @@ export const userService = {
 
 	getCurrentUser: (): User | null => {
 		const userStr = localStorage.getItem("durian_user");
+
 		try {
 			return userStr ? JSON.parse(userStr) : null;
-		} catch (e) {
-			console.error("Error parsing user data", e);
+		} catch {
 			localStorage.removeItem("durian_user");
+
 			return null;
 		}
 	},

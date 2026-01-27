@@ -1,5 +1,6 @@
 import React from "react";
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
+
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import { MasterDataProvider } from "./context/MasterDataContext";
@@ -10,6 +11,9 @@ import { Login } from "./pages/Login";
 import { OwnerDashboard } from "./pages/OwnerDashboard";
 import { OrchardForm } from "./pages/OrchardForm";
 import { PrivateRoute } from "./routes/PrivateRoute";
+import { NotFoundPage } from "./pages/NotFoundPage";
+import { TestErrorPage } from "./pages/TestErrorPage";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 
 function App() {
 	return (
@@ -18,29 +22,35 @@ function App() {
 				<AuthProvider>
 					<AlertProvider>
 						<HashRouter>
-							<div className="h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col overflow-hidden">
-								<Header />
-								<main className="flex-grow overflow-hidden relative">
-									<Routes>
-										{/* Public Routes */}
-										<Route path="/" element={<HomePage />} />
-										<Route path="/login" element={<Login />} />
+							<ErrorBoundary>
+								<div className="h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col overflow-hidden">
+									<Header />
+									<main className="flex-grow overflow-hidden relative">
+										<Routes>
+											{/* Public Routes */}
+											<Route element={<HomePage />} path="/" />
+											<Route element={<Login />} path="/login" />
+											<Route element={<TestErrorPage />} path="/test-error" />
 
-										{/* Protected Owner Routes */}
-										<Route element={<PrivateRoute />}>
-											<Route path="/owner" element={<OwnerDashboard />} />
-											<Route path="/owner/add" element={<OrchardForm />} />
-											<Route
-												path="/owner/edit/:id"
-												element={<OrchardForm />}
-											/>
-										</Route>
+											{/* Protected Owner Routes */}
+											<Route element={<PrivateRoute />}>
+												<Route element={<OwnerDashboard />} path="/owner" />
+												<Route
+													element={<OrchardForm />}
+													path="/owner/add"
+												/>
+												<Route
+													element={<OrchardForm />}
+													path="/owner/edit/:id"
+												/>
+											</Route>
 
-										{/* Catch all */}
-										<Route path="*" element={<Navigate to="/" replace />} />
-									</Routes>
-								</main>
-							</div>
+											{/* Catch all - Not Found */}
+											<Route element={<NotFoundPage />} path="*" />
+										</Routes>
+									</main>
+								</div>
+							</ErrorBoundary>
 						</HashRouter>
 					</AlertProvider>
 				</AuthProvider>

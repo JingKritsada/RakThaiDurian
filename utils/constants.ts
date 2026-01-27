@@ -1,9 +1,9 @@
 import { DurianStatus, OrchardType } from "./enum";
 
 export const ORCHARD_TYPE_LABELS: Record<OrchardType, string> = {
-	[OrchardType.Sell]: "ซื้อผลผลิตหน้าสวน",
-	[OrchardType.Tour]: "ท่องเที่ยวชมสวน",
-	[OrchardType.Cafe]: "คาเฟ่และขนมหวาน",
+	[OrchardType.Sell]: "ซื้อผลผลิต",
+	[OrchardType.Tour]: "เที่ยวชมสวน",
+	[OrchardType.Cafe]: "คาเฟ่และอาหาร",
 	[OrchardType.Stay]: "ที่พักโฮมสเตย์",
 };
 
