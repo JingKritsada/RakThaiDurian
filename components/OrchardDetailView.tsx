@@ -1,9 +1,21 @@
 import React from "react";
-import { X, MapPin, Phone, Navigation, Image as ImageIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import {
+	X,
+	MapPin,
+	Phone,
+	Navigation,
+	Image as ImageIcon,
+	Sprout,
+	Home,
+	Users,
+	Info,
+} from "lucide-react";
 
 import { Orchard } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
 
+import { Button } from "./Button";
 import { SocialLinks } from "./SocialLinks";
 
 interface OrchardDetailViewProps {
@@ -19,6 +31,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 	variant = "sheet",
 	onImageLoad,
 }) => {
+	const navigate = useNavigate();
 	const { getStatus, getServiceType } = useMasterData();
 	const statusInfo = getStatus(orchard.status);
 
@@ -33,30 +46,16 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 	return (
 		<div className={containerClasses}>
-			{isSheet && (
-				<div
-					className="sticky top-0 bg-white dark:bg-slate-900 pt-2 pb-1 z-20 flex justify-center rounded-t-3xl"
-					role="button"
-					tabIndex={0}
-					onClick={onClose}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") onClose?.();
-					}}
-				>
-					<div className="w-16 h-1.5 bg-slate-200 dark:bg-slate-700 rounded-full mb-1" />
-				</div>
-			)}
-
 			<div className={`flex flex-col gap-4 ${isSheet ? "p-6 pt-2 pb-8" : "p-5"}`}>
 				{/* Header */}
-				<div className="flex justify-between items-start">
-					<div className="flex flex-col gap-2 mr-2 min-w-0 flex-1">
-						<h3 className="text-xl font-bold text-slate-900 dark:text-white leading-tight">
+				<div className={`flex justify-between items-end mb-2 ${isSheet ? "mt-2" : "mt-0"}`}>
+					<div className="flex gap-4 mr-4 min-w-0">
+						<h3 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight truncate">
 							{orchard.name}
 						</h3>
 
 						<span
-							className={`w-fit inline-block px-2.5 py-1 text-xs font-bold rounded-lg border shadow-sm backdrop-blur-lg whitespace-nowrap ${statusInfo.color}`}
+							className={`inline-block px-3 py-1 text-sm font-bold rounded-lg border shadow-sm backdrop-blur-lg whitespace-nowrap ${statusInfo.color}`}
 						>
 							{statusInfo.label}
 						</span>
@@ -64,17 +63,18 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 					{/* Close button for Popup (or Sheet explicit close) */}
 					{onClose && (
-						<button
+						<Button
 							aria-label="Close details"
-							className={`p-1.5 rounded-full transition-colors shrink-0 ${
+							className={`!p-2 rounded-full transition-colors shrink-0 !min-h-0 !w-auto ${
 								isSheet
 									? "bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200"
 									: "bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-300"
 							}`}
+							variant="none"
 							onClick={onClose}
 						>
 							<X size={20} />
-						</button>
+						</Button>
 					)}
 				</div>
 
@@ -135,25 +135,25 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Features Tags */}
 				{(orchard.isMixedAgro || orchard.hasPackage || orchard.hasAccommodation) && (
-					<div className="flex flex-wrap gap-2 justify-center text-white text-[10px] font-bold">
+					<div className="flex flex-wrap gap-2 justify-center text-white text-xs">
 						{orchard.isMixedAgro && (
-							<span className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-forest-800/90 shadow-sm">
-								<MapPin size={12} />
-								สวนแบบผสมผสาน
+							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
+								<Sprout size={14} />
+								สวนผสมผสาน
 							</span>
 						)}
 
 						{orchard.hasPackage && (
-							<span className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-forest-800/90 shadow-sm">
-								<MapPin size={12} />
-								มีแพ็กเกจ/กิจกรรม
+							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
+								<Users size={14} />
+								แพ็กเกจ/กิจกรรม
 							</span>
 						)}
 
 						{orchard.hasAccommodation && (
-							<span className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-forest-800/90 shadow-sm">
-								<MapPin size={12} />
-								มีที่พัก/โฮมสเตย์
+							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
+								<Home size={14} />
+								ที่พัก/โฮมสเตย์
 							</span>
 						)}
 					</div>
@@ -184,22 +184,14 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				)}
 
 				{/* Action Buttons */}
-				<div className="grid grid-cols-2 gap-3 mt-2">
-					{orchard.phoneNumber ? (
-						<a
-							className="flex items-center justify-center gap-2 bg-forest-800 hover:bg-forest-900 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-forest-900/20 whitespace-nowrap"
-							href={`tel:${orchard.phoneNumber}`}
-						>
-							<Phone size={16} /> โทรติดต่อ
-						</a>
-					) : (
-						<button
-							disabled
-							className="flex items-center justify-center gap-2 bg-slate-200 text-slate-400 py-3 rounded-xl font-bold text-sm cursor-not-allowed whitespace-nowrap"
-						>
-							<Phone size={16} /> ไม่มีเบอร์
-						</button>
-					)}
+				<div className="grid grid-cols-2 gap-3 mt-3">
+					<Button
+						className="flex items-center justify-center gap-2 bg-forest-800 hover:bg-forest-900 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-forest-900/20 whitespace-nowrap"
+						variant="none"
+						onClick={() => navigate(`/orchard/${orchard.id}`)}
+					>
+						<Info size={16} /> ดูข้อมูลเพิ่มเติม
+					</Button>
 					<a
 						className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-blue-900/20 whitespace-nowrap"
 						href={`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`}

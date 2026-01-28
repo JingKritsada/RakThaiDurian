@@ -63,10 +63,13 @@ export const OwnerDashboard: React.FC = () => {
 							</p>
 						</div>
 						<Link to="/owner/add">
-							<button className="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-xl font-bold flex items-center shadow-lg transition-transform transform hover:scale-105 whitespace-nowrap">
+							<Button
+								className="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-xl font-bold flex items-center shadow-lg transition-transform transform hover:scale-105 whitespace-nowrap !min-h-0"
+								variant="none"
+							>
 								<Plus className="mr-2" size={22} />
 								ลงทะเบียนสวนใหม่
-							</button>
+							</Button>
 						</Link>
 					</div>
 				</div>
@@ -113,16 +116,20 @@ export const OwnerDashboard: React.FC = () => {
                                 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 focus-within:opacity-100 z-10"
 								>
 									<Link to={`/owner/edit/${orchard.id}`}>
-										<button className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-forest-100 hover:text-forest-700 dark:hover:bg-forest-900 transition-colors shadow-sm whitespace-nowrap">
+										<Button
+											className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-forest-100 hover:text-forest-700 dark:hover:bg-forest-900 transition-colors shadow-sm whitespace-nowrap !min-h-0"
+											variant="none"
+										>
 											<Edit2 size={16} /> แก้ไขข้อมูล
-										</button>
+										</Button>
 									</Link>
-									<button
-										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-sm whitespace-nowrap"
+									<Button
+										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-sm whitespace-nowrap !min-h-0"
+										variant="none"
 										onClick={() => handleDelete(orchard.id)}
 									>
 										<Trash2 size={16} /> ลบ
-									</button>
+									</Button>
 								</div>
 							</div>
 						))}

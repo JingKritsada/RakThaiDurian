@@ -22,7 +22,7 @@ export const Login: React.FC = () => {
 		setIsSubmitting(true);
 
 		try {
-			await login(email, password);
+			await login(email, password, { skipGlobalLoading: true });
 			navigate("/owner");
 		} catch (err: unknown) {
 			const error = err as Error;
@@ -73,14 +73,15 @@ export const Login: React.FC = () => {
 							label="รหัสผ่าน (Password)"
 							placeholder="ระบุรหัสผ่าน"
 							suffix={
-								<button
-									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none transition-colors"
+								<Button
+									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none transition-colors !p-0 rounded-full"
 									tabIndex={-1}
 									type="button"
+									variant="none"
 									onClick={() => setShowPassword(!showPassword)}
 								>
 									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-								</button>
+								</Button>
 							}
 							type={showPassword ? "text" : "password"}
 							value={password}

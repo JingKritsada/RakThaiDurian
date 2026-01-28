@@ -29,27 +29,30 @@ const FontSizeControls = ({
 	setFontSize: (size: FontSize) => void;
 }) => (
 	<div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
-		<button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+		<Button
+			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรเล็ก"
+			variant="none"
 			onClick={() => setFontSize("small")}
 		>
 			<span className="text-xs">ก</span>
-		</button>
-		<button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+		</Button>
+		<Button
+			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรปกติ"
+			variant="none"
 			onClick={() => setFontSize("medium")}
 		>
 			<span className="text-sm">ก</span>
-		</button>
-		<button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+		</Button>
+		<Button
+			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรใหญ่"
+			variant="none"
 			onClick={() => setFontSize("large")}
 		>
 			<span className="text-lg">ก</span>
-		</button>
+		</Button>
 	</div>
 );
 
@@ -77,9 +80,12 @@ export const Header: React.FC = () => {
 	return (
 		<header className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex justify-between items-center h-20">
+				<div className="flex justify-between items-center h-16">
 					{/* Logo */}
-					<Link className="flex items-center gap-3 group" to="/">
+					<Link
+						className="flex items-end gap-3 group hover:scale-105 transition-transform"
+						to="/"
+					>
 						<div className="w-10 h-10 bg-forest-800 rounded-xl flex items-center justify-center text-white shadow-md group-hover:bg-forest-900 transition-colors">
 							<span className="font-heading font-bold text-xl">ท</span>
 						</div>
@@ -105,13 +111,14 @@ export const Header: React.FC = () => {
 							<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
 						</div>
 
-						<button
-							className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+						<Button
+							className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
 							title="เปลี่ยนโหมดสี"
+							variant="none"
 							onClick={toggleTheme}
 						>
 							<ThemeIcon theme={theme} />
-						</button>
+						</Button>
 
 						<div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2" />
 
@@ -142,20 +149,21 @@ export const Header: React.FC = () => {
 					</div>
 
 					{/* Mobile Menu Button */}
-					<button
-						className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+					<Button
+						className="md:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
+						variant="none"
 						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 					>
 						{isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-					</button>
+					</Button>
 				</div>
 			</div>
 
 			{/* Mobile Menu */}
 			{isMobileMenuOpen && (
 				<div className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-xl animate-in slide-in-from-top-2">
-					<div className="flex flex-col gap-4">
-						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl">
+					<div className="flex flex-col gap-2">
+						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
 							<div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
 								<Type size={18} />
 								<span className="text-sm font-medium">ขนาดตัวอักษร</span>
@@ -163,12 +171,13 @@ export const Header: React.FC = () => {
 							<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
 						</div>
 
-						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-4 rounded-2xl">
+						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
 							<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
 								โหมดการแสดงผล
 							</span>
-							<button
-								className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600"
+							<Button
+								className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
+								variant="none"
 								onClick={toggleTheme}
 							>
 								<ThemeIcon theme={theme} />
@@ -179,7 +188,7 @@ export const Header: React.FC = () => {
 											? "โหมดมืด"
 											: "ตามระบบ"}
 								</span>
-							</button>
+							</Button>
 						</div>
 
 						<div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />

@@ -357,12 +357,17 @@ export const OrchardForm: React.FC = () => {
 			};
 
 			if (isEditMode && id) {
-				await orchardService.updateOrchard(parseInt(id), payload);
-			} else {
-				await orchardService.addOrchard({
-					...payload,
-					ownerId: user.id,
+				await orchardService.updateOrchard(parseInt(id), payload, {
+					skipGlobalLoading: true,
 				});
+			} else {
+				await orchardService.addOrchard(
+					{
+						...payload,
+						ownerId: user.id,
+					},
+					{ skipGlobalLoading: true }
+				);
 			}
 
 			showAlert("สำเร็จ", "บันทึกข้อมูลสวนเรียบร้อยแล้ว", "success");
@@ -383,7 +388,7 @@ export const OrchardForm: React.FC = () => {
 		label: string;
 		icon: React.ElementType;
 	}) => (
-		<button
+		<Button
 			className={`
         flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-xl transition-all whitespace-nowrap
         ${
@@ -393,11 +398,12 @@ export const OrchardForm: React.FC = () => {
 		}
       `}
 			type="button"
+			variant="none"
 			onClick={() => setActiveTab(id)}
 		>
 			<Icon size={18} />
 			<span>{label}</span>
-		</button>
+		</Button>
 	);
 
 	if (loadingData || isMasterDataLoading) {
@@ -410,7 +416,7 @@ export const OrchardForm: React.FC = () => {
 
 	return (
 		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-950">
-			<div className="max-w-4xl mx-auto px-4 py-8">
+			<div className="max-w-4xl mx-auto px-4 pt-8">
 				{/* Header */}
 				<div className="mb-6">
 					<Button
@@ -520,6 +526,7 @@ export const OrchardForm: React.FC = () => {
 									}
 								/>
 
+								{/* TODO: Validation for phone number */}
 								<InputField
 									icon={Phone}
 									label="เบอร์โทรศัพท์ติดต่อ"
@@ -573,13 +580,15 @@ export const OrchardForm: React.FC = () => {
 													type.id as OrchardType
 												)}
 												className={`
-                            cursor-pointer rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 text-center transition-all
-                            ${
-								selectedTypes.includes(type.id as OrchardType)
-									? "bg-forest-50 dark:bg-forest-900/30 border-forest-500 text-forest-800 dark:text-forest-300 shadow-sm"
-									: "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-forest-200"
-							}
-                          `}
+													cursor-pointer rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 text-center transition-all
+													${
+														selectedTypes.includes(
+															type.id as OrchardType
+														)
+															? "bg-forest-50 dark:bg-forest-900/30 border-forest-500 text-forest-800 dark:text-forest-300 shadow-sm"
+															: "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-forest-200"
+													}
+												`}
 												role="checkbox"
 												tabIndex={0}
 												onClick={() => toggleType(type.id as OrchardType)}
@@ -631,19 +640,17 @@ export const OrchardForm: React.FC = () => {
 											</p>
 										</label>
 
-										<button
+										<Button
 											className="flex items-center gap-2 px-4 py-2 text-sm font-medium bg-white dark:bg-slate-800 text-forest-700 dark:text-forest-300 rounded-xl shadow-sm border border-slate-200 dark:border-slate-600 hover:border-forest-500 transition-all disabled:opacity-50"
 											disabled={isLocating}
+											isLoading={isLocating}
 											type="button"
+											variant="none"
 											onClick={handleSetCurrentLocation}
 										>
-											{isLocating ? (
-												<div className="animate-spin rounded-full h-4 w-4 border-2 border-forest-600 border-t-transparent" />
-											) : (
-												<Locate size={16} />
-											)}
+											{!isLocating && <Locate size={16} />}
 											{isLocating ? "กำลังค้นหา..." : "ใช้ตำแหน่งปัจจุบัน"}
-										</button>
+										</Button>
 									</div>
 
 									<div className="rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-600 shadow-sm">
@@ -697,27 +704,29 @@ export const OrchardForm: React.FC = () => {
 													className="w-full h-full object-cover"
 													src={img}
 												/>
-												<button
-													className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity"
+												<Button
+													className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity !w-auto !h-auto min-h-0"
 													title="ลบรูปภาพ"
 													type="button"
+													variant="none"
 													onClick={() => removeImage(index)}
 												>
 													<X size={14} />
-												</button>
+												</Button>
 											</div>
 										))}
 
-										<button
-											className="aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
+										<Button
+											className="!h-full w-full aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
 											type="button"
+											variant="none"
 											onClick={() => imageInputRef.current?.click()}
 										>
 											<div className="p-3 bg-white dark:bg-slate-800 rounded-full shadow-sm">
 												<Upload size={20} />
 											</div>
 											<span className="text-xs font-medium">เพิ่มรูปภาพ</span>
-										</button>
+										</Button>
 									</div>
 									<input
 										ref={imageInputRef}
@@ -785,13 +794,14 @@ export const OrchardForm: React.FC = () => {
 															{video}
 														</a>
 													</div>
-													<button
-														className="text-slate-400 hover:text-red-500 transition-colors p-1"
+													<Button
+														className="text-slate-400 hover:text-red-500 transition-colors p-1 !w-auto !h-auto min-h-0"
 														type="button"
+														variant="none"
 														onClick={() => handleRemoveVideo(index)}
 													>
 														<Trash2 size={18} />
-													</button>
+													</Button>
 												</div>
 											))}
 										</div>

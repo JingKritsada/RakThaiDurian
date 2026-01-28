@@ -57,12 +57,13 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 			/>
 
 			<div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-sm w-full p-6 transform scale-100 transition-all animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-700">
-				<button
-					className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+				<Button
+					className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors !min-h-0 !w-auto p-0"
+					variant="none"
 					onClick={onClose}
 				>
 					<X size={20} />
-				</button>
+				</Button>
 
 				<div className="flex flex-col items-center text-center">
 					<div className={`p-4 rounded-full mb-4 ${bgColors[type]}`}>{icons[type]}</div>

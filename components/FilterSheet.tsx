@@ -76,12 +76,13 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 					<h3 className="text-xl font-bold text-slate-900 dark:text-white">
 						ตัวกรองและจัดเรียง
 					</h3>
-					<button
-						className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors"
+					<Button
+						className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors !min-h-0 !w-auto"
+						variant="none"
 						onClick={onClose}
 					>
 						<X size={24} />
-					</button>
+					</Button>
 				</div>
 
 				{/* Scrollable Content */}
@@ -178,7 +179,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 									const isSelected = tempFilters.includes(type.id as OrchardType);
 
 									return (
-										<button
+										<Button
 											key={type.id}
 											className={`
                         relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-24
@@ -188,6 +189,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 								: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
 						}
                       `}
+											variant="none"
 											onClick={() => toggleFilter(type.id as OrchardType)}
 										>
 											{isSelected && (
@@ -198,7 +200,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 											<span className="font-semibold text-sm text-center">
 												{type.label}
 											</span>
-										</button>
+										</Button>
 									);
 								})}
 							</div>

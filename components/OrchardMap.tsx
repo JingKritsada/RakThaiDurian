@@ -110,13 +110,11 @@ const MapUpdater = ({
 		if (!isRouteMode && center) {
 			let target: [number, number] = center;
 
-			if (offsetForMobile) {
-				// Mobile: Shift center SOUTH so marker appears in TOP half (to avoid bottom sheet)
-				target = [center[0] - 0.03, center[1]];
-			} else {
+			if (!offsetForMobile) {
 				// Desktop: Shift center NORTH so marker appears in BOTTOM half (to accommodate popup above)
 				target = [center[0] + 0.025, center[1]];
 			}
+
 			map.flyTo(target, 14, { duration: 1.5 });
 		}
 	}, [center, map, offsetForMobile, isRouteMode]);

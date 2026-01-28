@@ -8,6 +8,8 @@ import {
 	MultiSelectFieldProps,
 } from "../interface/inputInterface";
 
+import { Button } from "./Button";
+
 // --- Components ---
 
 export const InputField: React.FC<InputFieldProps> = ({
@@ -33,7 +35,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 						${
 							inputClassName
 								? inputClassName
-								: "w-full h-[48px] py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none"
+								: "w-full h-[48px] py-3.5 rounded-xl border bg-white dark:bg-slate-700 !text-slate-900 dark:!text-white shadow-sm transition-all outline-none relative appearance-none"
 						}
 						${Icon ? "pl-12" : "pl-4"}
 						${suffix ? "pr-12" : "pr-4"}
@@ -42,7 +44,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 								? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
 								: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
 						}
-            			[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
+            			[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none 
           			`}
 					{...props}
 				/>
@@ -114,9 +116,9 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 			</div>
 			<button
 				className={`
-          relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2
-          ${checked ? "bg-forest-600" : "bg-slate-200 dark:bg-slate-600"}
-        `}
+					relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2
+					${checked ? "bg-forest-600" : "bg-slate-200 dark:bg-slate-600"}
+				`}
 				type="button"
 				onClick={() => onChange(!checked)}
 			>
@@ -124,9 +126,9 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 				<span
 					aria-hidden="true"
 					className={`
-            pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out
-            ${checked ? "translate-x-5" : "translate-x-0"}
-          `}
+						pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out
+						${checked ? "translate-x-5" : "translate-x-0"}
+					`}
 				/>
 			</button>
 		</div>
@@ -200,16 +202,17 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 									className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-forest-100 text-forest-800 dark:bg-forest-900/40 dark:text-forest-300 border border-forest-200 dark:border-forest-800"
 								>
 									{opt.label}
-									<button
-										className="ml-1.5 hover:text-forest-900 focus:outline-none"
+									<Button
+										className="ml-1.5 hover:text-forest-900 focus:outline-none !min-h-0 !w-auto p-0 text-inherit"
 										type="button"
+										variant="none"
 										onClick={(e) => {
 											e.stopPropagation();
 											handleSelect(opt.id);
 										}}
 									>
 										<X size={14} />
-									</button>
+									</Button>
 								</span>
 							))}
 						</div>

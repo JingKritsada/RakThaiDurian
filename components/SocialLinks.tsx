@@ -8,12 +8,14 @@ interface SocialLinksProps {
 	links?: SocialMediaLinks;
 	className?: string;
 	itemClassName?: string;
+	showUrl?: boolean;
 }
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
 	links,
 	className = "flex gap-3",
 	itemClassName = "",
+	showUrl = false,
 }) => {
 	if (!links) return null;
 
@@ -58,6 +60,36 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 	const validItems = socialItems.filter((item) => item.url && item.url.trim() !== "");
 
 	if (validItems.length === 0) return null;
+
+	if (showUrl) {
+		return (
+			<div className={`space-y-3 ${className}`}>
+				{validItems.map((item) => (
+					<a
+						key={item.key}
+						className="flex items-center gap-3 p-2 rounded-xl group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+						href={item.url}
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						<div
+							className={`flex items-center justify-center w-10 h-10 rounded-full shadow-sm group-hover:scale-110 transition-transform shrink-0 ${item.color}`}
+						>
+							<item.icon className="w-5 h-5" />
+						</div>
+						<div className="flex flex-col min-w-0">
+							<span className="text-md tracking-wider font-bold text-slate-700 dark:text-slate-300 group-hover:text-forest-600 dark:group-hover:text-forest-400">
+								{item.label}
+							</span>
+							<span className="text-sm font-mono text-slate-500 truncate group-hover:underline">
+								{item.url}
+							</span>
+						</div>
+					</a>
+				))}
+			</div>
+		);
+	}
 
 	return (
 		<div className={className}>

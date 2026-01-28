@@ -84,6 +84,24 @@ input[type="date"] {
 	font-display: swap;
 }
 
+@font-face {
+	font-family: "JetBrainsMono";
+	src: url("./assets/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Regular.ttf")
+		format("truetype");
+	font-weight: normal;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: "JetBrainsMono";
+	src: url("./assets/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Bold.ttf")
+		format("truetype");
+	font-weight: bold;
+	font-style: normal;
+	font-display: swap;
+}
+
 /* Apply to all headings */
 h1,
 h2,

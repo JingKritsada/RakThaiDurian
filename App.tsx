@@ -5,8 +5,10 @@ import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
 import { MasterDataProvider } from "./context/MasterDataContext";
 import { AlertProvider } from "./context/AlertContext";
+import { LoadingProvider } from "./context/LoadingContext";
 import { Header } from "./components/Header";
 import { HomePage } from "./pages/HomePage";
+import { OrchardDetailPage } from "./pages/OrchardDetailPage";
 import { Login } from "./pages/Login";
 import { OwnerDashboard } from "./pages/OwnerDashboard";
 import { OrchardForm } from "./pages/OrchardForm";
@@ -19,41 +21,53 @@ function App() {
 	return (
 		<ThemeProvider>
 			<MasterDataProvider>
-				<AuthProvider>
-					<AlertProvider>
-						<HashRouter>
-							<ErrorBoundary>
-								<div className="h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col overflow-hidden">
-									<Header />
-									<main className="flex-grow overflow-hidden relative">
-										<Routes>
-											{/* Public Routes */}
-											<Route element={<HomePage />} path="/" />
-											<Route element={<Login />} path="/login" />
-											<Route element={<TestErrorPage />} path="/test-error" />
-
-											{/* Protected Owner Routes */}
-											<Route element={<PrivateRoute />}>
-												<Route element={<OwnerDashboard />} path="/owner" />
+				<HashRouter>
+					<LoadingProvider>
+						<AuthProvider>
+							<AlertProvider>
+								<ErrorBoundary>
+									<div className="h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 flex flex-col overflow-hidden">
+										<Header />
+										<main className="flex-grow overflow-hidden relative">
+											<Routes>
+												{/* Public Routes */}
+												<Route element={<HomePage />} path="/" />
 												<Route
-													element={<OrchardForm />}
-													path="/owner/add"
+													element={<OrchardDetailPage />}
+													path="/orchard/:id"
 												/>
+												<Route element={<Login />} path="/login" />
 												<Route
-													element={<OrchardForm />}
-													path="/owner/edit/:id"
+													element={<TestErrorPage />}
+													path="/test-error"
 												/>
-											</Route>
 
-											{/* Catch all - Not Found */}
-											<Route element={<NotFoundPage />} path="*" />
-										</Routes>
-									</main>
-								</div>
-							</ErrorBoundary>
-						</HashRouter>
-					</AlertProvider>
-				</AuthProvider>
+												{/* Protected Owner Routes */}
+												<Route element={<PrivateRoute />}>
+													<Route
+														element={<OwnerDashboard />}
+														path="/owner"
+													/>
+													<Route
+														element={<OrchardForm />}
+														path="/owner/add"
+													/>
+													<Route
+														element={<OrchardForm />}
+														path="/owner/edit/:id"
+													/>
+												</Route>
+
+												{/* Catch all - Not Found */}
+												<Route element={<NotFoundPage />} path="*" />
+											</Routes>
+										</main>
+									</div>
+								</ErrorBoundary>
+							</AlertProvider>
+						</AuthProvider>
+					</LoadingProvider>
+				</HashRouter>
 			</MasterDataProvider>
 		</ThemeProvider>
 	);

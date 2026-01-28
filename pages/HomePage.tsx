@@ -350,8 +350,8 @@ export const HomePage: React.FC = () => {
 			/>
 
 			{/* Mobile Sticky Header */}
-			<div className="md:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-3 shadow-sm">
-				<div className="flex gap-3 mb-1">
+			<div className="md:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-3 shadow-sm">
+				<div className="flex gap-3">
 					<InputField
 						className="w-full"
 						disabled={isRouteMode}
@@ -615,9 +615,10 @@ export const HomePage: React.FC = () => {
 									{isRouteMode ? "ปิดโหมดเส้นทาง" : "สร้างเส้นทาง"}
 								</Button>
 
-								<button
-									className="h-12 w-12 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
+								<Button
+									className="!p-0 h-12 w-12 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors p-0 !min-h-0"
 									title="ตำแหน่งปัจจุบัน"
+									variant="none"
 									onClick={handleLocate}
 								>
 									{isLocating ? (
@@ -659,7 +660,7 @@ export const HomePage: React.FC = () => {
 											<line strokeWidth="2.5" x1="5" x2="2" y1="12" y2="12" />
 										</svg>
 									)}
-								</button>
+								</Button>
 							</div>
 						</div>
 					)}
@@ -719,7 +720,7 @@ export const HomePage: React.FC = () => {
 										onClick={openGoogleMapsRoute}
 									>
 										<Navigation className="mr-2" size={18} />
-										เริ่มนำทางด้วย Google Maps
+										นำทางด้วย Google Maps
 									</Button>
 								</div>
 							</div>

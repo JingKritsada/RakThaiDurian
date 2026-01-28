@@ -43,8 +43,18 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 		const priceNum = parseFloat(newItem.price);
 		const quantityNum = parseInt(newItem.quantity);
 
-		if (!newItem.name || isNaN(priceNum) || priceNum <= 0) {
-			showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุชื่อที่พักและราคาให้ถูกต้อง", "warning");
+		if (
+			!newItem.name ||
+			isNaN(priceNum) ||
+			priceNum <= 0 ||
+			isNaN(quantityNum) ||
+			quantityNum <= 0
+		) {
+			showAlert(
+				"ข้อมูลไม่ครบถ้วน",
+				"กรุณาระบุชื่อที่พัก, ราคา, และ จำนวนให้ถูกต้อง",
+				"warning"
+			);
 
 			return;
 		}
@@ -164,8 +174,8 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 						<div
 							key={item.id}
 							className={`bg-white dark:bg-slate-800 rounded-xl p-4 border shadow-sm flex gap-4 relative group transition-all
-                ${editingId === item.id ? "border-forest-500 ring-2 ring-forest-100 dark:ring-forest-900" : "border-slate-200 dark:border-slate-700"}
-              `}
+								${editingId === item.id ? "border-forest-500 ring-2 ring-forest-100 dark:ring-forest-900" : "border-slate-200 dark:border-slate-700"}
+							`}
 						>
 							<div className="w-24 h-24 shrink-0 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
 								{item.images.length > 0 ? (
@@ -180,8 +190,8 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 									</div>
 								)}
 							</div>
-							<div className="flex-grow min-w-0 pr-16">
-								<h4 className="font-bold text-slate-900 dark:text-white truncate">
+							<div className="flex-grow min-w-0 pr-20">
+								<h4 className="font-bold text-sm text-slate-900 dark:text-white truncate">
 									{item.name}
 								</h4>
 								<div className="text-sm text-slate-500 dark:text-slate-400 mt-1 flex flex-col gap-1">
@@ -197,23 +207,25 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								</div>
 							</div>
 
-							<div className="absolute top-2 right-2 flex gap-1">
-								<button
-									className="p-1.5 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors"
+							<div className="absolute top-2 right-2 flex gap-0">
+								<Button
+									className="!p-3 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
 									title="แก้ไข"
 									type="button"
+									variant="none"
 									onClick={() => handleEdit(item)}
 								>
 									<Edit2 size={16} />
-								</button>
-								<button
-									className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+								</Button>
+								<Button
+									className="!p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
 									title="ลบ"
 									type="button"
+									variant="none"
 									onClick={() => handleDelete(item.id)}
 								>
 									<Trash2 size={16} />
-								</button>
+								</Button>
 							</div>
 						</div>
 					))}
@@ -222,16 +234,17 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 			{/* Add/Edit Section */}
 			{!isAdding ? (
-				<button
-					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium"
+				<Button
+					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium bg-transparent"
 					type="button"
+					variant="none"
 					onClick={() => {
 						resetForm();
 						setIsAdding(true);
 					}}
 				>
 					<Plus size={20} /> เพิ่มประเภทที่พัก
-				</button>
+				</Button>
 			) : (
 				<div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 animate-in zoom-in-95 duration-200">
 					<div className="flex justify-between items-center mb-4">
@@ -248,17 +261,19 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								</>
 							)}
 						</h4>
-						<button
-							className="text-slate-400 hover:text-slate-600"
+						<Button
+							className="text-slate-400 hover:text-slate-600 !min-h-0 !w-auto p-0"
 							type="button"
+							variant="none"
 							onClick={resetForm}
 						>
 							<X size={20} />
-						</button>
+						</Button>
 					</div>
 
 					<div className="space-y-4">
 						<InputField
+							required
 							icon={Bed}
 							label="ชื่อประเภทที่พัก"
 							placeholder="เช่น บ้านไม้ไผ่ริมน้ำ, เต็นท์กระโจม"
@@ -268,6 +283,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 						<div className="grid grid-cols-2 gap-4">
 							<InputField
+								required
 								icon={Banknote}
 								label="ราคาต่อคืน (บาท)"
 								placeholder="0"
@@ -277,6 +293,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								onChange={(e) => setNewItem({ ...newItem, price: e.target.value })}
 							/>
 							<InputField
+								required
 								icon={Users}
 								label="จำนวนห้องที่มี"
 								placeholder="1"
@@ -307,23 +324,25 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 											className="w-full h-full object-cover"
 											src={img}
 										/>
-										<button
-											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"
+										<Button
+											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity !min-h-0 !w-auto"
 											type="button"
+											variant="none"
 											onClick={() => removeNewItemImage(idx)}
 										>
 											<X size={12} />
-										</button>
+										</Button>
 									</div>
 								))}
-								<button
-									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors"
+								<Button
+									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors !min-h-0 p-0"
 									type="button"
+									variant="none"
 									onClick={() => fileInputRef.current?.click()}
 								>
 									<Upload size={16} />
 									<span className="text-[10px] mt-1">เพิ่มรูป</span>
-								</button>
+								</Button>
 							</div>
 							<input
 								ref={fileInputRef}
