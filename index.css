@@ -70,7 +70,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "SaoChingCha";
-	src: url("./assets/fonts/SaoChingCha/SaoChingcha-Regular.otf") format("opentype");
+	src: url("/fonts/SaoChingCha/SaoChingcha-Regular.otf") format("opentype");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -78,7 +78,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "SaoChingCha";
-	src: url("./assets/fonts/SaoChingCha/SaoChingcha-Bold.otf") format("opentype");
+	src: url("/fonts/SaoChingCha/SaoChingcha-Bold.otf") format("opentype");
 	font-weight: bold;
 	font-style: normal;
 	font-display: swap;
@@ -86,7 +86,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "JetBrainsMono";
-	src: url("./assets/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Regular.ttf")
+	src: url("/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Regular.ttf")
 		format("truetype");
 	font-weight: normal;
 	font-style: normal;
@@ -95,7 +95,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "JetBrainsMono";
-	src: url("./assets/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Bold.ttf")
+	src: url("/fonts/JetBrainsMonoNerdFontMono/JetBrainsMonoNerdFontMono-Bold.ttf")
 		format("truetype");
 	font-weight: bold;
 	font-style: normal;
