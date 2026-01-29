@@ -70,7 +70,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "SaoChingCha";
-	src: url("/fonts/SaoChingCha/SaoChingcha-Regular.otf") format("opentype");
+	src: url("/fonts/SaoChingcha/SaoChingcha-Regular.otf") format("opentype");
 	font-weight: normal;
 	font-style: normal;
 	font-display: swap;
@@ -78,7 +78,7 @@ input[type="date"] {
 
 @font-face {
 	font-family: "SaoChingCha";
-	src: url("/fonts/SaoChingCha/SaoChingcha-Bold.otf") format("opentype");
+	src: url("/fonts/SaoChingcha/SaoChingcha-Bold.otf") format("opentype");
 	font-weight: bold;
 	font-style: normal;
 	font-display: swap;
