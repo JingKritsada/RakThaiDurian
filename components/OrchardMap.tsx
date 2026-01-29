@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import L from "leaflet";
-
 import {
 	MapContainer,
 	TileLayer,
@@ -9,7 +8,8 @@ import {
 	useMap,
 	useMapEvents,
 	Polyline,
-} from "../utils/leafletFix";
+} from "react-leaflet";
+
 import { Orchard } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
 
