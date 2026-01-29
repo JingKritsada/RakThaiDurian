@@ -78,151 +78,160 @@ export const Header: React.FC = () => {
 	};
 
 	return (
-		<header className="sticky top-0 z-50 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
-			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="flex justify-between items-center h-16">
-					{/* Logo */}
-					<Link
-						className="flex items-end gap-3 group hover:scale-105 transition-transform"
-						to="/"
-					>
-						<div className="w-10 h-10 bg-forest-800 rounded-xl flex items-center justify-center text-white shadow-md group-hover:bg-forest-900 transition-colors">
-							<span className="font-heading font-bold text-xl">ท</span>
-						</div>
-						<div className="flex flex-col">
-							<span className="font-heading font-bold text-lg text-slate-900 dark:text-white leading-none">
-								ทุเรียน
-								<span className="font-heading text-forest-600 dark:text-forest-400">
-									รักไทย
-								</span>
-							</span>
-							<span className="text-xs text-slate-500 dark:text-slate-400">
-								สารบัญสวนคุณภาพ
-							</span>
-						</div>
-					</Link>
-
-					{/* Desktop Controls */}
-					<div className="hidden md:flex items-center gap-4">
-						<div className="flex items-center gap-2">
-							<span className="text-xs text-slate-400 font-medium mr-1">
-								ขนาดอักษร
-							</span>
-							<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
-						</div>
-
-						<Button
-							className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
-							title="เปลี่ยนโหมดสี"
-							variant="none"
-							onClick={toggleTheme}
-						>
-							<ThemeIcon theme={theme} />
-						</Button>
-
-						<div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2" />
-
-						{user ? (
-							<div className="flex items-center gap-3">
-								<Link to="/owner">
-									<Button className="!px-3 !rounded-xl" variant="ghost">
-										<UserIcon className="mr-2" size={20} />
-										<span className="font-medium">{user.name}</span>
-									</Button>
-								</Link>
-								<Button
-									className="!px-4 !py-2 !rounded-xl text-sm"
-									variant="secondary"
-									onClick={handleLogout}
-								>
-									<LogOut className="mr-2" size={18} />
-									ออกจากระบบ
-								</Button>
-							</div>
-						) : (
-							<Link to="/login">
-								<Button className="!rounded-xl !py-2.5 !shadow-md shadow-forest-800/20">
-									เข้าสู่ระบบเจ้าของสวน
-								</Button>
-							</Link>
-						)}
-					</div>
-
-					{/* Mobile Menu Button */}
-					<Button
-						className="md:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
-						variant="none"
-						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-					>
-						{isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-					</Button>
-				</div>
-			</div>
-
-			{/* Mobile Menu */}
+		<>
 			{isMobileMenuOpen && (
-				<div className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-xl animate-in slide-in-from-top-2">
-					<div className="flex flex-col gap-2">
-						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
-							<div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-								<Type size={18} />
-								<span className="text-sm font-medium">ขนาดตัวอักษร</span>
+				<div
+					aria-hidden="true"
+					className="fixed inset-0 bg-black/60 backdrop-blur-md z-[2000] md:hidden animate-in fade-in duration-200"
+					onClick={() => setIsMobileMenuOpen(false)}
+				/>
+			)}
+			<header className="sticky top-0 z-[2001] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+					<div className="flex justify-between items-center h-16">
+						{/* Logo */}
+						<Link
+							className="flex items-end gap-3 group hover:scale-105 transition-transform"
+							to="/"
+						>
+							<div className="w-10 h-10 bg-forest-800 rounded-xl flex items-center justify-center text-white shadow-md group-hover:bg-forest-900 transition-colors">
+								<span className="font-heading font-bold text-xl">ท</span>
 							</div>
-							<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
-						</div>
+							<div className="flex flex-col">
+								<span className="font-heading font-bold text-lg text-slate-900 dark:text-white leading-none">
+									ทุเรียน
+									<span className="font-heading text-forest-600 dark:text-forest-400">
+										รักไทย
+									</span>
+								</span>
+								<span className="text-xs text-slate-500 dark:text-slate-400">
+									สารบัญสวนคุณภาพ
+								</span>
+							</div>
+						</Link>
 
-						<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
-							<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
-								โหมดการแสดงผล
-							</span>
+						{/* Desktop Controls */}
+						<div className="hidden md:flex items-center gap-4">
+							<div className="flex items-center gap-2">
+								<span className="text-xs text-slate-400 font-medium mr-1">
+									ขนาดอักษร
+								</span>
+								<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
+							</div>
+
 							<Button
-								className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
+								className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
+								title="เปลี่ยนโหมดสี"
 								variant="none"
 								onClick={toggleTheme}
 							>
 								<ThemeIcon theme={theme} />
-								<span className="text-sm">
-									{theme === "light"
-										? "โหมดสว่าง"
-										: theme === "dark"
-											? "โหมดมืด"
-											: "ตามระบบ"}
-								</span>
 							</Button>
-						</div>
 
-						<div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />
+							<div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2" />
 
-						{user ? (
-							<>
-								<Link to="/owner" onClick={() => setIsMobileMenuOpen(false)}>
+							{user ? (
+								<div className="flex items-center gap-3">
+									<Link to="/owner">
+										<Button className="!px-3 !rounded-xl" variant="ghost">
+											<UserIcon className="mr-2" size={20} />
+											<span className="font-medium">{user.name}</span>
+										</Button>
+									</Link>
 									<Button
-										className="w-full justify-center !bg-forest-800"
-										variant="primary"
+										className="!px-4 !py-2 !rounded-xl text-sm"
+										variant="secondary"
+										onClick={handleLogout}
 									>
-										<UserIcon className="mr-2" size={20} />
-										จัดการสวน ({user.name})
+										<LogOut className="mr-2" size={18} />
+										ออกจากระบบ
+									</Button>
+								</div>
+							) : (
+								<Link to="/login">
+									<Button className="!rounded-xl !py-2.5 !shadow-md shadow-forest-800/20">
+										เข้าสู่ระบบเจ้าของสวน
 									</Button>
 								</Link>
-								<Button
-									className="w-full justify-center"
-									variant="danger"
-									onClick={handleLogout}
-								>
-									<LogOut className="mr-2" size={20} />
-									ออกจากระบบ
-								</Button>
-							</>
-						) : (
-							<Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-								<Button className="w-full justify-center !py-3">
-									เข้าสู่ระบบเจ้าของสวน
-								</Button>
-							</Link>
-						)}
+							)}
+						</div>
+
+						{/* Mobile Menu Button */}
+						<Button
+							className="md:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
+							variant="none"
+							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+						>
+							{isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+						</Button>
 					</div>
 				</div>
-			)}
-		</header>
+
+				{/* Mobile Menu */}
+				{isMobileMenuOpen && (
+					<div className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-xl animate-in slide-in-from-top-2">
+						<div className="flex flex-col gap-2">
+							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
+								<div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+									<Type size={18} />
+									<span className="text-sm font-medium">ขนาดตัวอักษร</span>
+								</div>
+								<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
+							</div>
+
+							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
+								<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
+									โหมดการแสดงผล
+								</span>
+								<Button
+									className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
+									variant="none"
+									onClick={toggleTheme}
+								>
+									<ThemeIcon theme={theme} />
+									<span className="text-sm">
+										{theme === "light"
+											? "โหมดสว่าง"
+											: theme === "dark"
+												? "โหมดมืด"
+												: "ตามระบบ"}
+									</span>
+								</Button>
+							</div>
+
+							<div className="h-px bg-slate-100 dark:bg-slate-800 my-2" />
+
+							{user ? (
+								<>
+									<Link to="/owner" onClick={() => setIsMobileMenuOpen(false)}>
+										<Button
+											className="w-full justify-center !bg-forest-800"
+											variant="primary"
+										>
+											<UserIcon className="mr-2" size={20} />
+											จัดการสวน ({user.name})
+										</Button>
+									</Link>
+									<Button
+										className="w-full justify-center"
+										variant="danger"
+										onClick={handleLogout}
+									>
+										<LogOut className="mr-2" size={20} />
+										ออกจากระบบ
+									</Button>
+								</>
+							) : (
+								<Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+									<Button className="w-full justify-center !py-3">
+										เข้าสู่ระบบเจ้าของสวน
+									</Button>
+								</Link>
+							)}
+						</div>
+					</div>
+				)}
+			</header>
+		</>
 	);
 };

@@ -29,7 +29,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 				</label>
 			)}
 
-			<div className="relative">
+			<div className="relative h-full">
 				<input
 					className={`
 						${

@@ -57,10 +57,10 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 z-[2000] flex items-end sm:items-center justify-center sm:p-4">
+		<div className="fixed inset-0 z-[2500] flex items-end sm:items-center justify-center sm:p-4">
 			{/* Backdrop */}
 			<div
-				className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+				className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
 				role="button"
 				tabIndex={0}
 				onClick={onClose}

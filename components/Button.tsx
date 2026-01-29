@@ -15,7 +15,7 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
 	// Updated base style: Rounded-xl, font-medium, proper padding
 	const baseStyle =
-		"px-4 py-3 rounded-xl font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base";
+		"px-4 py-3 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base";
 
 	const variants = {
 		primary:

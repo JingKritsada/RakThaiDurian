@@ -757,19 +757,25 @@ export const OrchardDetailPage: React.FC = () => {
 						}
 					}}
 				>
-					{/* Close Button */}
-					<div className="absolute top-4 right-4 z-50">
-						<Button
-							className="text-white hover:bg-white/10 rounded-full !p-3 flex items-center justify-center bg-slate-700/50 backdrop-blur-md"
-							variant="none"
-							onClick={closeLightbox}
-						>
-							<X size={24} />
-						</Button>
-					</div>
-
 					{/* Main Image Area */}
-					<div className="flex-1 min-h-0 w-full flex items-center justify-center p-4 relative">
+					<div
+						className="flex-1 min-h-0 w-full flex items-center justify-center p-4 relative"
+						role="button"
+						tabIndex={0}
+						onClick={(e) => {
+							if (e.target === e.currentTarget) {
+								closeLightbox();
+							}
+						}}
+						onKeyDown={(e) => {
+							if (
+								e.target === e.currentTarget &&
+								(e.key === "Enter" || e.key === " ")
+							) {
+								closeLightbox();
+							}
+						}}
+					>
 						<div className="relative max-w-full max-h-full flex justify-center items-center">
 							<img
 								alt={`Gallery ${lightboxIndex + 1}`}
@@ -781,14 +787,14 @@ export const OrchardDetailPage: React.FC = () => {
 							{images.length > 1 && (
 								<>
 									<Button
-										className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all"
+										className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
 										variant="none"
 										onClick={prevLightboxImage}
 									>
 										<ChevronLeft size={36} />
 									</Button>
 									<Button
-										className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all"
+										className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
 										variant="none"
 										onClick={nextLightboxImage}
 									>
@@ -797,6 +803,17 @@ export const OrchardDetailPage: React.FC = () => {
 								</>
 							)}
 						</div>
+					</div>
+
+					{/* Close Button */}
+					<div className="absolute top-20 right-4 z-50">
+						<Button
+							className="text-white hover:bg-white/10 rounded-full !p-3 flex items-center justify-center bg-slate-700/50 backdrop-blur-md"
+							variant="none"
+							onClick={closeLightbox}
+						>
+							<X size={24} />
+						</Button>
 					</div>
 
 					{/* Thumbnails Footer */}

@@ -356,15 +356,35 @@ export const HomePage: React.FC = () => {
 						className="w-full"
 						disabled={isRouteMode}
 						icon={Search}
-						inputClassName={`w-full h-full py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none`}
+						inputClassName={`w-full !h-full py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none`}
 						placeholder="ค้นหารายชื่อสวนทุเรียน..."
 						type="text"
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
 
+					{/* View Toggle */}
+					<div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-300 dark:border-slate-700 h-[50px] items-center shrink-0">
+						<Button
+							className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "list" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
+							title="แสดงรายชื่อ"
+							variant="none"
+							onClick={() => switchViewMode("list")}
+						>
+							<List size={20} />
+						</Button>
+						<Button
+							className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "map" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
+							title="แสดงแผนที่"
+							variant="none"
+							onClick={() => switchViewMode("map")}
+						>
+							<MapIcon size={20} />
+						</Button>
+					</div>
+
 					<Button
-						className={`relative px-4 py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
+						className={`relative w-[50px] h-[50px] !p-0 flex items-center justify-center shrink-0 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
 						disabled={isRouteMode}
 						variant="none"
 						onClick={() => setIsFilterSheetOpen(true)}
@@ -727,31 +747,8 @@ export const HomePage: React.FC = () => {
 						</div>
 					)}
 
-					{/* Mobile Floating View Switcher */}
-					{!isRouteMode && (
-						<div
-							className={`lg:hidden absolute bottom-8 left-1/2 transform -translate-x-1/2 z-[400] transition-all duration-500 ${selectedOrchardId ? "translate-y-32 opacity-0" : "translate-y-0 opacity-100"}`}
-						>
-							<div className="flex gap-2">
-								<Button
-									className="shadow-xl shadow-forest-900/30 rounded-full px-6 py-3 bg-forest-800 text-white whitespace-nowrap"
-									onClick={() =>
-										switchViewMode(viewMode === "map" ? "list" : "map")
-									}
-								>
-									{viewMode === "map" ? (
-										<>
-											<List className="mr-2" size={20} /> แสดงรายชื่อ
-										</>
-									) : (
-										<>
-											<MapIcon className="mr-2" size={20} /> แสดงแผนที่
-										</>
-									)}
-								</Button>
-							</div>
-						</div>
-					)}
+					{/* Mobile Floating View Switcher - REMOVED */}
+					{!isRouteMode && null}
 
 					{/* Mobile Bottom Sheet Detail */}
 					{isMobile && !isRouteMode && selectedOrchard && statusInfo && (
