@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import L from "leaflet";
 import {
 	ArrowLeft,
 	Share2,
@@ -15,9 +16,11 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	X,
+	RotateCcw,
 } from "lucide-react";
 
 import { orchardService } from "../services/orchardService";
+import { getErrorMessage } from "../services/api";
 import { useMasterData } from "../context/MasterDataContext";
 import { useAlert } from "../context/AlertContext";
 import { Orchard } from "../interface/orchardInterface";
@@ -39,6 +42,9 @@ export const OrchardDetailPage: React.FC = () => {
 	const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
 	const [images, setImages] = useState<string[]>([]);
 	const [videos, setVideos] = useState<string[]>([]);
+
+	// Map Ref for location reset
+	const mapRef = useRef<L.Map | null>(null);
 
 	// Lightbox State
 	const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -87,7 +93,7 @@ export const OrchardDetailPage: React.FC = () => {
 					navigate(-1);
 				}
 			} catch (error) {
-				showAlert("ข้อผิดพลาด", "เกิดข้อผิดพลาดในการโหลดข้อมูล", error.message.toString());
+				showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
 			} finally {
 				setIsLoading(false);
 			}
@@ -226,7 +232,10 @@ export const OrchardDetailPage: React.FC = () => {
 	if (!orchard) return null;
 
 	const statusInfo = getStatus(orchard.status);
-	const hasServices = orchard.isMixedAgro || orchard.hasAccommodation || orchard.hasPackage;
+	const hasServices =
+		orchard.additionalCrops.length > 0 ||
+		orchard.accommodations.length > 0 ||
+		orchard.packages.length > 0;
 
 	// Image Grid Logic for Desktop
 	const renderImageGrid = () => {
@@ -343,7 +352,7 @@ export const OrchardDetailPage: React.FC = () => {
 						className="bg-forest-800 hover:bg-forest-900 text-white shadow-lg pointer-events-auto rounded-full w-10 h-10 flex items-center justify-center !p-0 transition-transform hover:scale-105"
 						title="ย้อนกลับ"
 						variant="none"
-						onClick={() => navigate(-1)}
+						onClick={() => navigate(`/?selected=${id}`)}
 					>
 						<ArrowLeft size={20} />
 					</Button>
@@ -532,41 +541,43 @@ export const OrchardDetailPage: React.FC = () => {
 
 								<div className="space-y-8">
 									{/* Mixed Agro */}
-									{orchard.isMixedAgro && orchard.additionalCrops && (
-										<div>
-											<div className="flex items-center gap-2 mb-3">
-												<Sprout className="text-forest-500" size={20} />
-												<h3 className="font-bold text-slate-800 dark:text-slate-200">
-													สวนเกษตรผสมผสาน
-												</h3>
-											</div>
-											<p className="text-sm text-slate-500 mb-3">
-												นอกจากทุเรียนแล้ว ยังมีพืชผลอื่นๆ:
-											</p>
-											<div className="flex flex-wrap gap-2">
-												{orchard.additionalCrops.map((crop, idx) => {
-													const cropInfo = getCrop(crop);
+									{orchard.additionalCrops.length > 0 &&
+										orchard.additionalCrops && (
+											<div>
+												<div className="flex items-center gap-2 mb-3">
+													<Sprout className="text-forest-500" size={20} />
+													<h3 className="font-bold text-slate-800 dark:text-slate-200">
+														สวนเกษตรผสมผสาน
+													</h3>
+												</div>
+												<p className="text-sm text-slate-500 mb-3">
+													นอกจากทุเรียนแล้ว ยังมีพืชผลอื่นๆ:
+												</p>
+												<div className="flex flex-wrap gap-2">
+													{orchard.additionalCrops.map(
+														(CropOption, idx) => {
+															const cropInfo = getCrop(CropOption);
 
-													return (
-														<span
-															key={idx}
-															className="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg text-sm border border-green-100 dark:border-green-800"
-														>
-															{cropInfo?.label || crop}
-														</span>
-													);
-												})}
+															return (
+																<span
+																	key={idx}
+																	className="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg text-sm border border-green-100 dark:border-green-800"
+																>
+																	{cropInfo?.label || CropOption}
+																</span>
+															);
+														}
+													)}
+												</div>
 											</div>
-										</div>
-									)}
+										)}
 
 									{/* Accommodation */}
-									{orchard.hasAccommodation &&
-										orchard.accommodations &&
+									{orchard.accommodations &&
 										orchard.accommodations.length > 0 && (
 											<div
 												className={
-													orchard.isMixedAgro
+													orchard.additionalCrops.length > 0
 														? "pt-6 border-t border-slate-50 dark:border-slate-700"
 														: ""
 												}
@@ -602,7 +613,7 @@ export const OrchardDetailPage: React.FC = () => {
 																		{acc.price.toLocaleString()}
 																	</span>
 																	<span className="text-xs text-slate-500">
-																		ว่าง: {acc.quantity} ห้อง
+																		จำนวน: {acc.quantity} ห้อง
 																	</span>
 																</div>
 															</div>
@@ -613,74 +624,70 @@ export const OrchardDetailPage: React.FC = () => {
 										)}
 
 									{/* Packages */}
-									{orchard.hasPackage &&
-										orchard.packages &&
-										orchard.packages.length > 0 && (
-											<div
-												className={
-													orchard.isMixedAgro || orchard.hasAccommodation
-														? "pt-6 border-t border-slate-50 dark:border-slate-700"
-														: ""
-												}
-											>
-												<div className="flex items-center gap-2 mb-4">
-													<Users className="text-purple-500" size={20} />
-													<h3 className="font-bold text-slate-800 dark:text-slate-200">
-														แพ็กเกจท่องเที่ยว
-													</h3>
-												</div>
-												<div className="space-y-4">
-													{orchard.packages.map((pkg, idx) => (
-														<div
-															key={idx}
-															className="flex flex-col sm:flex-row gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30"
-														>
-															{pkg.images?.[0] && (
-																<div className="w-full sm:w-32 h-32 shrink-0 rounded-xl overflow-hidden">
-																	<img
-																		alt={pkg.name}
-																		className="w-full h-full object-cover"
-																		src={pkg.images[0]}
-																	/>
-																</div>
-															)}
-															<div className="flex-grow">
-																<div className="flex justify-between items-start mb-2">
-																	<h4 className="font-bold text-slate-900 dark:text-white">
-																		{pkg.name}
-																	</h4>
-																	<span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs rounded-lg whitespace-nowrap">
-																		{pkg.duration} ชม.
-																	</span>
-																</div>
-																<p className="text-sm text-slate-600 dark:text-slate-400 mb-3 line-clamp-2">
-																	{pkg.includes}
-																</p>
-																<div className="flex justify-between items-center mt-auto">
-																	<span className="text-forest-600 dark:text-forest-400 font-bold text-lg">
-																		฿
-																		{pkg.price.toLocaleString()}
-																	</span>
-																	<div className="text-xs text-slate-400">
-																		{new Date(
-																			pkg.startDate
-																		).toLocaleDateString(
-																			"th-TH"
-																		)}{" "}
-																		-{" "}
-																		{new Date(
-																			pkg.endDate
-																		).toLocaleDateString(
-																			"th-TH"
-																		)}
-																	</div>
+									{orchard.packages && orchard.packages.length > 0 && (
+										<div
+											className={
+												orchard.additionalCrops.length > 0 ||
+												orchard.accommodations.length > 0
+													? "pt-6 border-t border-slate-50 dark:border-slate-700"
+													: ""
+											}
+										>
+											<div className="flex items-center gap-2 mb-4">
+												<Users className="text-purple-500" size={20} />
+												<h3 className="font-bold text-slate-800 dark:text-slate-200">
+													แพ็กเกจท่องเที่ยว
+												</h3>
+											</div>
+											<div className="space-y-4">
+												{orchard.packages.map((pkg, idx) => (
+													<div
+														key={idx}
+														className="flex flex-col sm:flex-row gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30"
+													>
+														{pkg.images?.[0] && (
+															<div className="w-full sm:w-32 h-32 shrink-0 rounded-xl overflow-hidden">
+																<img
+																	alt={pkg.name}
+																	className="w-full h-full object-cover"
+																	src={pkg.images[0]}
+																/>
+															</div>
+														)}
+														<div className="flex-grow">
+															<div className="flex justify-between items-start mb-2">
+																<h4 className="font-bold text-slate-900 dark:text-white">
+																	{pkg.name}
+																</h4>
+																<span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 text-xs rounded-lg whitespace-nowrap">
+																	{pkg.duration} ชม.
+																</span>
+															</div>
+															<p className="text-sm text-slate-600 dark:text-slate-400 mb-3 line-clamp-2">
+																{pkg.includes}
+															</p>
+															<div className="flex justify-between items-center mt-auto">
+																<span className="text-forest-600 dark:text-forest-400 font-bold text-lg">
+																	฿{pkg.price.toLocaleString()}
+																</span>
+																<div className="text-xs text-slate-400">
+																	{new Date(
+																		pkg.startDate
+																	).toLocaleDateString(
+																		"th-TH"
+																	)}{" "}
+																	-{" "}
+																	{new Date(
+																		pkg.endDate
+																	).toLocaleDateString("th-TH")}
 																</div>
 															</div>
 														</div>
-													))}
-												</div>
+													</div>
+												))}
 											</div>
-										)}
+										</div>
+									)}
 								</div>
 							</section>
 						)}
@@ -702,21 +709,52 @@ export const OrchardDetailPage: React.FC = () => {
 										</p>
 									</div>
 
-									<div className="h-[250px] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 relative group">
-										<OrchardMap
-											disablePopup
-											orchards={[orchard]}
-											selectedOrchardId={orchard.id}
-										/>
-										<a
-											className="absolute bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg font-bold flex items-center gap-2 transition-transform hover:scale-105"
-											href={`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`}
-											rel="noreferrer"
-											target="_blank"
-										>
-											<Navigation size={18} /> นำทาง
-										</a>
-									</div>
+									{orchard.lat !== undefined &&
+										orchard.lng !== undefined &&
+										!isNaN(orchard.lat) &&
+										!isNaN(orchard.lng) && (
+											<div className="h-[250px] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 relative group">
+												<OrchardMap
+													disablePopup
+													orchards={[orchard]}
+													selectedOrchardId={orchard.id}
+													setMapRef={(map) => {
+														mapRef.current = map;
+													}}
+												/>
+												<div className="absolute bottom-4 right-4 flex gap-2">
+													<Button
+														aria-label="รีเซ็ตตำแหน่งแผนที่"
+														className="bg-slate-700 hover:bg-slate-800 text-white !px-3 rounded-xl shadow-lg transition-transform hover:scale-105"
+														title="รีเซ็ตตำแหน่งแผนที่"
+														type="button"
+														onClick={() => {
+															if (
+																mapRef.current &&
+																orchard.lat &&
+																orchard.lng
+															) {
+																mapRef.current.flyTo(
+																	[orchard.lat, orchard.lng],
+																	14,
+																	{ duration: 1 }
+																);
+															}
+														}}
+													>
+														<RotateCcw size={18} />
+													</Button>
+													<a
+														className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg font-bold flex items-center gap-2 transition-transform hover:scale-105"
+														href={`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`}
+														rel="noreferrer"
+														target="_blank"
+													>
+														<Navigation size={18} /> นำทาง
+													</a>
+												</div>
+											</div>
+										)}
 								</div>
 							</section>
 

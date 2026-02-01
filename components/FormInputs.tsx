@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { ChevronDown, X, Check } from "lucide-react";
+import { ChevronDown, X, Check, ChevronUp } from "lucide-react";
 
 import {
 	InputFieldProps,
@@ -39,11 +39,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 						}
 						${Icon ? "pl-12" : "pl-4"}
 						${suffix ? "pr-12" : "pr-4"}
-						${
-							error
-								? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-								: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
-						}
+						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"}
             			[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none 
           			`}
 					{...props}
@@ -80,11 +76,7 @@ export const TextAreaField: React.FC<TextAreaFieldProps> = ({
 								: "w-full p-4 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none resize-none"
 						}
 						${Icon ? "pl-12" : ""}
-						${
-							error
-								? "border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200"
-								: "border-slate-300 dark:border-slate-600 focus:border-forest-500 focus:ring-2 focus:ring-forest-200"
-						}
+						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"}
 					`}
 					{...props}
 				/>
@@ -116,7 +108,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 			</div>
 			<button
 				className={`
-					relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-forest-500 focus-visible:ring-offset-2
+					relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out
 					${checked ? "bg-forest-600" : "bg-slate-200 dark:bg-slate-600"}
 				`}
 				type="button"
@@ -179,14 +171,10 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 			<div className="relative">
 				<div
 					className={`
-            w-full min-h-[54px] px-3 py-2 rounded-xl border bg-white dark:bg-slate-700 cursor-pointer flex items-center justify-between flex-wrap gap-2
-            ${
-				error
-					? "border-red-500"
-					: "border-slate-300 dark:border-slate-600 hover:border-forest-500"
-			}
-            ${isOpen ? "ring-2 ring-forest-200 border-forest-500" : ""}
-          `}
+						w-full min-h-[54px] px-3 py-2 rounded-xl border bg-white dark:bg-slate-700 cursor-pointer flex items-center justify-between flex-wrap gap-2
+						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600 hover:border-forest-500"}
+						${isOpen ? "ring-2 ring-forest-200 border-forest-500" : ""}
+          			`}
 					role="button"
 					tabIndex={0}
 					onClick={() => setIsOpen(!isOpen)}
@@ -199,11 +187,11 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 							{selectedOptions.map((opt) => (
 								<span
 									key={opt.id}
-									className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-forest-100 text-forest-800 dark:bg-forest-900/40 dark:text-forest-300 border border-forest-200 dark:border-forest-800"
+									className="inline-flex gap-2 items-center px-3 py-2 rounded-lg text-xs font-medium bg-forest-100 text-forest-800 dark:bg-forest-900/40 dark:text-forest-300 border border-forest-200 dark:border-forest-800"
 								>
 									{opt.label}
 									<Button
-										className="ml-1.5 hover:text-forest-900 focus:outline-none !min-h-0 !w-auto p-0 text-inherit"
+										className="hover:text-forest-900 !min-h-0 !w-auto !p-0 text-inherit"
 										type="button"
 										variant="none"
 										onClick={(e) => {
@@ -219,7 +207,12 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 					) : (
 						<span className="text-slate-400 px-1">{placeholder}</span>
 					)}
-					<ChevronDown className="text-slate-400 shrink-0 ml-auto" size={20} />
+
+					{isOpen ? (
+						<ChevronUp className="text-slate-400 shrink-0 ml-auto" size={20} />
+					) : (
+						<ChevronDown className="text-slate-400 shrink-0 ml-auto" size={20} />
+					)}
 				</div>
 
 				{/* Dropdown Menu */}
@@ -235,13 +228,13 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 											key={option.id}
 											aria-selected={isSelected}
 											className={`
-                        flex items-center justify-between px-3 py-2.5 rounded-lg cursor-pointer text-sm mb-0.5
-                        ${
-							isSelected
-								? "bg-forest-50 dark:bg-forest-900/30 text-forest-900 dark:text-forest-200"
-								: "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
-						}
-                      `}
+												flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer text-sm mb-0.5
+												${
+													isSelected
+														? "bg-forest-50 dark:bg-forest-900/30 text-forest-900 dark:text-forest-200"
+														: "text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+												}
+											`}
 											role="option"
 											tabIndex={0}
 											onClick={() => handleSelect(option.id)}
@@ -269,6 +262,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 					</div>
 				)}
 			</div>
+
 			{error && <p className="text-red-500 text-xs mt-1 ml-1">{error}</p>}
 		</div>
 	);

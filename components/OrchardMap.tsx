@@ -301,14 +301,19 @@ export const OrchardMap: React.FC<MapProps> = ({
 }) => {
 	const defaultCenter: [number, number] = [13.7563, 100.5018]; // Default to Bangkok
 
-	const selectedOrchard = orchards.find((o) => o.id === selectedOrchardId);
+	// Filter orchards with valid coordinates
+	const validOrchards = orchards.filter(
+		(o) => o.lat !== undefined && o.lng !== undefined && !isNaN(o.lat) && !isNaN(o.lng)
+	);
+
+	const selectedOrchard = validOrchards.find((o) => o.id === selectedOrchardId);
 	const center = selectedOrchard
 		? ([selectedOrchard.lat, selectedOrchard.lng] as [number, number])
 		: undefined;
 
 	// Calculate route positions
 	const routePoints = routeIds
-		.map((id) => orchards.find((o) => o.id === id))
+		.map((id) => validOrchards.find((o) => o.id === id))
 		.filter((o): o is Orchard => !!o)
 		.map((o) => [o.lat, o.lng] as [number, number]);
 
@@ -325,7 +330,7 @@ export const OrchardMap: React.FC<MapProps> = ({
 				<MapReferenceHandler setMapRef={setMapRef} />
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+					url="/osm-tiles/{z}/{x}/{y}.png"
 				/>
 
 				<MapClickHandler onMapClick={onMapClick} />
@@ -362,12 +367,12 @@ export const OrchardMap: React.FC<MapProps> = ({
 					</Marker>
 				)}
 
-				{orchards.map((orchard) => {
+				{validOrchards.map((orchard) => {
 					const routeIndex = isRouteMode ? routeIds.indexOf(orchard.id) : -1;
 
 					return (
 						<OrchardMarker
-							key={orchard.id}
+							key={`orchard-marker-${orchard.id}`}
 							disablePopup={disablePopup}
 							isSelected={selectedOrchardId === orchard.id}
 							orchard={orchard}

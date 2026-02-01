@@ -15,12 +15,12 @@ interface CardProps {
 export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 	const { getStatus, getServiceType } = useMasterData();
 
-	const statusInfo = getStatus(orchard.status) ||
-		getStatus("available") || {
-			label: "Unknown",
-			color: "bg-gray-100 text-gray-800",
-			mapColor: "#888",
-		};
+	const statusInfo = getStatus(orchard.status) ?? {
+		id: orchard.status,
+		label: orchard.status,
+		color: "bg-gray-100 text-gray-700 border-gray-300",
+		mapColor: "#808080",
+	};
 
 	const coverImage = orchard.images.length > 0 ? orchard.images[0] : null;
 
@@ -86,7 +86,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 						<span className="truncate">{orchard.address}</span>
 					</div>
 
-					<p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 font-normal leading-relaxed mb-4">
+					<p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 font-normal leading-relaxed mb-4 whitespace-pre-wrap">
 						{orchard.description}
 					</p>
 				</div>
@@ -118,7 +118,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 						>
 							<SocialLinks
 								className="flex gap-1.5"
-								itemClassName="w-7 h-7"
+								itemClassName="!w-7 !h-7"
 								links={orchard.socialMedia}
 							/>
 						</div>

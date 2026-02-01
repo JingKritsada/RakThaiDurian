@@ -1,11 +1,16 @@
-import { ServiceTypeResponse, StatusResponse, CropOption } from "../interface/dropdownInterface";
+import { CropOption, ServiceTypeResponse, StatusResponse } from "../interface/dropdownInterface";
 import { MOCK_SERVICE_TYPES, MOCK_STATUSES, MOCK_CROPS } from "../utils/mock";
 import { loadingManager } from "../utils/loadingManager";
 
+import { ApiOptions } from "./api";
+
+/**
+ * Dropdown Service
+ * Note: Backend doesn't have dropdown endpoints yet, using mock data
+ * When backend implements these endpoints, replace with apiRequest calls
+ */
 export const dropdownService = {
-	getServiceTypes: (options?: {
-		skipGlobalLoading?: boolean;
-	}): Promise<ServiceTypeResponse[]> => {
+	getServiceTypes: (options?: ApiOptions): Promise<ServiceTypeResponse[]> => {
 		if (!options?.skipGlobalLoading) loadingManager.show();
 
 		return new Promise((resolve) => {
@@ -16,7 +21,7 @@ export const dropdownService = {
 		});
 	},
 
-	getOrchardStatuses: (options?: { skipGlobalLoading?: boolean }): Promise<StatusResponse[]> => {
+	getOrchardStatuses: (options?: ApiOptions): Promise<StatusResponse[]> => {
 		if (!options?.skipGlobalLoading) loadingManager.show();
 
 		return new Promise((resolve) => {
@@ -27,7 +32,7 @@ export const dropdownService = {
 		});
 	},
 
-	getAdditionalCrops: (options?: { skipGlobalLoading?: boolean }): Promise<CropOption[]> => {
+	getAdditionalCrops: (options?: ApiOptions): Promise<CropOption[]> => {
 		if (!options?.skipGlobalLoading) loadingManager.show();
 
 		return new Promise((resolve) => {

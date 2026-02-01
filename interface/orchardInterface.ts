@@ -2,6 +2,11 @@ import { OrchardType, DurianStatus } from "../utils/enum";
 
 export { OrchardType, DurianStatus };
 
+// Type aliases for backend string compatibility
+// Backend sends types as string[] and status as string
+export type OrchardTypeString = OrchardType | `${OrchardType}`;
+export type DurianStatusString = DurianStatus | `${DurianStatus}`;
+
 export interface SocialMediaLinks {
 	line?: string;
 	facebook?: string;
@@ -29,25 +34,27 @@ export interface Package {
 	images: string[];
 }
 
-export interface Orchard {
-	id: number;
+export interface OrchardFormData {
 	name: string;
 	description: string;
 	history?: string;
-	types: OrchardType[];
-	status: DurianStatus;
+	types?: OrchardTypeString[];
+	status: DurianStatusString;
 	lat: number;
 	lng: number;
 	images: string[];
 	videos?: string[];
-	ownerId: string;
 	address: string;
 	phoneNumber?: string;
-	isMixedAgro?: boolean;
-	additionalCrops?: string[];
 	socialMedia?: SocialMediaLinks;
-	hasAccommodation?: boolean;
+	additionalCrops?: string[];
 	accommodations?: Accommodation[];
-	hasPackage?: boolean;
 	packages?: Package[];
+}
+
+export interface Orchard extends OrchardFormData {
+	id: number;
+	ownerId: string;
+	createdAt?: string;
+	updatedAt?: string;
 }

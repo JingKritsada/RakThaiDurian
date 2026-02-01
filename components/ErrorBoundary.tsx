@@ -29,8 +29,9 @@ export class ErrorBoundary extends Component<Props, State> {
 
 	public resetError = () => {
 		this.setState({ hasError: false, error: null });
-		// Optionally perform other reset logic here (e.g. redirect)
-		window.location.reload();
+
+		// Redirect to home screen
+		window.location.href = "/";
 	};
 
 	public render() {

@@ -1,3 +1,5 @@
+import { CropCategory } from "@/utils/enum";
+
 export interface ServiceTypeResponse {
 	id: string;
 }
@@ -19,6 +21,7 @@ export interface StatusOption extends StatusResponse {
 
 export interface CropOption {
 	id: string;
+	value: string;
 	label: string;
-	category: "fruit" | "vegetable";
+	category: CropCategory;
 }

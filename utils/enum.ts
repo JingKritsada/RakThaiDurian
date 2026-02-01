@@ -1,23 +1,24 @@
 export enum OrchardType {
-	Sell = "sell",
-	Tour = "tour",
-	Cafe = "cafe",
-	Stay = "stay",
+	SELL = "sell",
+	TOUR = "tour",
+	CAFE = "cafe",
+	STAY = "stay",
 }
 
 export enum DurianStatus {
-	Available = "available",
-	Low = "low",
-	Reserved = "reserved",
-	Out = "out",
+	AVAILABLE = "available",
+	LOW = "low",
+	RESERVED = "reserved",
+	OUT = "out",
 }
 
 export enum UserRole {
-	Owner = "owner",
-	User = "user",
+	ADMIN = "admin",
+	OWNER = "owner",
 }
 
 export enum CropCategory {
-	Fruit = "fruit",
-	Vegetable = "vegetable",
+	FRUIT = "fruit",
+	VEGETABLE = "vegetable",
+	HERBS = "herbs",
 }

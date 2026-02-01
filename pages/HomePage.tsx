@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
 	Search,
 	Map as MapIcon,
@@ -9,12 +10,15 @@ import {
 	Flag,
 	Timer,
 	Filter,
+	LocateFixed,
 } from "lucide-react";
 import L from "leaflet";
 
 import { orchardService } from "../services/orchardService";
+import { getErrorMessage } from "../services/api";
 import { Orchard, OrchardType } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
+import { useAlert } from "../context/AlertContext";
 import { Card } from "../components/Card";
 import { FilterSheet } from "../components/FilterSheet";
 import { OrchardDetailView } from "../components/OrchardDetailView"; // New Component
@@ -57,11 +61,16 @@ const useWindowSize = () => {
 
 export const HomePage: React.FC = () => {
 	const { getStatus } = useMasterData();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const [orchards, setOrchards] = useState<Orchard[]>([]);
 	const [selectedTypes, setSelectedTypes] = useState<OrchardType[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 	const [searchQuery, setSearchQuery] = useState("");
-	const [selectedOrchardId, setSelectedOrchardId] = useState<number | undefined>(undefined);
+	const [selectedOrchardId, setSelectedOrchardId] = useState<number | undefined>(() => {
+		const selected = searchParams.get("selected");
+
+		return selected ? parseInt(selected, 10) : undefined;
+	});
 
 	// Sort State
 	const [sortBy, setSortBy] = useState<"default" | "nearest">("default");
@@ -88,16 +97,42 @@ export const HomePage: React.FC = () => {
 
 	const showMapControls = !isMobile || viewMode === "map";
 
+	const { showAlert } = useAlert();
+
 	useEffect(() => {
 		const fetchData = async () => {
-			const data = await orchardService.getOrchards();
+			try {
+				const data = await orchardService.getOrchards();
 
-			setOrchards(data);
-			setIsLoading(false);
+				setOrchards(data);
+			} catch (error) {
+				showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
+			} finally {
+				setIsLoading(false);
+			}
 		};
 
 		fetchData();
-	}, []);
+	}, [showAlert]);
+
+	// Clear search params when selected orchard changes and fly to orchard if coming from detail page
+	useEffect(() => {
+		const selectedParam = searchParams.get("selected");
+
+		if (selectedParam && selectedOrchardId) {
+			// Clear URL param after reading it
+			setSearchParams({}, { replace: true });
+
+			// Fly to selected orchard when data is loaded
+			if (mapInstance && orchards.length > 0) {
+				const orchard = orchards.find((o) => o.id === selectedOrchardId);
+
+				if (orchard && orchard.lat && orchard.lng) {
+					mapInstance.flyTo([orchard.lat, orchard.lng], 14, { duration: 1 });
+				}
+			}
+		}
+	}, [searchParams, setSearchParams, selectedOrchardId, mapInstance, orchards]);
 
 	// Filter and Sort Logic
 	const filteredOrchards = useMemo(() => {
@@ -407,11 +442,11 @@ export const HomePage: React.FC = () => {
 				<div
 					className={`
 						absolute inset-0 z-10 bg-white dark:bg-slate-900 transition-transform duration-300 transform flex flex-col
-					 	lg:relative lg:translate-x-0 lg:w-[600px] lg:border-r lg:border-slate-200 lg:dark:border-slate-800 lg:z-0
+					 	lg:relative lg:translate-x-0 lg:w-[600px] lg:shrink-0 lg:border-r lg:border-slate-200 lg:dark:border-slate-800 lg:z-0
 						${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
 					`}
 				>
-					<div className="hidden md:block p-6 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
+					<div className="hidden md:block p-6 pb-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
 						<div className="flex gap-3 mb-4">
 							<InputField
 								className="w-full"
@@ -580,7 +615,7 @@ export const HomePage: React.FC = () => {
 								})}
 							</div>
 						) : (
-							<div className="text-center py-20">
+							<div className="flex flex-col items-center text-center py-20">
 								<div className="bg-slate-100 dark:bg-slate-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
 									<Search className="text-slate-400" size={32} />
 								</div>
@@ -644,41 +679,7 @@ export const HomePage: React.FC = () => {
 									{isLocating ? (
 										<div className="animate-spin rounded-full h-5 w-5 border-2 border-forest-500 border-t-transparent" />
 									) : (
-										<svg
-											fill="none"
-											height="24"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth="2"
-											viewBox="0 0 24 24"
-											width="24"
-										>
-											<circle
-												cx="12"
-												cy="12"
-												fill="currentColor"
-												r="3"
-												stroke="none"
-											/>
-											<circle cx="12" cy="12" r="7" strokeWidth="2.5" />
-											<line strokeWidth="2.5" x1="12" x2="12" y1="2" y2="5" />
-											<line
-												strokeWidth="2.5"
-												x1="12"
-												x2="12"
-												y1="19"
-												y2="22"
-											/>
-											<line
-												strokeWidth="2.5"
-												x1="19"
-												x2="22"
-												y1="12"
-												y2="12"
-											/>
-											<line strokeWidth="2.5" x1="5" x2="2" y1="12" y2="12" />
-										</svg>
+										<LocateFixed size={28} />
 									)}
 								</Button>
 							</div>

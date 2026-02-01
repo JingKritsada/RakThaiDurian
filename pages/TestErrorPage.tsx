@@ -15,7 +15,7 @@ export const TestErrorPage: React.FC = () => {
 
 	if (shouldReferenceError) {
 		// @ts-ignore - intentionally causing an error
-		nonExistentFunction(); // eslint-disable-line no-undef
+		nonExistentFunction();
 	}
 
 	const triggerError = () => {

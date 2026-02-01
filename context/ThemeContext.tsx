@@ -60,10 +60,10 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 	// Apply Font Size
 	useEffect(() => {
 		const root = window.document.documentElement;
-		let sizeValue = "14px";
+		let sizeValue = "16px";
 
-		if (fontSize === "small") sizeValue = "12px";
-		if (fontSize === "large") sizeValue = "16px";
+		if (fontSize === "small") sizeValue = "14px";
+		if (fontSize === "large") sizeValue = "18px";
 
 		root.style.fontSize = sizeValue;
 		localStorage.setItem("fontSize", fontSize);

@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Lock, Mail, AlertCircle, Eye, EyeOff } from "lucide-react";
 
 import { useAuth } from "../context/AuthContext";
+import { getErrorMessage } from "../services/api";
 import { Button } from "../components/Button";
 import { InputField } from "../components/FormInputs";
 
 export const Login: React.FC = () => {
-	const [email, setEmail] = useState("owner@durian.com");
+	const [username, setUsername] = useState("owner");
 	const [password, setPassword] = useState("123456");
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
@@ -22,12 +23,10 @@ export const Login: React.FC = () => {
 		setIsSubmitting(true);
 
 		try {
-			await login(email, password, { skipGlobalLoading: true });
+			await login(username, password, { skipGlobalLoading: true });
 			navigate("/owner");
 		} catch (err: unknown) {
-			const error = err as Error;
-
-			setError(error.message || "ข้อมูลไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง");
+			setError(getErrorMessage(err));
 		} finally {
 			setIsSubmitting(false);
 		}
@@ -60,11 +59,11 @@ export const Login: React.FC = () => {
 						<InputField
 							required
 							icon={Mail}
-							label="ที่อยู่อีเมล (Email Address)"
-							placeholder="ระบุอีเมลของคุณ"
-							type="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
+							label="ชื่อผู้ใช้ (Username)"
+							placeholder="ระบุชื่อผู้ใช้ของคุณ"
+							type="text"
+							value={username}
+							onChange={(e) => setUsername(e.target.value)}
 						/>
 
 						<InputField
@@ -74,7 +73,7 @@ export const Login: React.FC = () => {
 							placeholder="ระบุรหัสผ่าน"
 							suffix={
 								<Button
-									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 focus:outline-none transition-colors !p-0 rounded-full"
+									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors !p-0 rounded-full"
 									tabIndex={-1}
 									type="button"
 									variant="none"

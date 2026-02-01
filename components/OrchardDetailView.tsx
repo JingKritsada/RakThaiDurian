@@ -134,23 +134,25 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				)}
 
 				{/* Features Tags */}
-				{(orchard.isMixedAgro || orchard.hasPackage || orchard.hasAccommodation) && (
+				{(orchard.additionalCrops.length > 0 ||
+					orchard.packages.length > 0 ||
+					orchard.accommodations.length > 0) && (
 					<div className="flex flex-wrap gap-2 justify-center text-white text-xs">
-						{orchard.isMixedAgro && (
+						{orchard.additionalCrops.length > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Sprout size={14} />
 								สวนผสมผสาน
 							</span>
 						)}
 
-						{orchard.hasPackage && (
+						{orchard.packages.length > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Users size={14} />
 								แพ็กเกจ/กิจกรรม
 							</span>
 						)}
 
-						{orchard.hasAccommodation && (
+						{orchard.accommodations.length > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Home size={14} />
 								ที่พัก/โฮมสเตย์

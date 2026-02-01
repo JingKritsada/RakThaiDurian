@@ -77,12 +77,14 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 
 	const customIcon = L.divIcon({
 		className: "bg-transparent border-none",
-		html: `<div style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#eab308" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3" fill="white"></circle>
-            </svg>
-           </div>`,
+		html: `
+			<div style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#eab308" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10">
+				<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+				<circle cx="12" cy="10" r="3" fill="white"></circle>
+				</svg>
+        	</div>
+		`,
 		iconSize: [40, 40],
 		iconAnchor: [20, 40],
 	});
@@ -96,15 +98,13 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 			>
 				<MapInvalidator />
 				<MapUpdater lat={lat} lng={lng} />
-				<TileLayer
-					attribution="&copy; OpenStreetMap"
-					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-				/>
+				<TileLayer attribution="&copy; OpenStreetMap" url="/osm-tiles/{z}/{x}/{y}.png" />
 				<MapEvents onChange={onChange} />
 				<CurrentLocationHandler hasLocation={hasValidLocation} onFound={onChange} />
 
 				{lat !== 0 && lng !== 0 && <Marker icon={customIcon} position={[lat, lng]} />}
 			</MapContainer>
+
 			<div className="absolute bottom-2 right-2 bg-white/80 dark:bg-slate-800/80 p-1 text-xs rounded z-[400] pointer-events-none text-slate-600 dark:text-slate-300">
 				แตะที่แผนที่เพื่อปักหมุด
 			</div>

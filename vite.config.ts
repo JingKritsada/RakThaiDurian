@@ -11,6 +11,19 @@ export default defineConfig(({ mode }) => {
 		server: {
 			port: 3000,
 			host: "0.0.0.0",
+			proxy: {
+				"/api": {
+					target: "https://platform.psru.ac.th:3022",
+					changeOrigin: true,
+					secure: false,
+				},
+				"/osm-tiles": {
+					target: "https://tile.openstreetmap.org",
+					changeOrigin: true,
+					secure: true,
+					rewrite: (path) => path.replace(/^\/osm-tiles/, ""),
+				},
+			},
 		},
 		plugins: [react(), basicSsl()],
 		define: {

@@ -18,11 +18,10 @@ export const Button: React.FC<ButtonProps> = ({
 		"px-4 py-3 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base";
 
 	const variants = {
-		primary:
-			"bg-forest-800 hover:bg-forest-900 text-white focus:ring-forest-500 shadow-sm hover:shadow-md",
+		primary: "bg-forest-800 hover:bg-forest-900 text-white shadow-sm hover:shadow-md",
 		secondary:
-			"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 focus:ring-slate-500 shadow-sm",
-		danger: "bg-red-600 hover:bg-red-700 text-white focus:ring-red-500 shadow-sm",
+			"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm",
+		danger: "bg-red-600 hover:bg-red-700 text-white shadow-sm",
 		ghost: "bg-transparent text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-forest-800 dark:hover:text-white",
 		none: "",
 	};

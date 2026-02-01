@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 
 import { orchardService } from "../services/orchardService";
+import { getErrorMessage } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useMasterData } from "../context/MasterDataContext";
 import { useAlert } from "../context/AlertContext";
@@ -35,6 +36,7 @@ import {
 	SocialMediaLinks,
 	Accommodation,
 	Package,
+	OrchardFormData,
 } from "../interface/orchardInterface";
 import { Button } from "../components/Button";
 import { LocationPicker } from "../components/LocationPicker";
@@ -67,7 +69,7 @@ export const OrchardForm: React.FC = () => {
 	// Refs for file inputs need to be separate or managed carefully if components unmount
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
-	const [formData, setFormData] = useState({
+	const [formData, setFormData] = useState<OrchardFormData>({
 		name: "",
 		description: "",
 		history: "",
@@ -75,8 +77,7 @@ export const OrchardForm: React.FC = () => {
 		phoneNumber: "",
 		lat: 0,
 		lng: 0,
-		status: DurianStatus.Available as DurianStatus,
-		isMixedAgro: false,
+		status: DurianStatus.AVAILABLE as DurianStatus,
 		additionalCrops: [] as string[],
 		images: [] as string[],
 		videos: [] as string[],
@@ -87,12 +88,15 @@ export const OrchardForm: React.FC = () => {
 			tiktok: "",
 			youtube: "",
 		} as SocialMediaLinks,
-		hasAccommodation: false,
 		accommodations: [] as Accommodation[],
-		hasPackage: false,
 		packages: [] as Package[],
 	});
 	const [selectedTypes, setSelectedTypes] = useState<OrchardType[]>([]);
+
+	// State for Extra Services toggles
+	const [isMixedAgro, setIsMixedAgro] = useState(false);
+	const [hasAccommodation, setHasAccommodation] = useState(false);
+	const [hasPackage, setHasPackage] = useState(false);
 
 	// State for Video Input
 	const [tempVideoUrl, setTempVideoUrl] = useState("");
@@ -120,7 +124,6 @@ export const OrchardForm: React.FC = () => {
 							lat: orchard.lat,
 							lng: orchard.lng,
 							status: orchard.status,
-							isMixedAgro: orchard.isMixedAgro || false,
 							additionalCrops: orchard.additionalCrops || [],
 							images: orchard.images || [],
 							videos: orchard.videos || [],
@@ -131,18 +134,22 @@ export const OrchardForm: React.FC = () => {
 								tiktok: orchard.socialMedia?.tiktok || "",
 								youtube: orchard.socialMedia?.youtube || "",
 							},
-							hasAccommodation: orchard.hasAccommodation || false,
 							accommodations: orchard.accommodations || [],
-							hasPackage: orchard.hasPackage || false,
 							packages: orchard.packages || [],
 						});
-						setSelectedTypes(orchard.types);
+
+						setSelectedTypes((orchard.types || []) as OrchardType[]);
+
+						// Set toggle states based on loaded data
+						setIsMixedAgro((orchard.additionalCrops?.length ?? 0) > 0);
+						setHasAccommodation((orchard.accommodations?.length ?? 0) > 0);
+						setHasPackage((orchard.packages?.length ?? 0) > 0);
 					} else {
 						showAlert("ไม่พบข้อมูล", "ไม่พบข้อมูลสวนที่คุณต้องการแก้ไข", "error");
 						navigate("/owner");
 					}
-				} catch {
-					// Error loading orchard
+				} catch (error) {
+					showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
 				} finally {
 					setLoadingData(false);
 				}
@@ -345,15 +352,12 @@ export const OrchardForm: React.FC = () => {
 				lng: formData.lng,
 				types: selectedTypes,
 				status: formData.status,
-				isMixedAgro: formData.isMixedAgro,
-				additionalCrops: formData.isMixedAgro ? formData.additionalCrops : [],
+				additionalCrops: formData.additionalCrops,
 				images: formData.images,
 				videos: formData.videos,
 				socialMedia: formData.socialMedia,
-				hasAccommodation: formData.hasAccommodation,
-				accommodations: formData.hasAccommodation ? formData.accommodations : [],
-				hasPackage: formData.hasPackage,
-				packages: formData.hasPackage ? formData.packages : [],
+				accommodations: formData.accommodations,
+				packages: formData.packages,
 			};
 
 			if (isEditMode && id) {
@@ -372,8 +376,8 @@ export const OrchardForm: React.FC = () => {
 
 			showAlert("สำเร็จ", "บันทึกข้อมูลสวนเรียบร้อยแล้ว", "success");
 			navigate("/owner");
-		} catch {
-			showAlert("ข้อผิดพลาด", "เกิดข้อผิดพลาดในการบันทึกข้อมูล", "error");
+		} catch (error) {
+			showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
 		} finally {
 			setIsLoading(false);
 		}
@@ -752,7 +756,7 @@ export const OrchardForm: React.FC = () => {
 
 									<div className="flex gap-2 mb-4">
 										<input
-											className="flex-grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm focus:border-forest-500 focus:ring-2 focus:ring-forest-200 outline-none"
+											className="flex-grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm outline-none"
 											placeholder="วางลิงก์วิดีโอที่นี่..."
 											type="text"
 											value={tempVideoUrl}
@@ -886,15 +890,13 @@ export const OrchardForm: React.FC = () => {
 								{/* Mixed Agriculture */}
 								<div className="space-y-4">
 									<ToggleSwitch
-										checked={formData.isMixedAgro}
+										checked={isMixedAgro}
 										description="หากสวนของคุณมีการปลูกพืชผักหรือผลไม้อื่นๆ แซมในสวนทุเรียน"
 										label="เป็นสวนเกษตรผสมผสาน"
-										onChange={(val) =>
-											setFormData({ ...formData, isMixedAgro: val })
-										}
+										onChange={(val) => setIsMixedAgro(val)}
 									/>
 
-									{formData.isMixedAgro && (
+									{isMixedAgro && (
 										<div className="animate-in slide-in-from-top-2 fade-in duration-300 pl-4 border-l-4 border-forest-100 dark:border-forest-900/50">
 											<MultiSelectField
 												label="พืชที่ปลูกเพิ่มเติม (ผัก/ผลไม้)"
@@ -918,15 +920,13 @@ export const OrchardForm: React.FC = () => {
 								{/* Accommodation */}
 								<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
 									<ToggleSwitch
-										checked={formData.hasAccommodation}
+										checked={hasAccommodation}
 										description="เปิดให้บริหารที่พักแก่นักท่องเที่ยว"
 										label="มีบริการที่พัก/โฮมสเตย์"
-										onChange={(val) =>
-											setFormData({ ...formData, hasAccommodation: val })
-										}
+										onChange={(val) => setHasAccommodation(val)}
 									/>
 
-									{formData.hasAccommodation && (
+									{hasAccommodation && (
 										<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
 											<AccommodationManager
 												accommodations={formData.accommodations}
@@ -944,15 +944,13 @@ export const OrchardForm: React.FC = () => {
 								{/* Packages */}
 								<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
 									<ToggleSwitch
-										checked={formData.hasPackage}
+										checked={hasPackage}
 										description="กิจกรรมบุฟเฟต์, Workshop หรือแพ็กเกจท่องเที่ยว"
 										label="มีแพ็กเกจท่องเที่ยว/กิจกรรม"
-										onChange={(val) =>
-											setFormData({ ...formData, hasPackage: val })
-										}
+										onChange={(val) => setHasPackage(val)}
 									/>
 
-									{formData.hasPackage && (
+									{hasPackage && (
 										<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
 											<PackageManager
 												packages={formData.packages}

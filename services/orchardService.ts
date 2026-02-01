@@ -1,99 +1,113 @@
 import { Orchard } from "../interface/orchardInterface";
-import { MOCK_ORCHARDS as INITIAL_ORCHARDS } from "../utils/mock";
-import { loadingManager } from "../utils/loadingManager";
 
-// Use a local variable to simulate a database state that can be updated
-let ORCHARDS_DB = [...INITIAL_ORCHARDS];
+import { apiClient, apiRequest, ApiOptions } from "./api";
+
+import {
+	OrchardsListResponse,
+	OrchardResponse,
+	UploadResponse,
+} from "@/interface/responseInterface";
 
 export const orchardService = {
-	getOrchards: (options?: { skipGlobalLoading?: boolean }): Promise<Orchard[]> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+	/**
+	 * Get all orchards
+	 * GET /orchards
+	 */
+	getOrchards: async (options?: ApiOptions): Promise<Orchard[]> => {
+		const response = await apiRequest<OrchardsListResponse>(
+			() => apiClient.get<OrchardsListResponse>("/orchards"),
+			options
+		);
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve([...ORCHARDS_DB]);
-			}, 600);
-		});
+		return response.data || [];
 	},
 
-	getOrchardsByOwner: (
-		ownerId: string,
-		options?: { skipGlobalLoading?: boolean }
-	): Promise<Orchard[]> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+	/**
+	 * Get orchards by owner ID
+	 * GET /orchards?ownerId=...
+	 */
+	getOrchardsByOwner: async (ownerId: string, options?: ApiOptions): Promise<Orchard[]> => {
+		const response = await apiRequest<OrchardsListResponse>(
+			() =>
+				apiClient.get<OrchardsListResponse>("/orchards", {
+					params: { ownerId },
+				}),
+			options
+		);
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve(ORCHARDS_DB.filter((o) => o.ownerId === ownerId));
-			}, 500);
-		});
+		return response.data || [];
 	},
 
-	getOrchardById: (
-		id: number,
-		options?: { skipGlobalLoading?: boolean }
-	): Promise<Orchard | undefined> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+	/**
+	 * Get orchard by ID
+	 * GET /orchards/{id}
+	 */
+	getOrchardById: async (id: number, options?: ApiOptions): Promise<Orchard | undefined> => {
+		try {
+			const response = await apiRequest<OrchardResponse>(
+				() => apiClient.get<OrchardResponse>(`/orchards/${id}`),
+				options
+			);
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve(ORCHARDS_DB.find((o) => o.id === id));
-			}, 400);
-		});
+			return response.data;
+		} catch {
+			// Return undefined if not found (404)
+			return undefined;
+		}
 	},
 
-	addOrchard: (
-		orchard: Omit<Orchard, "id">,
-		options?: { skipGlobalLoading?: boolean }
-	): Promise<Orchard> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+	/**
+	 * Create new orchard
+	 * POST /orchards
+	 */
+	addOrchard: async (orchard: Omit<Orchard, "id">, options?: ApiOptions): Promise<Orchard> => {
+		const response = await apiRequest<OrchardResponse>(
+			() => apiClient.post<OrchardResponse>("/orchards", orchard),
+			options
+		);
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				const newOrchard = { ...orchard, id: Date.now() };
-
-				ORCHARDS_DB = [newOrchard, ...ORCHARDS_DB];
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve(newOrchard);
-			}, 800);
-		});
+		return response.data;
 	},
 
-	updateOrchard: (
+	/**
+	 * Update orchard
+	 * PUT /orchards/{id}
+	 */
+	updateOrchard: async (
 		id: number,
 		data: Partial<Orchard>,
-		options?: { skipGlobalLoading?: boolean }
+		options?: ApiOptions
 	): Promise<Orchard> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+		const response = await apiRequest<OrchardResponse>(
+			() => apiClient.put<OrchardResponse>(`/orchards/${id}`, data),
+			options
+		);
 
-		return new Promise((resolve, reject) => {
-			setTimeout(() => {
-				const index = ORCHARDS_DB.findIndex((o) => o.id === id);
-
-				if (index !== -1) {
-					ORCHARDS_DB[index] = { ...ORCHARDS_DB[index], ...data };
-					if (!options?.skipGlobalLoading) loadingManager.hide();
-					resolve(ORCHARDS_DB[index]);
-				} else {
-					if (!options?.skipGlobalLoading) loadingManager.hide();
-					reject(new Error("Orchard not found"));
-				}
-			}, 800);
-		});
+		return response.data;
 	},
 
-	deleteOrchard: (id: number, options?: { skipGlobalLoading?: boolean }): Promise<void> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+	/**
+	 * Delete orchard
+	 * DELETE /orchards/{id}
+	 */
+	deleteOrchard: async (id: number, options?: ApiOptions): Promise<void> => {
+		await apiRequest<void>(() => apiClient.delete<void>(`/orchards/${id}`), options);
+	},
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				ORCHARDS_DB = ORCHARDS_DB.filter((o) => o.id !== id);
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve();
-			}, 500);
-		});
+	/**
+	 * Upload image
+	 * POST /uploads
+	 */
+	uploadImage: async (file: File, options?: ApiOptions): Promise<string> => {
+		const formData = new FormData();
+
+		formData.append("file", file);
+
+		const response = await apiRequest<UploadResponse>(
+			() => apiClient.postForm<UploadResponse>("/uploads", formData),
+			options
+		);
+
+		return response.data.url;
 	},
 };

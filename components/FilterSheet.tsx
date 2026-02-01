@@ -32,7 +32,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 		if (isOpen) {
 			// eslint-disable-next-line
 			setTempSort(currentSort);
-			// eslint-disable-next-line
+
 			setTempFilters(currentFilters);
 		}
 	}, [isOpen, currentSort, currentFilters]);

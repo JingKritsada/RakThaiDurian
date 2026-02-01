@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export const PrivateRoute: React.FC = () => {
-	const { user, isLoading } = useAuth();
+	const { user, isLoading, token } = useAuth();
 
 	if (isLoading) {
 		return (
@@ -14,5 +14,5 @@ export const PrivateRoute: React.FC = () => {
 		);
 	}
 
-	return user && user.role === "owner" ? <Outlet /> : <Navigate replace to="/login" />;
+	return user && token ? <Outlet /> : <Navigate replace to="/login" />;
 };

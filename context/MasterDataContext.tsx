@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-import { ServiceTypeOption, StatusOption, CropOption } from "../interface/dropdownInterface";
+import { CropOption, ServiceTypeOption, StatusOption } from "../interface/dropdownInterface";
 import { dropdownService } from "../services/dropdownService";
 import {
 	ORCHARD_TYPE_LABELS,

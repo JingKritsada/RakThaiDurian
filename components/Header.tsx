@@ -28,9 +28,9 @@ const FontSizeControls = ({
 	fontSize: FontSize;
 	setFontSize: (size: FontSize) => void;
 }) => (
-	<div className="flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+	<div className="flex items-center h-full bg-slate-100 dark:bg-slate-800 rounded-xl p-0.5 border border-slate-200 dark:border-slate-700">
 		<Button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรเล็ก"
 			variant="none"
 			onClick={() => setFontSize("small")}
@@ -38,7 +38,7 @@ const FontSizeControls = ({
 			<span className="text-xs">ก</span>
 		</Button>
 		<Button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรปกติ"
 			variant="none"
 			onClick={() => setFontSize("medium")}
@@ -46,7 +46,7 @@ const FontSizeControls = ({
 			<span className="text-sm">ก</span>
 		</Button>
 		<Button
-			className={`w-8 h-8 flex items-center justify-center rounded-lg transition-all p-0 !min-h-0 ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรใหญ่"
 			variant="none"
 			onClick={() => setFontSize("large")}
@@ -88,17 +88,17 @@ export const Header: React.FC = () => {
 			)}
 			<header className="sticky top-0 z-[2001] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between items-center h-16">
+					<div className="flex justify-between items-center h-16 py-2.5">
 						{/* Logo */}
 						<Link
-							className="flex items-end gap-3 group hover:scale-105 transition-transform"
+							className="flex items-center gap-3 h-full group hover:scale-105 transition-transform"
 							to="/"
 						>
-							<div className="w-10 h-10 bg-forest-800 rounded-xl flex items-center justify-center text-white shadow-md group-hover:bg-forest-900 transition-colors">
+							<div className="h-full aspect-square bg-forest-800 rounded-xl flex items-center justify-center text-white shadow-md group-hover:bg-forest-900 transition-colors">
 								<span className="font-heading font-bold text-xl">ท</span>
 							</div>
 							<div className="flex flex-col">
-								<span className="font-heading font-bold text-lg text-slate-900 dark:text-white leading-none">
+								<span className="font-heading font-bold text-lg text-slate-900 dark:text-white">
 									ทุเรียน
 									<span className="font-heading text-forest-600 dark:text-forest-400">
 										รักไทย
@@ -111,8 +111,8 @@ export const Header: React.FC = () => {
 						</Link>
 
 						{/* Desktop Controls */}
-						<div className="hidden md:flex items-center gap-4">
-							<div className="flex items-center gap-2">
+						<div className="hidden md:flex items-center gap-4 h-full">
+							<div className="flex items-center gap-2 h-full">
 								<span className="text-xs text-slate-400 font-medium mr-1">
 									ขนาดอักษร
 								</span>
@@ -120,7 +120,7 @@ export const Header: React.FC = () => {
 							</div>
 
 							<Button
-								className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
+								className="h-full aspect-square !p-0 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
 								title="เปลี่ยนโหมดสี"
 								variant="none"
 								onClick={toggleTheme}
@@ -131,15 +131,18 @@ export const Header: React.FC = () => {
 							<div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2" />
 
 							{user ? (
-								<div className="flex items-center gap-3">
+								<div className="flex items-center gap-3 h-full	">
 									<Link to="/owner">
-										<Button className="!px-3 !rounded-xl" variant="ghost">
+										<Button
+											className="h-full !px-3 !rounded-xl"
+											variant="ghost"
+										>
 											<UserIcon className="mr-2" size={20} />
 											<span className="font-medium">{user.name}</span>
 										</Button>
 									</Link>
 									<Button
-										className="!px-4 !py-2 !rounded-xl text-sm"
+										className="h-full !px-4 !py-2 !rounded-xl text-sm"
 										variant="secondary"
 										onClick={handleLogout}
 									>
@@ -149,7 +152,7 @@ export const Header: React.FC = () => {
 								</div>
 							) : (
 								<Link to="/login">
-									<Button className="!rounded-xl !py-2.5 !shadow-md shadow-forest-800/20">
+									<Button className="h-full !rounded-xl !py-2.5 !shadow-md shadow-forest-800/20">
 										เข้าสู่ระบบเจ้าของสวน
 									</Button>
 								</Link>
@@ -171,7 +174,7 @@ export const Header: React.FC = () => {
 				{isMobileMenuOpen && (
 					<div className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-xl animate-in slide-in-from-top-2">
 						<div className="flex flex-col gap-2">
-							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
+							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
 								<div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
 									<Type size={18} />
 									<span className="text-sm font-medium">ขนาดตัวอักษร</span>
@@ -179,12 +182,12 @@ export const Header: React.FC = () => {
 								<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
 							</div>
 
-							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl">
+							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
 								<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
 									โหมดการแสดงผล
 								</span>
 								<Button
-									className="flex items-center gap-2 px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
+									className="flex items-center gap-2 h-full px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
 									variant="none"
 									onClick={toggleTheme}
 								>

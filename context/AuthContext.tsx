@@ -1,14 +1,15 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from "react";
 
 import { User } from "../interface/userInterface";
-import { userService } from "../services/userService";
+import { userService, tokenManager } from "../services/userService";
 
 interface AuthContextType {
 	user: User | null;
 	isLoading: boolean;
+	token: string | null;
 	login: (
-		email: string,
-		pass: string,
+		username: string,
+		password: string,
 		options?: { skipGlobalLoading?: boolean }
 	) => Promise<void>;
 	logout: (options?: { skipGlobalLoading?: boolean }) => Promise<void>;
@@ -20,26 +21,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 	const [user, setUser] = useState<User | null>(() => userService.getCurrentUser());
 	const [isLoading] = useState(false);
 
-	const login = async (
-		email: string,
-		pass: string,
-		options?: { skipGlobalLoading?: boolean }
-	) => {
-		const loggedInUser = await userService.login(email, pass, options);
+	// Use state to store token as fallback when localStorage fails
+	const [memoryToken, setMemoryToken] = useState<string | null>(() => tokenManager.getToken());
 
-		setUser(loggedInUser);
-	};
+	// Memoized token value - prioritize memory, fallback to localStorage
+	const token = useMemo(() => {
+		return memoryToken || tokenManager.getToken();
+	}, [memoryToken]);
 
-	const logout = async (options?: { skipGlobalLoading?: boolean }) => {
-		await userService.logout(options);
-		setUser(null);
-	};
+	const login = useCallback(
+		async (username: string, password: string, options?: { skipGlobalLoading?: boolean }) => {
+			const { user: loggedInUser, token: authToken } = await userService.login(
+				username,
+				password,
+				options
+			);
 
-	return (
-		<AuthContext.Provider value={{ user, isLoading, login, logout }}>
-			{children}
-		</AuthContext.Provider>
+			// Store token in memory as fallback
+			setMemoryToken(authToken);
+			setUser(loggedInUser);
+		},
+		[]
 	);
+
+	const logout = useCallback(async (options?: { skipGlobalLoading?: boolean }) => {
+		await userService.logout(options);
+		setMemoryToken(null);
+		setUser(null);
+	}, []);
+
+	const value = useMemo(
+		() => ({
+			user,
+			isLoading,
+			token,
+			login,
+			logout,
+		}),
+		[user, isLoading, token, login, logout]
+	);
+
+	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

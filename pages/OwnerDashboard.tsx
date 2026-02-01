@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
 
 import { orchardService } from "../services/orchardService";
+import { getErrorMessage } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import { useAlert } from "../context/AlertContext";
 import { Orchard } from "../interface/orchardInterface";
@@ -18,15 +19,19 @@ export const OwnerDashboard: React.FC = () => {
 	const loadData = useCallback(async () => {
 		if (!user) return;
 		setIsLoading(true);
-		const data = await orchardService.getOrchardsByOwner(user.id);
+		try {
+			const data = await orchardService.getOrchardsByOwner(user.id);
 
-		setOrchards(data);
-		setIsLoading(false);
-	}, [user]);
+			setOrchards(data);
+		} catch (error) {
+			showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
+		} finally {
+			setIsLoading(false);
+		}
+	}, [user, showAlert]);
 
 	useEffect(() => {
 		if (user) {
-			// eslint-disable-next-line
 			loadData();
 		}
 	}, [user, loadData]);
@@ -40,8 +45,8 @@ export const OwnerDashboard: React.FC = () => {
 					await orchardService.deleteOrchard(id);
 					showAlert("สำเร็จ", "ลบข้อมูลสวนเรียบร้อยแล้ว", "success");
 					loadData();
-				} catch {
-					showAlert("ข้อผิดพลาด", "ไม่สามารถลบข้อมูลสวนได้", "error");
+				} catch (error) {
+					showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
 				}
 			},
 			"error",
@@ -111,10 +116,7 @@ export const OwnerDashboard: React.FC = () => {
 								</div>
 
 								{/* Action Buttons Toolbar */}
-								<div
-									className="mt-2 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 p-3 sm:p-0 
-                                sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 focus-within:opacity-100 z-10"
-								>
+								<div className="mt-2 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 p-3 sm:p-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
 									<Link to={`/owner/edit/${orchard.id}`}>
 										<Button
 											className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-forest-100 hover:text-forest-700 dark:hover:bg-forest-900 transition-colors shadow-sm whitespace-nowrap !min-h-0"
