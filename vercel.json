@@ -1,0 +1,12 @@
+{
+	"rewrites": [
+		{
+			"source": "/api/:path*",
+			"destination": "https://platform.psru.ac.th:3022/api/:path*"
+		},
+		{
+			"source": "/osm-tiles/:path*",
+			"destination": "https://tile.openstreetmap.org/:path*"
+		}
+	]
+}
