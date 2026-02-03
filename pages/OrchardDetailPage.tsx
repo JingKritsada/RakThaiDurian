@@ -473,18 +473,18 @@ export const OrchardDetailPage: React.FC = () => {
 										{videos.length > 1 && (
 											<>
 												<Button
-													className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
+													className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
 													variant="none"
 													onClick={handlePrevVideo}
 												>
-													<ChevronLeft size={24} />
+													<ChevronLeft size={36} />
 												</Button>
 												<Button
-													className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
+													className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
 													variant="none"
 													onClick={handleNextVideo}
 												>
-													<ChevronRight size={24} />
+													<ChevronRight size={36} />
 												</Button>
 
 												<div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-md pointer-events-none">

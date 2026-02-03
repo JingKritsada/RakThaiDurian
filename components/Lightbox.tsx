@@ -80,7 +80,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 				<div className=" relative max-w-full max-h-full flex justify-center items-center">
 					<img
 						alt={`Gallery ${currentIndex + 1}`}
-						className="w-[90vw] h-[80vh] w-auto h-auto object-cover rounded-xl shadow-2xl"
+						className="w-[90vw] h-[80vh] object-cover rounded-xl shadow-2xl"
 						src={getImageUrl(images[currentIndex])}
 					/>
 
@@ -120,7 +120,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 					{images.map((img, idx) => (
 						<button
 							key={idx}
-							className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200 border-2 ${
+							className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200 border-2 ${
 								idx === currentIndex
 									? "border-forest-500 scale-105 opacity-100 ring-2 ring-forest-500/50"
 									: "border-transparent opacity-50 hover:opacity-80 hover:scale-105"
