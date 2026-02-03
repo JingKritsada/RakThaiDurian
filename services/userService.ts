@@ -13,15 +13,11 @@ export const tokenManager = {
 		if (token) {
 			try {
 				localStorage.setItem("durian_token", token);
-			} catch (e) {
-				console.warn("Failed to save token to localStorage:", e);
-			}
+			} catch {}
 		} else {
 			try {
 				localStorage.removeItem("durian_token");
-			} catch (e) {
-				console.warn("Failed to remove token from localStorage:", e);
-			}
+			} catch {}
 		}
 	},
 	getToken: (): string | null => {
@@ -37,9 +33,7 @@ export const tokenManager = {
 
 				return storedToken;
 			}
-		} catch (e) {
-			console.warn("Failed to get token from localStorage:", e);
-		}
+		} catch {}
 
 		return null;
 	},
@@ -47,9 +41,7 @@ export const tokenManager = {
 		memoryToken = null;
 		try {
 			localStorage.removeItem("durian_token");
-		} catch (e) {
-			console.warn("Failed to remove token from localStorage:", e);
-		}
+		} catch {}
 	},
 };
 
@@ -155,9 +147,7 @@ export const userService = {
 					tokenManager.clearToken();
 					try {
 						localStorage.removeItem("durian_user");
-					} catch (e) {
-						console.warn("Failed to remove user from localStorage:", e);
-					}
+					} catch {}
 					resolve({ data: undefined } as never);
 				}),
 			options

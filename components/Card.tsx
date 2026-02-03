@@ -3,6 +3,7 @@ import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 import { Orchard } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
+import { getImageUrl } from "../utils/constants";
 
 import { SocialLinks } from "./SocialLinks";
 
@@ -27,7 +28,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 	return (
 		<div
 			className={`
-				group flex flex-col sm:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
+				group flex flex-col sm:flex-row lg:flex-col xl:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
 				border ${isSelected ? "border-forest-500 ring-2 ring-forest-500 shadow-lg" : "border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-forest-200 dark:hover:border-forest-800"}
 				h-full min-h-[13rem] relative
 			`}
@@ -41,12 +42,12 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 			}}
 		>
 			{/* Image Section */}
-			<div className="w-full sm:w-[200px] aspect-video sm:aspect-auto sm:h-auto bg-slate-200 dark:bg-slate-700 relative shrink-0 overflow-hidden">
+			<div className="w-full sm:w-[200px] lg:w-full xl:w-[200px] aspect-video sm:h-auto bg-slate-200 dark:bg-slate-700 relative shrink-0 overflow-hidden">
 				{coverImage ? (
 					<img
 						alt={orchard.name}
 						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-						src={coverImage}
+						src={getImageUrl(coverImage)}
 					/>
 				) : (
 					<div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -91,7 +92,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 					</p>
 				</div>
 
-				<div className="flex flex-col sm:flex-row justify-between items-start sm:items-end pt-3 border-t border-slate-100 dark:border-slate-700 gap-3 mt-auto">
+				<div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-between items-start sm:items-end lg:items-start xl:items-end pt-3 border-t border-slate-100 dark:border-slate-700 gap-3 mt-auto">
 					<div className="flex flex-wrap gap-2">
 						{orchard.types.map((typeId) => {
 							const typeInfo = getServiceType(typeId);
@@ -110,7 +111,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 					{/* Social Icons in Card */}
 					{orchard.socialMedia && (
 						<div
-							className="self-end sm:self-auto"
+							className="self-end sm:self-auto lg:self-end xl:self-auto"
 							role="button"
 							tabIndex={0}
 							onClick={(e) => e.stopPropagation()}

@@ -15,18 +15,20 @@ import {
 	Navigation,
 	ChevronLeft,
 	ChevronRight,
-	X,
 	RotateCcw,
 } from "lucide-react";
 
 import { orchardService } from "../services/orchardService";
 import { getErrorMessage } from "../services/api";
 import { useMasterData } from "../context/MasterDataContext";
+import { getImageUrl } from "../utils/constants";
 import { useAlert } from "../context/AlertContext";
 import { Orchard } from "../interface/orchardInterface";
 import { Button } from "../components/Button";
 import { OrchardMap } from "../components/OrchardMap";
 import { SocialLinks } from "../components/SocialLinks";
+import { MiniCarousel } from "../components/MiniCarousel";
+import { Lightbox } from "../components/Lightbox";
 
 export const OrchardDetailPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
@@ -53,22 +55,10 @@ export const OrchardDetailPage: React.FC = () => {
 	const openLightbox = (index: number) => {
 		setLightboxIndex(index);
 		setIsLightboxOpen(true);
-		document.body.style.overflow = "hidden"; // Prevent scrolling
 	};
 
 	const closeLightbox = () => {
 		setIsLightboxOpen(false);
-		document.body.style.overflow = "unset";
-	};
-
-	const nextLightboxImage = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setLightboxIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
-	};
-
-	const prevLightboxImage = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setLightboxIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
 	};
 
 	useEffect(() => {
@@ -249,11 +239,11 @@ export const OrchardDetailPage: React.FC = () => {
 
 		if (images.length === 1) {
 			return (
-				<div className="w-full h-[300px] md:h-[500px] overflow-hidden">
+				<div className="w-full h-[300px] md:h-[500px] overflow-hidden bg-white dark:bg-slate-950">
 					<img
 						alt={orchard.name}
 						className="w-full h-full object-cover"
-						src={images[0]}
+						src={getImageUrl(images[0])}
 					/>
 				</div>
 			);
@@ -261,13 +251,13 @@ export const OrchardDetailPage: React.FC = () => {
 
 		// Grid for 2+ images
 		return (
-			<div className="w-full h-[300px] md:h-[600px] grid grid-cols-1 md:grid-cols-4 gap-2 overflow-hidden">
+			<div className="w-full h-[300px] md:h-[600px] grid grid-cols-1 md:grid-cols-4 gap-2 overflow-hidden bg-white dark:bg-slate-950">
 				{/* Main Image (Left Half) */}
 				<div className="md:col-span-2 h-full relative group cursor-pointer overflow-hidden">
 					<img
 						alt={orchard.name}
 						className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-						src={images[0]}
+						src={getImageUrl(images[0])}
 					/>
 				</div>
 
@@ -281,7 +271,7 @@ export const OrchardDetailPage: React.FC = () => {
 							<img
 								alt={`${orchard.name} ${idx + 2}`}
 								className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-								src={img}
+								src={getImageUrl(img)}
 							/>
 							{/* Overlay for 'More' images if there are more than 5 */}
 							{idx === 3 && images.length > 5 && (
@@ -301,16 +291,23 @@ export const OrchardDetailPage: React.FC = () => {
 			{/* Top Image Section */}
 			<div className="relative w-full bg-slate-900 group">
 				{/* Mobile Carousel View (visible only on small screens) */}
-				<div className="md:hidden w-full h-[50vh] relative">
+				<div className="md:hidden w-full h-[50vh] relative overflow-hidden">
 					{images.length > 0 ? (
-						<>
-							<img
-								alt="Orchard Media"
-								className="w-full h-full object-cover"
-								src={images[currentImageIndex]}
-							/>
-							<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-						</>
+						<div
+							className="flex h-full w-full transition-transform duration-500 ease-in-out"
+							style={{ transform: `translateX(-${currentImageIndex * 100}%)` }}
+						>
+							{images.map((img, index) => (
+								<div key={index} className="w-full h-full shrink-0 relative">
+									<img
+										alt={`Orchard Media ${index + 1}`}
+										className="w-full h-full object-cover"
+										src={getImageUrl(img)}
+									/>
+									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+								</div>
+							))}
+						</div>
 					) : (
 						<div className="w-full h-full flex items-center justify-center text-slate-500 bg-slate-200 dark:bg-slate-800">
 							<ImageIcon size={48} />
@@ -385,7 +382,7 @@ export const OrchardDetailPage: React.FC = () => {
 									</h1>
 									{statusInfo && (
 										<span
-											className={`px-4 py-2 text-md font-bold rounded-lg whitespace-nowrap shrink-0 ${statusInfo.color}`}
+											className={`inline-block px-4 py-2 text-md font-bold rounded-lg border shadow-sm backdrop-blur-lg whitespace-nowrap ${statusInfo.color}`}
 										>
 											{statusInfo.label}
 										</span>
@@ -462,14 +459,14 @@ export const OrchardDetailPage: React.FC = () => {
 						</section>
 
 						{/* Part 2: Videos */}
-						{videos.length > 0 && (
-							<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-								<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
-									<Layers className="text-red-600" /> วิดีโอและสื่อ
-								</h2>
+						<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8 hidden lg:block">
+							<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+								<Layers className="text-red-600" /> วิดีโอและสื่อ
+							</h2>
 
-								<div className="space-y-4">
-									{/* Main Video Display */}
+							<div className="space-y-4">
+								{/* Main Video Display */}
+								{videos.length > 0 && (
 									<div className="relative group rounded-2xl overflow-hidden bg-black">
 										{renderVideo(videos[currentVideoIndex])}
 
@@ -496,41 +493,41 @@ export const OrchardDetailPage: React.FC = () => {
 											</>
 										)}
 									</div>
+								)}
 
-									{/* Pictures Thumbnail Grid (Visible on Desktop > md) */}
-									{images.length > 0 && (
-										<div className="hidden md:grid grid-cols-6 gap-4 h-28">
-											{images.slice(0, 6).map((img, idx) => (
-												<div
-													key={idx}
-													className="relative rounded-xl overflow-hidden cursor-pointer group h-full border-2 border-transparent hover:border-forest-500 transition-all"
-													role="button"
-													tabIndex={0}
-													onClick={() => openLightbox(idx)}
-													onKeyDown={(e) => {
-														if (e.key === "Enter" || e.key === " ") {
-															openLightbox(idx);
-														}
-													}}
-												>
-													<img
-														alt={`Thumbnail ${idx + 1}`}
-														className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-														src={img}
-													/>
-													{/* Overlay for +More images */}
-													{idx === 5 && images.length > 6 && (
-														<div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
-															+{images.length - 6}
-														</div>
-													)}
-												</div>
-											))}
-										</div>
-									)}
-								</div>
-							</section>
-						)}
+								{/* Pictures Thumbnail Grid (Visible on Desktop > md) */}
+								{images.length > 0 && (
+									<div className="hidden md:grid grid-cols-6 gap-4 h-28">
+										{images.slice(0, 6).map((img, idx) => (
+											<div
+												key={idx}
+												className="relative rounded-xl overflow-hidden cursor-pointer group h-full border-2 border-transparent hover:border-forest-500 transition-all"
+												role="button"
+												tabIndex={0}
+												onClick={() => openLightbox(idx)}
+												onKeyDown={(e) => {
+													if (e.key === "Enter" || e.key === " ") {
+														openLightbox(idx);
+													}
+												}}
+											>
+												<img
+													alt={`Thumbnail ${idx + 1}`}
+													className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+													src={getImageUrl(img)}
+												/>
+												{/* Overlay for +More images */}
+												{idx === 5 && images.length > 6 && (
+													<div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
+														+{images.length - 6}
+													</div>
+												)}
+											</div>
+										))}
+									</div>
+								)}
+							</div>
+						</section>
 
 						{/* Part 3: Services */}
 						{hasServices && (
@@ -594,15 +591,16 @@ export const OrchardDetailPage: React.FC = () => {
 															key={idx}
 															className="rounded-2xl border border-slate-100 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900/30"
 														>
-															{acc.images?.[0] && (
-																<div className="h-40 w-full">
-																	<img
-																		alt={acc.name}
-																		className="w-full h-full object-cover"
-																		src={acc.images[0]}
-																	/>
-																</div>
-															)}
+															{acc.images &&
+																acc.images.length > 0 && (
+																	<div className="h-40 w-full">
+																		<MiniCarousel
+																			alt={acc.name}
+																			className="h-full w-full"
+																			images={acc.images}
+																		/>
+																	</div>
+																)}
 															<div className="p-4">
 																<h4 className="font-bold text-slate-900 dark:text-white mb-1">
 																	{acc.name}
@@ -636,25 +634,25 @@ export const OrchardDetailPage: React.FC = () => {
 											<div className="flex items-center gap-2 mb-4">
 												<Users className="text-purple-500" size={20} />
 												<h3 className="font-bold text-slate-800 dark:text-slate-200">
-													แพ็กเกจท่องเที่ยว
+													แพ็คเกจท่องเที่ยว
 												</h3>
 											</div>
-											<div className="space-y-4">
+											<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 												{orchard.packages.map((pkg, idx) => (
 													<div
 														key={idx}
-														className="flex flex-col sm:flex-row gap-4 p-4 rounded-2xl border border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/30"
+														className="rounded-2xl border border-slate-100 dark:border-slate-700 overflow-hidden bg-slate-50 dark:bg-slate-900/30"
 													>
-														{pkg.images?.[0] && (
-															<div className="w-full sm:w-32 h-32 shrink-0 rounded-xl overflow-hidden">
-																<img
+														{pkg.images && pkg.images.length > 0 && (
+															<div className="h-40 w-full">
+																<MiniCarousel
 																	alt={pkg.name}
-																	className="w-full h-full object-cover"
-																	src={pkg.images[0]}
+																	className="h-full w-full"
+																	images={pkg.images}
 																/>
 															</div>
 														)}
-														<div className="flex-grow">
+														<div className="flex-grow p-4">
 															<div className="flex justify-between items-start mb-2">
 																<h4 className="font-bold text-slate-900 dark:text-white">
 																	{pkg.name}
@@ -779,105 +777,13 @@ export const OrchardDetailPage: React.FC = () => {
 			</div>
 
 			{/* Lightbox Component */}
-			{isLightboxOpen && images.length > 0 && (
-				<div
-					className="fixed inset-0 z-[100] bg-black/95 flex flex-col pt-4 animate-in fade-in duration-200"
-					role="button"
-					tabIndex={0}
-					onClick={(e) => {
-						if (e.target === e.currentTarget) {
-							closeLightbox();
-						}
-					}}
-					onKeyDown={(e) => {
-						if (e.key === "Escape") {
-							closeLightbox();
-						}
-					}}
-				>
-					{/* Main Image Area */}
-					<div
-						className="flex-1 min-h-0 w-full flex items-center justify-center p-4 relative"
-						role="button"
-						tabIndex={0}
-						onClick={(e) => {
-							if (e.target === e.currentTarget) {
-								closeLightbox();
-							}
-						}}
-						onKeyDown={(e) => {
-							if (
-								e.target === e.currentTarget &&
-								(e.key === "Enter" || e.key === " ")
-							) {
-								closeLightbox();
-							}
-						}}
-					>
-						<div className="relative max-w-full max-h-full flex justify-center items-center">
-							<img
-								alt={`Gallery ${lightboxIndex + 1}`}
-								className="max-w-[90vw] min-h-[75vh] w-auto h-auto object-cover rounded-xl shadow-2xl"
-								src={images[lightboxIndex]}
-							/>
-
-							{/* Navigation Buttons */}
-							{images.length > 1 && (
-								<>
-									<Button
-										className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-										variant="none"
-										onClick={prevLightboxImage}
-									>
-										<ChevronLeft size={36} />
-									</Button>
-									<Button
-										className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-										variant="none"
-										onClick={nextLightboxImage}
-									>
-										<ChevronRight size={36} />
-									</Button>
-								</>
-							)}
-						</div>
-					</div>
-
-					{/* Close Button */}
-					<div className="absolute top-20 right-4 z-50">
-						<Button
-							className="text-white hover:bg-white/10 rounded-full !p-3 flex items-center justify-center bg-slate-700/50 backdrop-blur-md"
-							variant="none"
-							onClick={closeLightbox}
-						>
-							<X size={24} />
-						</Button>
-					</div>
-
-					{/* Thumbnails Footer */}
-					<div className="bg-black/90 w-full p-4 flex justify-center overflow-x-auto gap-3 shrink-0 backdrop-blur-md border-t border-white/10">
-						<div className="flex gap-2 min-w-min px-4">
-							{images.map((img, idx) => (
-								<button
-									key={idx}
-									className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200 border-2 ${
-										idx === lightboxIndex
-											? "border-forest-500 scale-105 opacity-100 ring-2 ring-forest-500/50"
-											: "border-transparent opacity-50 hover:opacity-80 hover:scale-105"
-									}`}
-									onClick={() => setLightboxIndex(idx)}
-								>
-									<img
-										alt={`Thumbnail ${idx + 1}`}
-										className="w-full h-full object-cover"
-										src={img}
-									/>
-								</button>
-							))}
-						</div>
-					</div>
-				</div>
-			)}
+			<Lightbox
+				currentIndex={lightboxIndex}
+				images={images}
+				isOpen={isLightboxOpen}
+				setIndex={setLightboxIndex}
+				onClose={closeLightbox}
+			/>
 		</div>
 	);
 };

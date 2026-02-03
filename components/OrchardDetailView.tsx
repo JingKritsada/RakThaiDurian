@@ -14,6 +14,7 @@ import {
 
 import { Orchard } from "../interface/orchardInterface";
 import { useMasterData } from "../context/MasterDataContext";
+import { getImageUrl } from "../utils/constants";
 
 import { Button } from "./Button";
 import { SocialLinks } from "./SocialLinks";
@@ -87,7 +88,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 									key={idx}
 									alt={`${orchard.name} - ${idx + 1}`}
 									className="w-full h-full object-cover shrink-0 snap-center"
-									src={img}
+									src={getImageUrl(img)}
 									onLoad={onImageLoad}
 								/>
 							))}
@@ -105,7 +106,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				)}
 
 				{/* Service Types */}
-				<div className="flex justify-between gap-1.5">
+				<div className="hidden md:flex justify-between gap-1.5">
 					{orchard.types.map((typeId) => {
 						const typeInfo = getServiceType(typeId);
 
@@ -137,7 +138,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				{(orchard.additionalCrops.length > 0 ||
 					orchard.packages.length > 0 ||
 					orchard.accommodations.length > 0) && (
-					<div className="flex flex-wrap gap-2 justify-center text-white text-xs">
+					<div className="hidden md:flex flex-wrap gap-2 justify-center text-white text-xs">
 						{orchard.additionalCrops.length > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Sprout size={14} />

@@ -43,3 +43,20 @@ export const STATUS_COLORS: Record<DurianStatus, { tailwind: string; map: string
 		map: "#64748b",
 	},
 };
+
+/**
+ * Base URL for uploaded images from backend
+ */
+export const UPLOADS_BASE_URL = "https://platform.psru.ac.th:3022";
+
+/**
+ * Get full image URL from filename or partial path
+ * @param imagePath - The image URL
+ * @returns Full URL to the image
+ */
+export const getImageUrl = (imagePath: string): string => {
+	if (!imagePath) return "";
+
+	// Otherwise, prepend the base URL
+	return `${UPLOADS_BASE_URL}${imagePath}`;
+};

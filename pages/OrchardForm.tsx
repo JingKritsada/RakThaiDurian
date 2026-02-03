@@ -38,6 +38,7 @@ import {
 	Package,
 	OrchardFormData,
 } from "../interface/orchardInterface";
+import { ImagePayload, ImageFile } from "../interface/imageInterface";
 import { Button } from "../components/Button";
 import { LocationPicker } from "../components/LocationPicker";
 import {
@@ -49,6 +50,7 @@ import {
 import { AccommodationManager } from "../components/AccommodationManager";
 import { PackageManager } from "../components/PackageManager";
 import { LineIcon, TiktokIcon } from "../utils/icons";
+import { getImageUrl } from "../utils/constants";
 
 type TabType = "general" | "location" | "media" | "services";
 const TABS: TabType[] = ["general", "location", "media", "services"];
@@ -342,6 +344,7 @@ export const OrchardForm: React.FC = () => {
 		setIsLoading(true);
 
 		try {
+			// Prepare orchard data payload (without images)
 			const payload = {
 				name: formData.name,
 				description: formData.description,
@@ -353,15 +356,35 @@ export const OrchardForm: React.FC = () => {
 				types: selectedTypes,
 				status: formData.status,
 				additionalCrops: formData.additionalCrops,
-				images: formData.images,
 				videos: formData.videos,
 				socialMedia: formData.socialMedia,
 				accommodations: formData.accommodations,
 				packages: formData.packages,
 			};
 
+			// Prepare image payload - separate from orchard data
+			const imagePayload: ImagePayload = {
+				orchardImages: formData.images as ImageFile[],
+				packageImages: formData.packages.reduce(
+					(acc, pkg) => {
+						acc[pkg.id] = pkg.images as ImageFile[];
+
+						return acc;
+					},
+					{} as Record<string, ImageFile[]>
+				),
+				accommodationImages: formData.accommodations.reduce(
+					(acc, accommodation) => {
+						acc[accommodation.id] = accommodation.images as ImageFile[];
+
+						return acc;
+					},
+					{} as Record<string, ImageFile[]>
+				),
+			};
+
 			if (isEditMode && id) {
-				await orchardService.updateOrchard(parseInt(id), payload, {
+				await orchardService.updateOrchard(parseInt(id), payload, imagePayload, {
 					skipGlobalLoading: true,
 				});
 			} else {
@@ -370,6 +393,7 @@ export const OrchardForm: React.FC = () => {
 						...payload,
 						ownerId: user.id,
 					},
+					imagePayload,
 					{ skipGlobalLoading: true }
 				);
 			}
@@ -706,7 +730,7 @@ export const OrchardForm: React.FC = () => {
 												<img
 													alt={`Preview ${index}`}
 													className="w-full h-full object-cover"
-													src={img}
+													src={getImageUrl(img)}
 												/>
 												<Button
 													className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity !w-auto !h-auto min-h-0"

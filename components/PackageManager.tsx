@@ -14,6 +14,7 @@ import {
 
 import { Package } from "../interface/orchardInterface";
 import { useAlert } from "../context/AlertContext";
+import { getImageUrl } from "../utils/constants";
 
 import { Button } from "./Button";
 import { InputField, TextAreaField } from "./FormInputs";
@@ -209,7 +210,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 										<img
 											alt={item.name}
 											className="w-full h-full object-cover"
-											src={item.images[0]}
+											src={getImageUrl(item.images[0])}
 										/>
 									) : (
 										<div className="w-full h-full flex items-center justify-center text-slate-400">
@@ -385,7 +386,7 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 										<img
 											alt="preview"
 											className="w-full h-full object-cover"
-											src={img}
+											src={getImageUrl(img)}
 										/>
 										<Button
 											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity !min-h-0 !w-auto"

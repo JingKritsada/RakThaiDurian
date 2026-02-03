@@ -385,7 +385,7 @@ export const HomePage: React.FC = () => {
 			/>
 
 			{/* Mobile Sticky Header */}
-			<div className="md:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-3 shadow-sm">
+			<div className="lg:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-3 shadow-sm">
 				<div className="flex gap-3">
 					<InputField
 						className="w-full"
@@ -442,7 +442,7 @@ export const HomePage: React.FC = () => {
 				<div
 					className={`
 						absolute inset-0 z-10 bg-white dark:bg-slate-900 transition-transform duration-300 transform flex flex-col
-					 	lg:relative lg:translate-x-0 lg:w-[600px] lg:shrink-0 lg:border-r lg:border-slate-200 lg:dark:border-slate-800 lg:z-0
+					 	lg:relative lg:translate-x-0 lg:w-[480px] xl:w-[600px] lg:shrink-0 lg:border-r lg:border-slate-200 lg:dark:border-slate-800 lg:z-0
 						${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
 					`}
 				>

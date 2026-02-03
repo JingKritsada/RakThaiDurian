@@ -111,7 +111,7 @@ export const Header: React.FC = () => {
 						</Link>
 
 						{/* Desktop Controls */}
-						<div className="hidden md:flex items-center gap-4 h-full">
+						<div className="hidden lg:flex items-center gap-4 h-full">
 							<div className="flex items-center gap-2 h-full">
 								<span className="text-xs text-slate-400 font-medium mr-1">
 									ขนาดอักษร
@@ -161,7 +161,7 @@ export const Header: React.FC = () => {
 
 						{/* Mobile Menu Button */}
 						<Button
-							className="md:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
+							className="lg:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
 							variant="none"
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 						>
