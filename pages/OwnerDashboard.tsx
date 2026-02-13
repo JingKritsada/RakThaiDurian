@@ -126,7 +126,7 @@ export const OwnerDashboard: React.FC = () => {
 										</Button>
 									</Link>
 									<Button
-										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors shadow-sm whitespace-nowrap !min-h-0"
+										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/70 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/60 transition-colors shadow-sm whitespace-nowrap !min-h-0"
 										variant="none"
 										onClick={() => handleDelete(orchard.id)}
 									>

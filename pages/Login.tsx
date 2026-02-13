@@ -8,8 +8,8 @@ import { Button } from "../components/Button";
 import { InputField } from "../components/FormInputs";
 
 export const Login: React.FC = () => {
-	const [username, setUsername] = useState("owner");
-	const [password, setPassword] = useState("123456");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [error, setError] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
