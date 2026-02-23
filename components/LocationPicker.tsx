@@ -108,7 +108,8 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 			</MapContainer>
 
 			<div
-				className={`absolute bottom-2 right-2 bg-white/80 dark:bg-slate-800/80 p-1 text-xs rounded z-[${Z_INDEX.locationAttribution}] pointer-events-none text-slate-600 dark:text-slate-300`}
+				className="absolute bottom-2 right-2 bg-white/80 dark:bg-slate-800/80 p-1 text-xs rounded pointer-events-none text-slate-600 dark:text-slate-300"
+				style={{ zIndex: Z_INDEX.locationAttribution }}
 			>
 				แตะที่แผนที่เพื่อปักหมุด
 			</div>

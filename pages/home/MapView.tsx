@@ -77,7 +77,8 @@ export const MapView: React.FC<MapViewProps> = ({
 			{/* Top Right Controls */}
 			{showMapControls && (
 				<div
-					className={`absolute top-4 right-4 z-[${Z_INDEX.mapButtons}] flex flex-col gap-3 items-end`}
+					className="absolute top-4 right-4 flex flex-col gap-3 items-end"
+					style={{ zIndex: Z_INDEX.mapButtons }}
 				>
 					<div className="flex items-center gap-3">
 						<Button
@@ -120,7 +121,8 @@ export const MapView: React.FC<MapViewProps> = ({
 			{/* Mobile Bottom Sheet Detail */}
 			{isMobile && !isRouteMode && selectedOrchard && statusInfo && (
 				<div
-					className={`absolute bottom-0 left-0 right-0 z-[${Z_INDEX.mapPanel}] rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] animate-in slide-in-from-bottom duration-500 border-t border-slate-100 dark:border-slate-800 max-h-[72vh] overflow-y-auto custom-scrollbar`}
+					className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] animate-in slide-in-from-bottom duration-500 border-t border-slate-100 dark:border-slate-800 max-h-[72vh] overflow-y-auto custom-scrollbar"
+					style={{ zIndex: Z_INDEX.mapPanel }}
 				>
 					<OrchardDetailView
 						orchard={selectedOrchard}

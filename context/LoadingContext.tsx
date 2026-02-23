@@ -57,7 +57,8 @@ export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) =>
 			{children}
 			{isLoading && (
 				<div
-					className={`fixed inset-0 z-[${Z_INDEX.globalLoading}] flex items-center justify-center bg-black/70 backdrop-blur-lg transition-opacity`}
+					className="fixed inset-0 flex items-center justify-center bg-black/70 backdrop-blur-lg transition-opacity"
+					style={{ zIndex: Z_INDEX.globalLoading }}
 				>
 					<div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-2xl flex flex-col items-center gap-6">
 						<div className="animate-spin rounded-full h-16 w-16 border-4 border-slate-200 dark:border-slate-700 border-t-forest-500 dark:border-t-forest-400" />

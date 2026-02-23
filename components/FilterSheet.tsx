@@ -59,7 +59,8 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 
 	return (
 		<div
-			className={`fixed inset-0 z-[${Z_INDEX.filterModal}] flex items-end sm:items-center justify-center sm:p-4`}
+			className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4"
+			style={{ zIndex: Z_INDEX.filterModal }}
 		>
 			{/* Backdrop */}
 			<div

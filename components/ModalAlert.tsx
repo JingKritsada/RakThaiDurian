@@ -48,7 +48,8 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 
 	return (
 		<div
-			className={`fixed inset-0 z-[${Z_INDEX.alertModal}] flex items-center justify-center p-4 animate-in fade-in duration-200`}
+			className="fixed inset-0 flex items-center justify-center p-4 animate-in fade-in duration-200"
+			style={{ zIndex: Z_INDEX.alertModal }}
 		>
 			<div
 				className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"

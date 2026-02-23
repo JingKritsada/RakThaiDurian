@@ -48,8 +48,9 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
 	return (
 		<div
-			className={`fixed inset-0 z-[${Z_INDEX.lightbox}] bg-black/95 flex flex-col pt-16 animate-in fade-in duration-200`}
+			className="fixed inset-0 bg-black/95 flex flex-col pt-16 animate-in fade-in duration-200"
 			role="button"
+			style={{ zIndex: Z_INDEX.lightbox }}
 			tabIndex={0}
 			onClick={(e) => {
 				if (e.target === e.currentTarget) {

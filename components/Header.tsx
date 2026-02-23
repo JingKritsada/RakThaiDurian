@@ -83,12 +83,14 @@ export const Header: React.FC = () => {
 			{isMobileMenuOpen && (
 				<div
 					aria-hidden="true"
-					className={`fixed inset-0 bg-black/60 backdrop-blur-md z-[${Z_INDEX.mobileNavBackdrop}] md:hidden animate-in fade-in duration-200`}
+					className="fixed inset-0 bg-black/60 backdrop-blur-md md:hidden animate-in fade-in duration-200"
+					style={{ zIndex: Z_INDEX.mobileNavBackdrop }}
 					onClick={() => setIsMobileMenuOpen(false)}
 				/>
 			)}
 			<header
-				className={`sticky top-0 z-[${Z_INDEX.mobileNavHeader}] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm`}
+				className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
+				style={{ zIndex: Z_INDEX.mobileNavHeader }}
 			>
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 					<div className="flex justify-between items-center h-16 py-2.5">

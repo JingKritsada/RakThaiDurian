@@ -25,7 +25,8 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 
 	return (
 		<div
-			className={`absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px] z-[${Z_INDEX.mapPanel}]`}
+			className="absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px]"
+			style={{ zIndex: Z_INDEX.mapPanel }}
 		>
 			<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-5 border border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom duration-300">
 				<div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
