@@ -5,26 +5,34 @@
 export const Z_INDEX = {
 	/** Map markers and controls */
 	mapControls: 10,
+
 	/** Sticky headers */
 	header: 50,
+
 	/** Lightbox overlay */
 	lightbox: 100,
-	/** Alert/Confirm modals (above lightbox) */
-	alertModal: 150,
+
 	/** Location picker attribution */
-	locationAttribution: 400,
+	locationAttribution: 200,
+
 	/** Map route info panel */
 	mapPanel: 500,
+
 	/** Map control buttons */
 	mapButtons: 1000,
+
 	/** Mobile navigation overlay backdrop */
-	mobileNavBackdrop: 2000,
+	mobileNavBackdrop: 1500,
+
+	/** Alert/Confirm modals (above lightbox) */
+	alertModal: 2000,
+
 	/** Mobile navigation header */
-	mobileNavHeader: 2001,
+	mobileNavHeader: 3000,
+
 	/** Filter modals */
-	filterModal: 2500,
-	/** Toast notifications */
-	toast: 5000,
+	filterModal: 3500,
+
 	/** Global loading overlay */
 	globalLoading: 9999,
 } as const;
