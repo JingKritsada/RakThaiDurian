@@ -1,8 +1,8 @@
-import { Orchard } from "../interface/orchardInterface";
-import { User } from "../interface/userInterface";
-import { CropOption, ServiceTypeResponse, StatusResponse } from "../interface/dropdownInterface";
-
 import { DurianStatus, OrchardType, CropCategory } from "./enum";
+
+import { Orchard } from "@/interface/orchardInterface";
+import { User } from "@/interface/userInterface";
+import { CropOption, ServiceTypeResponse, StatusResponse } from "@/interface/dropdownInterface";
 
 export const MOCK_OWNER: User = {
 	id: "owner1",

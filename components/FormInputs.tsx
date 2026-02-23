@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, X, Check, ChevronUp } from "lucide-react";
 
+import { Button } from "./Button";
+
 import {
 	InputFieldProps,
 	TextAreaFieldProps,
 	ToggleSwitchProps,
 	MultiSelectFieldProps,
-} from "../interface/inputInterface";
-
-import { Button } from "./Button";
+} from "@/interface/inputInterface";
 
 // --- Components ---
 
@@ -193,7 +193,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 									<Button
 										className="hover:text-forest-900 !min-h-0 !w-auto !p-0 text-inherit"
 										type="button"
-										variant="none"
+										variant="ghost"
 										onClick={(e) => {
 											e.stopPropagation();
 											handleSelect(opt.id);

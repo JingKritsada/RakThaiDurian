@@ -12,12 +12,12 @@ import {
 	Info,
 } from "lucide-react";
 
-import { Orchard } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-import { getImageUrl } from "../utils/constants";
-
 import { Button } from "./Button";
 import { SocialLinks } from "./SocialLinks";
+
+import { Orchard } from "@/interface/orchardInterface";
+import { useMasterData } from "@/context/MasterDataContext";
+import { getImageUrl } from "@/utils/constants";
 
 interface OrchardDetailViewProps {
 	orchard: Orchard;
@@ -71,7 +71,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 									? "bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200"
 									: "bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-300"
 							}`}
-							variant="none"
+							variant="ghost"
 							onClick={onClose}
 						>
 							<X size={20} />
@@ -190,7 +190,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				<div className="grid grid-cols-2 gap-3 mt-3">
 					<Button
 						className="flex items-center justify-center gap-2 bg-forest-800 hover:bg-forest-900 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-forest-900/20 whitespace-nowrap"
-						variant="none"
+						variant="ghost"
 						onClick={() => navigate(`/orchard/${orchard.id}`)}
 					>
 						<Info size={16} /> ดูข้อมูลเพิ่มเติม

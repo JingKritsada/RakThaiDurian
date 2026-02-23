@@ -25,32 +25,26 @@ import {
 	ArrowRight,
 } from "lucide-react";
 
-import { orchardService } from "../services/orchardService";
-import { getErrorMessage } from "../services/api";
-import { useAuth } from "../context/AuthContext";
-import { useMasterData } from "../context/MasterDataContext";
-import { useAlert } from "../context/AlertContext";
+import { orchardService } from "@/services/orchardService";
+import { getErrorMessage } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
+import { useMasterData } from "@/context/MasterDataContext";
+import { useAlert } from "@/context/AlertContext";
+import { OrchardType, DurianStatus } from "@/utils/enum";
 import {
-	OrchardType,
-	DurianStatus,
 	SocialMediaLinks,
 	Accommodation,
 	Package,
 	OrchardFormData,
-} from "../interface/orchardInterface";
-import { ImagePayload, ImageFile } from "../interface/imageInterface";
-import { Button } from "../components/Button";
-import { LocationPicker } from "../components/LocationPicker";
-import {
-	InputField,
-	TextAreaField,
-	ToggleSwitch,
-	MultiSelectField,
-} from "../components/FormInputs";
-import { AccommodationManager } from "../components/AccommodationManager";
-import { PackageManager } from "../components/PackageManager";
-import { LineIcon, TiktokIcon } from "../utils/icons";
-import { getImageUrl } from "../utils/constants";
+} from "@/interface/orchardInterface";
+import { ImagePayload, ImageFile } from "@/interface/imageInterface";
+import { Button } from "@/components/Button";
+import { LocationPicker } from "@/components/LocationPicker";
+import { InputField, TextAreaField, ToggleSwitch, MultiSelectField } from "@/components/FormInputs";
+import { AccommodationManager } from "@/components/AccommodationManager";
+import { PackageManager } from "@/components/PackageManager";
+import { LineIcon, TiktokIcon } from "@/utils/icons";
+import { getImageUrl } from "@/utils/constants";
 
 type TabType = "general" | "location" | "media" | "services";
 const TABS: TabType[] = ["general", "location", "media", "services"];
@@ -426,7 +420,7 @@ export const OrchardForm: React.FC = () => {
 		}
       `}
 			type="button"
-			variant="none"
+			variant="ghost"
 			onClick={() => setActiveTab(id)}
 		>
 			<Icon size={18} />
@@ -673,7 +667,7 @@ export const OrchardForm: React.FC = () => {
 											disabled={isLocating}
 											isLoading={isLocating}
 											type="button"
-											variant="none"
+											variant="ghost"
 											onClick={handleSetCurrentLocation}
 										>
 											{!isLocating && <Locate size={16} />}
@@ -736,7 +730,7 @@ export const OrchardForm: React.FC = () => {
 													className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity !w-auto !h-auto min-h-0"
 													title="ลบรูปภาพ"
 													type="button"
-													variant="none"
+													variant="ghost"
 													onClick={() => removeImage(index)}
 												>
 													<X size={14} />
@@ -747,7 +741,7 @@ export const OrchardForm: React.FC = () => {
 										<Button
 											className="!h-full w-full aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
 											type="button"
-											variant="none"
+											variant="ghost"
 											onClick={() => imageInputRef.current?.click()}
 										>
 											<div className="p-3 bg-white dark:bg-slate-800 rounded-full shadow-sm">
@@ -825,7 +819,7 @@ export const OrchardForm: React.FC = () => {
 													<Button
 														className="text-slate-400 hover:text-red-500 transition-colors p-1 !w-auto !h-auto min-h-0"
 														type="button"
-														variant="none"
+														variant="ghost"
 														onClick={() => handleRemoveVideo(index)}
 													>
 														<Trash2 size={18} />

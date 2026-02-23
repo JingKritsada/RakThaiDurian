@@ -1,11 +1,11 @@
 import React from "react";
 import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
-import { Orchard } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-import { getImageUrl } from "../utils/constants";
-
 import { SocialLinks } from "./SocialLinks";
+
+import { Orchard } from "@/interface/orchardInterface";
+import { useMasterData } from "@/context/MasterDataContext";
+import { getImageUrl } from "@/utils/constants";
 
 interface CardProps {
 	orchard: Orchard;

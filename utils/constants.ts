@@ -1,4 +1,5 @@
 import { DurianStatus, OrchardType } from "./enum";
+import { CONFIG } from "./config";
 
 export const ORCHARD_TYPE_LABELS: Record<OrchardType, string> = {
 	[OrchardType.SELL]: "ซื้อผลผลิต",
@@ -47,7 +48,7 @@ export const STATUS_COLORS: Record<DurianStatus, { tailwind: string; map: string
 /**
  * Base URL for uploaded images from backend
  */
-export const UPLOADS_BASE_URL = "https://platform.psru.ac.th:3022";
+export const UPLOADS_BASE_URL = CONFIG.UPLOADS_BASE_URL;
 
 /**
  * Get full image URL from filename or partial path

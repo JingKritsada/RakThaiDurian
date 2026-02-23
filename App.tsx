@@ -14,7 +14,6 @@ import { OwnerDashboard } from "./pages/OwnerDashboard";
 import { OrchardForm } from "./pages/OrchardForm";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { TestErrorPage } from "./pages/TestErrorPage";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
 function App() {
@@ -37,10 +36,6 @@ function App() {
 													path="/orchard/:id"
 												/>
 												<Route element={<Login />} path="/login" />
-												<Route
-													element={<TestErrorPage />}
-													path="/test-error"
-												/>
 
 												{/* Protected Owner Routes */}
 												<Route element={<PrivateRoute />}>

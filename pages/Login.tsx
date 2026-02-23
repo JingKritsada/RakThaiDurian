@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Lock, Mail, AlertCircle, Eye, EyeOff } from "lucide-react";
 
-import { useAuth } from "../context/AuthContext";
-import { getErrorMessage } from "../services/api";
-import { Button } from "../components/Button";
-import { InputField } from "../components/FormInputs";
+import { useAuth } from "@/context/AuthContext";
+import { getErrorMessage } from "@/services/api";
+import { Button } from "@/components/Button";
+import { InputField } from "@/components/FormInputs";
 
 export const Login: React.FC = () => {
 	const [username, setUsername] = useState("");
@@ -76,7 +76,7 @@ export const Login: React.FC = () => {
 									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors !p-0 rounded-full"
 									tabIndex={-1}
 									type="button"
-									variant="none"
+									variant="ghost"
 									onClick={() => setShowPassword(!showPassword)}
 								>
 									{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useCallback } from "react";
 
-import { ModalAlert, AlertType } from "../components/ModalAlert";
+import { ModalAlert, AlertType } from "@/components/ModalAlert";
 
 interface AlertState {
 	isOpen: boolean;

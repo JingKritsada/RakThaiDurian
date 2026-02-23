@@ -14,50 +14,21 @@ import {
 } from "lucide-react";
 import L from "leaflet";
 
-import { orchardService } from "../services/orchardService";
-import { getErrorMessage } from "../services/api";
-import { Orchard, OrchardType } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-import { useAlert } from "../context/AlertContext";
-import { Card } from "../components/Card";
-import { FilterSheet } from "../components/FilterSheet";
-import { OrchardDetailView } from "../components/OrchardDetailView"; // New Component
-import { OrchardMap } from "../components/OrchardMap";
-import { Button } from "../components/Button";
-
+import { orchardService } from "@/services/orchardService";
+import { getErrorMessage } from "@/services/api";
+import { Orchard } from "@/interface/orchardInterface";
+import { OrchardType } from "@/utils/enum";
+import { useMasterData } from "@/context/MasterDataContext";
+import { useAlert } from "@/context/AlertContext";
+import { Card } from "@/components/Card";
+import { FilterSheet } from "@/components/FilterSheet";
+import { OrchardDetailView } from "@/components/OrchardDetailView";
+import { OrchardMap } from "@/components/OrchardMap";
+import { Button } from "@/components/Button";
+import { calculateDistance } from "@/utils/geo";
+import { useWindowSize } from "@/hooks/useWindowSize";
+import { Z_INDEX } from "@/utils/zIndex";
 import { InputField } from "@/components/FormInputs";
-
-// Utility for Distance Calculation (Haversine Formula)
-const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
-	const R = 6371;
-	const dLat = (lat2 - lat1) * (Math.PI / 180);
-	const dLon = (lon2 - lon1) * (Math.PI / 180);
-	const a =
-		Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-		Math.cos(lat1 * (Math.PI / 180)) *
-			Math.cos(lat2 * (Math.PI / 180)) *
-			Math.sin(dLon / 2) *
-			Math.sin(dLon / 2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-	const d = R * c;
-
-	return d;
-};
-
-// Hook to detect window size
-const useWindowSize = () => {
-	const [size, setSize] = useState({ width: window.innerWidth });
-
-	useEffect(() => {
-		const handleResize = () => setSize({ width: window.innerWidth });
-
-		window.addEventListener("resize", handleResize);
-
-		return () => window.removeEventListener("resize", handleResize);
-	}, []);
-
-	return size;
-};
 
 export const HomePage: React.FC = () => {
 	const { getStatus } = useMasterData();
@@ -403,7 +374,7 @@ export const HomePage: React.FC = () => {
 						<Button
 							className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "list" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
 							title="แสดงรายชื่อ"
-							variant="none"
+							variant="ghost"
 							onClick={() => switchViewMode("list")}
 						>
 							<List size={20} />
@@ -411,7 +382,7 @@ export const HomePage: React.FC = () => {
 						<Button
 							className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "map" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
 							title="แสดงแผนที่"
-							variant="none"
+							variant="ghost"
 							onClick={() => switchViewMode("map")}
 						>
 							<MapIcon size={20} />
@@ -421,7 +392,7 @@ export const HomePage: React.FC = () => {
 					<Button
 						className={`relative w-[50px] h-[50px] !p-0 flex items-center justify-center shrink-0 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
 						disabled={isRouteMode}
-						variant="none"
+						variant="ghost"
 						onClick={() => setIsFilterSheetOpen(true)}
 					>
 						<Filter
@@ -462,7 +433,7 @@ export const HomePage: React.FC = () => {
 							<Button
 								className={`relative px-4 py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
 								disabled={isRouteMode}
-								variant="none"
+								variant="ghost"
 								onClick={() => setIsFilterSheetOpen(true)}
 							>
 								<Filter
@@ -659,7 +630,9 @@ export const HomePage: React.FC = () => {
 
 					{/* Top Right Controls */}
 					{showMapControls && (
-						<div className="absolute top-4 right-4 z-[1000] flex flex-col gap-3 items-end">
+						<div
+							className={`absolute top-4 right-4 z-[${Z_INDEX.mapButtons}] flex flex-col gap-3 items-end`}
+						>
 							<div className="flex items-center gap-3">
 								<Button
 									className={`h-12 !px-5 shadow-lg border-0 transition-all ${isRouteMode ? "!bg-blue-600 hover:!bg-blue-700 ring-4 ring-blue-500/20" : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"}`}
@@ -673,7 +646,7 @@ export const HomePage: React.FC = () => {
 								<Button
 									className="!p-0 h-12 w-12 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors p-0 !min-h-0"
 									title="ตำแหน่งปัจจุบัน"
-									variant="none"
+									variant="ghost"
 									onClick={handleLocate}
 								>
 									{isLocating ? (
@@ -688,7 +661,9 @@ export const HomePage: React.FC = () => {
 
 					{/* Route Stats Panel */}
 					{isRouteMode && routeIds.length > 0 && showMapControls && (
-						<div className="absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px] z-[500]">
+						<div
+							className={`absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px] z-[${Z_INDEX.mapPanel}]`}
+						>
 							<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-5 border border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom duration-300">
 								<div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
 									<div>
@@ -753,7 +728,9 @@ export const HomePage: React.FC = () => {
 
 					{/* Mobile Bottom Sheet Detail */}
 					{isMobile && !isRouteMode && selectedOrchard && statusInfo && (
-						<div className="absolute bottom-0 left-0 right-0 z-[500] rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] animate-in slide-in-from-bottom duration-500 border-t border-slate-100 dark:border-slate-800 max-h-[72vh] overflow-y-auto custom-scrollbar">
+						<div
+							className={`absolute bottom-0 left-0 right-0 z-[${Z_INDEX.mapPanel}] rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] animate-in slide-in-from-bottom duration-500 border-t border-slate-100 dark:border-slate-800 max-h-[72vh] overflow-y-auto custom-scrollbar`}
+						>
 							<OrchardDetailView
 								orchard={selectedOrchard}
 								variant="sheet"

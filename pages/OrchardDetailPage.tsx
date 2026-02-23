@@ -18,17 +18,17 @@ import {
 	RotateCcw,
 } from "lucide-react";
 
-import { orchardService } from "../services/orchardService";
-import { getErrorMessage } from "../services/api";
-import { useMasterData } from "../context/MasterDataContext";
-import { getImageUrl } from "../utils/constants";
-import { useAlert } from "../context/AlertContext";
-import { Orchard } from "../interface/orchardInterface";
-import { Button } from "../components/Button";
-import { OrchardMap } from "../components/OrchardMap";
-import { SocialLinks } from "../components/SocialLinks";
-import { MiniCarousel } from "../components/MiniCarousel";
-import { Lightbox } from "../components/Lightbox";
+import { orchardService } from "@/services/orchardService";
+import { getErrorMessage } from "@/services/api";
+import { useMasterData } from "@/context/MasterDataContext";
+import { getImageUrl } from "@/utils/constants";
+import { useAlert } from "@/context/AlertContext";
+import { Orchard } from "@/interface/orchardInterface";
+import { Button } from "@/components/Button";
+import { OrchardMap } from "@/components/OrchardMap";
+import { SocialLinks } from "@/components/SocialLinks";
+import { MiniCarousel } from "@/components/MiniCarousel";
+import { Lightbox } from "@/components/Lightbox";
 
 export const OrchardDetailPage: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
@@ -320,14 +320,14 @@ export const OrchardDetailPage: React.FC = () => {
 						<>
 							<Button
 								className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 backdrop-blur-sm !w-auto !h-auto min-h-0"
-								variant="none"
+								variant="ghost"
 								onClick={handlePrevImage}
 							>
 								<ChevronLeft size={24} />
 							</Button>
 							<Button
 								className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2 backdrop-blur-sm !w-auto !h-auto min-h-0"
-								variant="none"
+								variant="ghost"
 								onClick={handleNextImage}
 							>
 								<ChevronRight size={24} />
@@ -348,7 +348,7 @@ export const OrchardDetailPage: React.FC = () => {
 					<Button
 						className="bg-forest-800 hover:bg-forest-900 text-white shadow-lg pointer-events-auto rounded-full w-10 h-10 flex items-center justify-center !p-0 transition-transform hover:scale-105"
 						title="ย้อนกลับ"
-						variant="none"
+						variant="ghost"
 						onClick={() => navigate(`/?selected=${id}`)}
 					>
 						<ArrowLeft size={20} />
@@ -363,7 +363,7 @@ export const OrchardDetailPage: React.FC = () => {
 					<Button
 						className="bg-white/90 dark:bg-slate-900/90 hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-md backdrop-blur-sm pointer-events-auto rounded-full w-10 h-10 flex items-center justify-center !p-0 transition-transform hover:scale-105"
 						title="แชร์"
-						variant="none"
+						variant="ghost"
 						onClick={handleShare}
 					>
 						<Share2 size={20} />
@@ -474,14 +474,14 @@ export const OrchardDetailPage: React.FC = () => {
 											<>
 												<Button
 													className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
-													variant="none"
+													variant="ghost"
 													onClick={handlePrevVideo}
 												>
 													<ChevronLeft size={36} />
 												</Button>
 												<Button
 													className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
-													variant="none"
+													variant="ghost"
 													onClick={handleNextVideo}
 												>
 													<ChevronRight size={36} />

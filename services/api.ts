@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 
-import { loadingManager } from "../utils/loadingManager";
+import { loadingManager } from "@/utils/loadingManager";
 
 // Import tokenManager - use dynamic import to avoid circular dependency
 let getToken: () => string | null = () => localStorage.getItem("durian_token");

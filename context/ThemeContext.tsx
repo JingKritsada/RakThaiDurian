@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-import { Theme, FontSize } from "../interface/themeInterface";
+import { Theme, FontSize } from "@/interface/themeInterface";
 
 interface ThemeContextType {
 	theme: Theme;

@@ -1,7 +1,6 @@
-import { User } from "../interface/userInterface";
-
 import { apiClient, apiRequest, ApiOptions, setTokenGetter } from "./api";
 
+import { User } from "@/interface/userInterface";
 import { AuthResponse, UserProfileResponse } from "@/interface/responseInterface";
 
 // Token manager for handling token storage with fallback

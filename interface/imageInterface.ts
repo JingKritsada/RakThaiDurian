@@ -32,15 +32,4 @@ export interface ImageUploadResult {
 	accommodationImageUrls: Record<string, string[]>;
 }
 
-/**
- * Response from a single file upload
- */
-export interface UploadResponse {
-	success: boolean;
-	code: number;
-	message: string;
-	error: string | null;
-	data: {
-		url: string;
-	};
-}
+export type { UploadResponse } from "./responseInterface";

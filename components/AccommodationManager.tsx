@@ -11,12 +11,12 @@ import {
 	Edit2,
 } from "lucide-react";
 
-import { Accommodation } from "../interface/orchardInterface";
-import { useAlert } from "../context/AlertContext";
-import { getImageUrl } from "../utils/constants";
-
 import { Button } from "./Button";
 import { InputField } from "./FormInputs";
+
+import { Accommodation } from "@/interface/orchardInterface";
+import { useAlert } from "@/context/AlertContext";
+import { getImageUrl } from "@/utils/constants";
 
 interface AccommodationManagerProps {
 	accommodations: Accommodation[];
@@ -213,7 +213,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 									className="!p-3 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
 									title="แก้ไข"
 									type="button"
-									variant="none"
+									variant="ghost"
 									onClick={() => handleEdit(item)}
 								>
 									<Edit2 size={16} />
@@ -222,7 +222,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 									className="!p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
 									title="ลบ"
 									type="button"
-									variant="none"
+									variant="ghost"
 									onClick={() => handleDelete(item.id)}
 								>
 									<Trash2 size={16} />
@@ -238,7 +238,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 				<Button
 					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium bg-transparent"
 					type="button"
-					variant="none"
+					variant="ghost"
 					onClick={() => {
 						resetForm();
 						setIsAdding(true);
@@ -265,7 +265,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 						<Button
 							className="text-slate-400 hover:text-slate-600 !min-h-0 !w-auto p-0"
 							type="button"
-							variant="none"
+							variant="ghost"
 							onClick={resetForm}
 						>
 							<X size={20} />
@@ -328,7 +328,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 										<Button
 											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity !min-h-0 !w-auto"
 											type="button"
-											variant="none"
+											variant="ghost"
 											onClick={() => removeNewItemImage(idx)}
 										>
 											<X size={12} />
@@ -338,7 +338,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								<Button
 									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors !min-h-0 p-0"
 									type="button"
-									variant="none"
+									variant="ghost"
 									onClick={() => fileInputRef.current?.click()}
 								>
 									<Upload size={16} />

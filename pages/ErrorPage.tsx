@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Button } from "../components/Button";
-
+import { Button } from "@/components/Button";
 import { FuzzyText } from "@/components/FuzzyText";
 
 interface ErrorPageProps {

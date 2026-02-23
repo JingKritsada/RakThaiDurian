@@ -1,8 +1,8 @@
 import React from "react";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 
-import { SocialMediaLinks } from "../interface/orchardInterface";
-import { LineIcon, TiktokIcon } from "../utils/icons";
+import { SocialMediaLinks } from "@/interface/orchardInterface";
+import { LineIcon, TiktokIcon } from "@/utils/icons";
 
 interface SocialLinksProps {
 	links?: SocialMediaLinks;

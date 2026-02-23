@@ -1,6 +1,4 @@
-import { OrchardType, DurianStatus } from "../utils/enum";
-
-export { OrchardType, DurianStatus };
+import { OrchardType, DurianStatus } from "@/utils/enum";
 
 // Type aliases for backend string compatibility
 // Backend sends types as string[] and status as string
