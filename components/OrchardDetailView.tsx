@@ -107,7 +107,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Service Types */}
 				<div className="hidden md:flex justify-between gap-1.5">
-					{orchard.types.map((typeId) => {
+					{orchard.types?.map((typeId) => {
 						const typeInfo = getServiceType(typeId);
 
 						return typeInfo ? (
@@ -135,25 +135,25 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				)}
 
 				{/* Features Tags */}
-				{(orchard.additionalCrops.length > 0 ||
-					orchard.packages.length > 0 ||
-					orchard.accommodations.length > 0) && (
+				{((orchard.additionalCrops?.length ?? 0) > 0 ||
+					(orchard.packages?.length ?? 0) > 0 ||
+					(orchard.accommodations?.length ?? 0) > 0) && (
 					<div className="hidden md:flex flex-wrap gap-2 justify-center text-white text-xs">
-						{orchard.additionalCrops.length > 0 && (
+						{(orchard.additionalCrops?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Sprout size={14} />
 								สวนผสมผสาน
 							</span>
 						)}
 
-						{orchard.packages.length > 0 && (
+						{(orchard.packages?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Users size={14} />
 								แพ็กเกจ/กิจกรรม
 							</span>
 						)}
 
-						{orchard.accommodations.length > 0 && (
+						{(orchard.accommodations?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Home size={14} />
 								ที่พัก/โฮมสเตย์

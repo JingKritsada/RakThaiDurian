@@ -238,7 +238,7 @@ export const OrchardForm: React.FC = () => {
 
 			const imagePayload: ImagePayload = {
 				orchardImages: formData.images as ImageFile[],
-				packageImages: formData.packages.reduce(
+				packageImages: (formData.packages ?? []).reduce(
 					(acc, pkg) => {
 						acc[pkg.id] = pkg.images as ImageFile[];
 
@@ -246,7 +246,7 @@ export const OrchardForm: React.FC = () => {
 					},
 					{} as Record<string, ImageFile[]>
 				),
-				accommodationImages: formData.accommodations.reduce(
+				accommodationImages: (formData.accommodations ?? []).reduce(
 					(acc, accommodation) => {
 						acc[accommodation.id] = accommodation.images as ImageFile[];
 

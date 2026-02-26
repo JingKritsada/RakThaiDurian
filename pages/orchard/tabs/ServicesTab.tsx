@@ -56,7 +56,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 								label="พืชที่ปลูกเพิ่มเติม (ผัก/ผลไม้)"
 								options={cropOptions}
 								placeholder="เลือกพืชที่ปลูกในสวน..."
-								value={formData.additionalCrops}
+								value={formData.additionalCrops ?? []}
 								onChange={(val) =>
 									setFormData({
 										...formData,
@@ -83,7 +83,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 					{hasAccommodation && (
 						<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
 							<AccommodationManager
-								accommodations={formData.accommodations}
+								accommodations={formData.accommodations ?? []}
 								onChange={(updated) =>
 									setFormData({
 										...formData,
@@ -107,7 +107,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 					{hasPackage && (
 						<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
 							<PackageManager
-								packages={formData.packages}
+								packages={formData.packages ?? []}
 								onChange={(updated) =>
 									setFormData({ ...formData, packages: updated })
 								}

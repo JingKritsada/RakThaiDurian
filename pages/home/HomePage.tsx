@@ -97,7 +97,7 @@ export const HomePage: React.FC = () => {
 		// 1. Filter by Types
 		if (selectedTypes.length > 0) {
 			result = result.filter((orchard) =>
-				selectedTypes.every((type) => orchard.types.includes(type))
+				selectedTypes.every((type) => orchard.types?.includes(type))
 			);
 		}
 
@@ -211,7 +211,7 @@ export const HomePage: React.FC = () => {
 			!isRouteMode
 		) {
 			let minDist = Infinity;
-			let nearest: Orchard | null = null;
+			let nearest: Orchard | null = null as Orchard | null;
 
 			orchards.forEach((o) => {
 				const d = calculateDistance(userLocation[0], userLocation[1], o.lat, o.lng);
@@ -319,7 +319,7 @@ export const HomePage: React.FC = () => {
 	};
 
 	const selectedOrchard: Orchard | undefined = orchards.find((o) => o.id === selectedOrchardId);
-	const statusInfo = selectedOrchard ? getStatus(selectedOrchard.status) : null;
+	const statusInfo = selectedOrchard ? (getStatus(selectedOrchard.status) ?? null) : null;
 
 	// Calculate Active Filter Count for Badge
 	const activeFilterCount = selectedTypes.length + (sortBy !== "default" ? 1 : 0);

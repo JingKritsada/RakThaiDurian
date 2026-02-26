@@ -81,7 +81,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 
 	const handleAddVideo = () => {
 		if (tempVideoUrl.trim() === "") return;
-		if (formData.videos.includes(tempVideoUrl)) {
+		if (formData.videos?.includes(tempVideoUrl)) {
 			showAlert("ข้อมูลซ้ำ", "ลิงก์วิดีโอนี้ถูกเพิ่มไปแล้ว", "info");
 
 			return;
@@ -89,7 +89,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 
 		setFormData((prev) => ({
 			...prev,
-			videos: [...prev.videos, tempVideoUrl],
+			videos: [...(prev.videos ?? []), tempVideoUrl],
 		}));
 		setTempVideoUrl("");
 	};
@@ -97,7 +97,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 	const handleRemoveVideo = (indexToRemove: number) => {
 		setFormData((prev) => ({
 			...prev,
-			videos: prev.videos.filter((_, index) => index !== indexToRemove),
+			videos: (prev.videos ?? []).filter((_, index) => index !== indexToRemove),
 		}));
 	};
 
@@ -205,9 +205,9 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 						</Button>
 					</div>
 
-					{formData.videos.length > 0 && (
+					{(formData.videos?.length ?? 0) > 0 && (
 						<div className="space-y-2 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
-							{formData.videos.map((video, index) => (
+							{formData.videos?.map((video, index) => (
 								<div
 									key={index}
 									className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm"
@@ -252,35 +252,35 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 							icon={LineIcon}
 							label="Line (Link to Profile)"
 							placeholder="https://line.me/ti/p/~yourid"
-							value={formData.socialMedia.line}
+							value={formData.socialMedia?.line ?? ""}
 							onChange={(e) => handleSocialChange("line", e.target.value)}
 						/>
 						<InputField
 							icon={Facebook}
 							label="Facebook (URL)"
 							placeholder="https://facebook.com/yourpage"
-							value={formData.socialMedia.facebook}
+							value={formData.socialMedia?.facebook ?? ""}
 							onChange={(e) => handleSocialChange("facebook", e.target.value)}
 						/>
 						<InputField
 							icon={Instagram}
 							label="Instagram (URL)"
 							placeholder="https://instagram.com/yourprofile"
-							value={formData.socialMedia.instagram}
+							value={formData.socialMedia?.instagram ?? ""}
 							onChange={(e) => handleSocialChange("instagram", e.target.value)}
 						/>
 						<InputField
 							icon={TiktokIcon}
 							label="TikTok (URL)"
 							placeholder="https://tiktok.com/@yourprofile"
-							value={formData.socialMedia.tiktok}
+							value={formData.socialMedia?.tiktok ?? ""}
 							onChange={(e) => handleSocialChange("tiktok", e.target.value)}
 						/>
 						<InputField
 							icon={Youtube}
 							label="YouTube (URL)"
 							placeholder="https://youtube.com/c/yourchannel"
-							value={formData.socialMedia.youtube}
+							value={formData.socialMedia?.youtube ?? ""}
 							onChange={(e) => handleSocialChange("youtube", e.target.value)}
 						/>
 					</div>

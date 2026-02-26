@@ -93,11 +93,11 @@ export const OrchardDetailPage: React.FC = () => {
 				.then(() => {
 					showAlert("สำเร็จ", "คัดลอกลิงก์เรียบร้อยแล้ว", "success");
 				})
-				.catch((err) => {
+				.catch((error) => {
 					showAlert(
 						"ขออภัย",
 						"ไม่สามารถคัดลอกลิงก์ได้ (เบราว์เซอร์อาจไม่รองรับในโหมดนี้)",
-						err.message.toString()
+						error.message.toString()
 					);
 				});
 		} else {
@@ -110,8 +110,8 @@ export const OrchardDetailPage: React.FC = () => {
 				document.execCommand("copy");
 				document.body.removeChild(textArea);
 				showAlert("สำเร็จ", "คัดลอกลิงก์เรียบร้อยแล้ว", "success");
-			} catch (err) {
-				showAlert("ขออภัย", "ไม่สามารถแชร์ได้ในขณะนี้", (err as Error).message.toString());
+			} catch (error) {
+				showAlert("ขออภัย", "ไม่สามารถแชร์ได้ในขณะนี้", (error as any).message.toString());
 			}
 		}
 	};
@@ -193,11 +193,11 @@ export const OrchardDetailPage: React.FC = () => {
 
 	if (!orchard) return null;
 
-	const statusInfo = getStatus(orchard.status);
+	const statusInfo = getStatus(orchard.status) ?? null;
 	const hasServices =
-		orchard.additionalCrops.length > 0 ||
-		orchard.accommodations.length > 0 ||
-		orchard.packages.length > 0;
+		(orchard.additionalCrops?.length ?? 0) > 0 ||
+		(orchard.accommodations?.length ?? 0) > 0 ||
+		(orchard.packages?.length ?? 0) > 0;
 
 	return (
 		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-950">
@@ -217,7 +217,10 @@ export const OrchardDetailPage: React.FC = () => {
 				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 					{/* Left Column (Main Info) */}
 					<div className="lg:col-span-2 space-y-6">
-						<OrchardInfo getServiceType={getServiceType} orchard={orchard} />
+						<OrchardInfo
+							getServiceType={(id: string | number) => getServiceType(String(id))}
+							orchard={orchard}
+						/>
 
 						<OrchardGallery
 							currentVideoIndex={currentVideoIndex}
@@ -242,7 +245,7 @@ export const OrchardDetailPage: React.FC = () => {
 
 								<div className="space-y-8">
 									{/* Mixed Agro */}
-									{orchard.additionalCrops.length > 0 && (
+									{(orchard.additionalCrops?.length ?? 0) > 0 && (
 										<div>
 											<div className="flex items-center gap-2 mb-3">
 												<Sprout className="text-forest-500" size={20} />
@@ -254,7 +257,7 @@ export const OrchardDetailPage: React.FC = () => {
 												นอกจากทุเรียนแล้ว ยังมีพืชผลอื่นๆ:
 											</p>
 											<div className="flex flex-wrap gap-2">
-												{orchard.additionalCrops.map((CropOption, idx) => {
+												{orchard.additionalCrops?.map((CropOption, idx) => {
 													const cropInfo = getCrop(CropOption);
 
 													return (
@@ -271,14 +274,16 @@ export const OrchardDetailPage: React.FC = () => {
 									)}
 
 									<OrchardAccommodations
-										hasPrecedingContent={orchard.additionalCrops.length > 0}
+										hasPrecedingContent={
+											(orchard.additionalCrops?.length ?? 0) > 0
+										}
 										orchard={orchard}
 									/>
 
 									<OrchardPackages
 										hasPrecedingContent={
-											orchard.additionalCrops.length > 0 ||
-											orchard.accommodations.length > 0
+											(orchard.additionalCrops?.length ?? 0) > 0 ||
+											(orchard.accommodations?.length ?? 0) > 0
 										}
 										orchard={orchard}
 									/>
