@@ -58,6 +58,11 @@ export const UPLOADS_BASE_URL = CONFIG.UPLOADS_BASE_URL;
 export const getImageUrl = (imagePath: string): string => {
 	if (!imagePath) return "";
 
-	// Otherwise, prepend the base URL
-	return `${UPLOADS_BASE_URL}${imagePath}`;
+	// Backend returns paths like /public/uploads/...
+	// but they are proxied/rewritten to /uploads/... on our server
+	const normalizedPath = imagePath.startsWith("/public/")
+		? imagePath.slice("/public".length)
+		: imagePath;
+
+	return `${UPLOADS_BASE_URL}${normalizedPath}`;
 };

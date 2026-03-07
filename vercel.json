@@ -5,6 +5,10 @@
 			"destination": "https://platform.psru.ac.th:3022/api/:path*"
 		},
 		{
+			"source": "/uploads/:path*",
+			"destination": "https://platform.psru.ac.th:3022/public/uploads/:path*"
+		},
+		{
 			"source": "/osm-tiles/:path*",
 			"destination": "https://tile.openstreetmap.org/:path*"
 		}

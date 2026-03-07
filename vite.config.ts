@@ -15,6 +15,12 @@ export default defineConfig(() => {
 					changeOrigin: true,
 					secure: false,
 				},
+				"/uploads": {
+					target: "https://platform.psru.ac.th:3022",
+					changeOrigin: true,
+					secure: false,
+					rewrite: (path) => `/public${path}`,
+				},
 				"/osm-tiles": {
 					target: "https://tile.openstreetmap.org",
 					changeOrigin: true,
