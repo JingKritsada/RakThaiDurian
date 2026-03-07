@@ -1,14 +1,14 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-import { CropOption, ServiceTypeOption, StatusOption } from "../interface/dropdownInterface";
-import { dropdownService } from "../services/dropdownService";
+import { CropOption, ServiceTypeOption, StatusOption } from "@/interface/dropdownInterface";
+import { dropdownService } from "@/services/dropdownService";
 import {
 	ORCHARD_TYPE_LABELS,
 	ORCHARD_TYPE_ICONS,
 	STATUS_LABELS,
 	STATUS_COLORS,
-} from "../utils/constants";
-import { OrchardType, DurianStatus } from "../utils/enum";
+} from "@/utils/constants";
+import { OrchardType, DurianStatus } from "@/utils/enum";
 
 interface MasterDataContextType {
 	serviceTypes: ServiceTypeOption[];

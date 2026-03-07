@@ -1,11 +1,11 @@
 import React from "react";
 import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
-import { Orchard } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-import { getImageUrl } from "../utils/constants";
-
 import { SocialLinks } from "./SocialLinks";
+
+import { Orchard } from "@/interface/orchardInterface";
+import { useMasterData } from "@/context/MasterDataContext";
+import { getImageUrl } from "@/utils/constants";
 
 interface CardProps {
 	orchard: Orchard;
@@ -94,7 +94,7 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 
 				<div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-between items-start sm:items-end lg:items-start xl:items-end pt-3 border-t border-slate-100 dark:border-slate-700 gap-3 mt-auto">
 					<div className="flex flex-wrap gap-2">
-						{orchard.types.map((typeId) => {
+						{orchard.types?.map((typeId) => {
 							const typeInfo = getServiceType(typeId);
 
 							return typeInfo ? (

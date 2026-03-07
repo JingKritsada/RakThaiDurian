@@ -1,10 +1,28 @@
-import { Orchard, Accommodation, Package } from "../interface/orchardInterface";
-import { ImagePayload, ImageUploadResult } from "../interface/imageInterface";
-
 import { apiClient, apiRequest, ApiOptions } from "./api";
 import { uploadService } from "./uploadService";
 
+import { Orchard, Accommodation, Package } from "@/interface/orchardInterface";
+import { ImagePayload, ImageUploadResult } from "@/interface/imageInterface";
 import { OrchardsListResponse, OrchardResponse } from "@/interface/responseInterface";
+
+const attachOrchardImages = (urls: string[]): { images: string[] } => ({
+	images: urls,
+});
+
+const attachAccommodationImages = (
+	accommodations: Accommodation[],
+	imageMap: Record<string, string[]>
+): Accommodation[] =>
+	accommodations.map((accommodation) => ({
+		...accommodation,
+		images: imageMap[accommodation.id] || [],
+	}));
+
+const attachPackageImages = (packages: Package[], imageMap: Record<string, string[]>): Package[] =>
+	packages.map((pkg) => ({
+		...pkg,
+		images: imageMap[pkg.id] || [],
+	}));
 
 export const orchardService = {
 	/**
@@ -128,23 +146,21 @@ export const orchardService = {
 	): T & { images: string[]; accommodations?: Accommodation[]; packages?: Package[] } => {
 		const result = {
 			...orchardData,
-			images: imageResult.orchardImageUrls,
+			...attachOrchardImages(imageResult.orchardImageUrls),
 		};
 
-		// Attach accommodation images
 		if (orchardData.accommodations && orchardData.accommodations.length > 0) {
-			result.accommodations = orchardData.accommodations.map((accommodation) => ({
-				...accommodation,
-				images: imageResult.accommodationImageUrls[accommodation.id] || [],
-			}));
+			result.accommodations = attachAccommodationImages(
+				orchardData.accommodations,
+				imageResult.accommodationImageUrls
+			);
 		}
 
-		// Attach package images
 		if (orchardData.packages && orchardData.packages.length > 0) {
-			result.packages = orchardData.packages.map((pkg) => ({
-				...pkg,
-				images: imageResult.packageImageUrls[pkg.id] || [],
-			}));
+			result.packages = attachPackageImages(
+				orchardData.packages,
+				imageResult.packageImageUrls
+			);
 		}
 
 		return result;

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { X, ArrowUpDown, Check, MapPin, RefreshCw } from "lucide-react";
 
-import { OrchardType } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-
 import { Button } from "./Button";
+
+import { OrchardType } from "@/utils/enum";
+import { useMasterData } from "@/context/MasterDataContext";
+import { Z_INDEX } from "@/utils/zIndex";
 
 interface FilterSheetProps {
 	isOpen: boolean;
@@ -57,7 +58,10 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 z-[2500] flex items-end sm:items-center justify-center sm:p-4">
+		<div
+			className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4"
+			style={{ zIndex: Z_INDEX.filterModal }}
+		>
 			{/* Backdrop */}
 			<div
 				className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
@@ -78,7 +82,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 					</h3>
 					<Button
 						className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors !min-h-0 !w-auto"
-						variant="none"
+						variant="ghost"
 						onClick={onClose}
 					>
 						<X size={24} />
@@ -189,7 +193,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 								: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
 						}
                       `}
-											variant="none"
+											variant="ghost"
 											onClick={() => toggleFilter(type.id as OrchardType)}
 										>
 											{isSelected && (

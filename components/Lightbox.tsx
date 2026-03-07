@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 
-import { getImageUrl } from "../utils/constants";
-
 import { Button } from "./Button";
+
+import { getImageUrl } from "@/utils/constants";
+import { Z_INDEX } from "@/utils/zIndex";
 
 interface LightboxProps {
 	isOpen: boolean;
@@ -47,8 +48,9 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
 	return (
 		<div
-			className="fixed inset-0 z-[100] bg-black/95 flex flex-col pt-16 animate-in fade-in duration-200"
+			className="fixed inset-0 bg-black/95 flex flex-col pt-16 animate-in fade-in duration-200"
 			role="button"
+			style={{ zIndex: Z_INDEX.lightbox }}
 			tabIndex={0}
 			onClick={(e) => {
 				if (e.target === e.currentTarget) {
@@ -86,7 +88,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
 					<Button
 						className="absolute right-4 top-10 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-						variant="none"
+						variant="ghost"
 						onClick={onClose}
 					>
 						<X size={36} />
@@ -97,14 +99,14 @@ export const Lightbox: React.FC<LightboxProps> = ({
 						<>
 							<Button
 								className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-								variant="none"
+								variant="ghost"
 								onClick={handlePrev}
 							>
 								<ChevronLeft size={36} />
 							</Button>
 							<Button
 								className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-								variant="none"
+								variant="ghost"
 								onClick={handleNext}
 							>
 								<ChevronRight size={36} />

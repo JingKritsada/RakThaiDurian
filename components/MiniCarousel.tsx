@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { getImageUrl } from "../utils/constants";
-
 import { Button } from "./Button";
+
+import { getImageUrl } from "@/utils/constants";
 
 interface MiniCarouselProps {
 	images: string[];
@@ -50,14 +50,14 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 				<>
 					<Button
 						className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-md !p-1 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 backdrop-blur-sm !w-auto !h-auto min-h-0 z-10"
-						variant="none"
+						variant="ghost"
 						onClick={handlePrev}
 					>
 						<ChevronLeft size={24} />
 					</Button>
 					<Button
 						className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-md !p-1 opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 backdrop-blur-sm !w-auto !h-auto min-h-0 z-10"
-						variant="none"
+						variant="ghost"
 						onClick={handleNext}
 					>
 						<ChevronRight size={24} />

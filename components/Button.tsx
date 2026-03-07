@@ -1,65 +1,83 @@
 import React, { ButtonHTMLAttributes } from "react";
 
+type ButtonVariant = "primary" | "secondary" | "danger" | "ghost" | "outline";
+type ButtonSize = "xs" | "sm" | "md" | "lg";
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?: "primary" | "secondary" | "danger" | "ghost" | "none";
+	variant?: ButtonVariant;
+	size?: ButtonSize;
 	isLoading?: boolean;
+	leftIcon?: React.ReactNode;
+	rightIcon?: React.ReactNode;
 }
+
+const sizeStyles: Record<ButtonSize, string> = {
+	xs: "px-2 py-1 text-xs gap-1 rounded-lg",
+	sm: "px-3 py-1.5 text-sm gap-1.5 rounded-lg",
+	md: "px-4 py-2.5 text-base gap-2 rounded-xl",
+	lg: "px-6 py-3 text-lg gap-2 rounded-xl",
+};
+
+const variantStyles: Record<ButtonVariant, string> = {
+	primary: "bg-forest-800 hover:bg-forest-900 text-white shadow-sm hover:shadow-md",
+	secondary:
+		"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm",
+	danger: "bg-red-600 hover:bg-red-700 text-white shadow-sm",
+	ghost: "bg-transparent text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-forest-800 dark:hover:text-white",
+	outline:
+		"bg-transparent border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700",
+};
 
 export const Button: React.FC<ButtonProps> = ({
 	children,
 	variant = "primary",
-	isLoading,
+	size = "md",
+	isLoading = false,
+	leftIcon,
+	rightIcon,
 	className = "",
 	disabled,
 	...props
 }) => {
-	// Updated base style: Rounded-xl, font-medium, proper padding
 	const baseStyle =
-		"px-4 py-3 rounded-xl font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-base";
-
-	const variants = {
-		primary: "bg-forest-800 hover:bg-forest-900 text-white shadow-sm hover:shadow-md",
-		secondary:
-			"bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 shadow-sm",
-		danger: "bg-red-600 hover:bg-red-700 text-white shadow-sm",
-		ghost: "bg-transparent text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-forest-800 dark:hover:text-white",
-		none: "",
-	};
+		"font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center";
 
 	return (
 		<button
-			className={`${baseStyle} ${variants[variant]} ${className}`}
+			className={`${baseStyle} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`}
 			disabled={disabled || isLoading}
 			{...props}
 		>
 			{isLoading ? (
-				<>
-					<svg
-						className="animate-spin -ml-1 mr-3 h-5 w-5"
-						fill="none"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle
-							className="opacity-25"
-							cx="12"
-							cy="12"
-							r="10"
-							stroke="currentColor"
-							strokeWidth="4"
-						/>
-
-						<path
-							className="opacity-75"
-							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-							fill="currentColor"
-						/>
-					</svg>
-					กำลังประมวลผล...
-				</>
+				<LoadingSpinner />
 			) : (
-				children
+				<>
+					{leftIcon}
+					{children}
+					{rightIcon}
+				</>
 			)}
 		</button>
 	);
 };
+
+const LoadingSpinner: React.FC = () => (
+	<span className="flex items-center gap-2">
+		<svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+			<circle
+				className="opacity-25"
+				cx="12"
+				cy="12"
+				r="10"
+				stroke="currentColor"
+				strokeWidth="4"
+			/>
+			<path
+				className="opacity-75"
+				d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+				fill="currentColor"
+			/>
+		</svg>
+		กำลังประมวลผล...
+	</span>
+);

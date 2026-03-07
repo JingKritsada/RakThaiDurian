@@ -1,4 +1,3 @@
-import React from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 
 import { ThemeProvider } from "./context/ThemeContext";
@@ -7,14 +6,13 @@ import { MasterDataProvider } from "./context/MasterDataContext";
 import { AlertProvider } from "./context/AlertContext";
 import { LoadingProvider } from "./context/LoadingContext";
 import { Header } from "./components/Header";
-import { HomePage } from "./pages/HomePage";
-import { OrchardDetailPage } from "./pages/OrchardDetailPage";
+import { HomePage } from "./pages/home/HomePage";
+import { OrchardDetailPage } from "./pages/orchard/OrchardDetailPage";
 import { Login } from "./pages/Login";
 import { OwnerDashboard } from "./pages/OwnerDashboard";
-import { OrchardForm } from "./pages/OrchardForm";
+import { OrchardForm } from "./pages/orchard/OrchardForm";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import { TestErrorPage } from "./pages/TestErrorPage";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 
 function App() {
@@ -37,10 +35,6 @@ function App() {
 													path="/orchard/:id"
 												/>
 												<Route element={<Login />} path="/login" />
-												<Route
-													element={<TestErrorPage />}
-													path="/test-error"
-												/>
 
 												{/* Protected Owner Routes */}
 												<Route element={<PrivateRoute />}>

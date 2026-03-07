@@ -1,45 +1,51 @@
-import { CropOption, ServiceTypeResponse, StatusResponse } from "../interface/dropdownInterface";
-import { MOCK_SERVICE_TYPES, MOCK_STATUSES, MOCK_CROPS } from "../utils/mock";
-import { loadingManager } from "../utils/loadingManager";
+import { apiClient, apiRequest, ApiOptions } from "./api";
 
-import { ApiOptions } from "./api";
+import { CropOption, ServiceTypeResponse, StatusResponse } from "@/interface/dropdownInterface";
+import { MOCK_SERVICE_TYPES, MOCK_STATUSES, MOCK_CROPS } from "@/utils/mock";
+import { loadingManager } from "@/utils/loadingManager";
+
+const USE_MOCK = import.meta.env.VITE_USE_MOCK !== "false";
+
+const mockWithDelay = <T>(data: T, options?: ApiOptions): Promise<T> => {
+	if (!options?.skipGlobalLoading) loadingManager.show();
+
+	return new Promise((resolve) => {
+		setTimeout(() => {
+			if (!options?.skipGlobalLoading) loadingManager.hide();
+			resolve(data);
+		}, 300);
+	});
+};
 
 /**
  * Dropdown Service
- * Note: Backend doesn't have dropdown endpoints yet, using mock data
- * When backend implements these endpoints, replace with apiRequest calls
+ * Uses mock data by default. Set VITE_USE_MOCK=false to use real API endpoints.
  */
 export const dropdownService = {
 	getServiceTypes: (options?: ApiOptions): Promise<ServiceTypeResponse[]> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+		if (USE_MOCK) {
+			return mockWithDelay([...MOCK_SERVICE_TYPES], options);
+		}
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve([...MOCK_SERVICE_TYPES]);
-			}, 300);
-		});
+		return apiRequest<ServiceTypeResponse[]>(
+			() => apiClient.get("/data/service-types"),
+			options
+		);
 	},
 
 	getOrchardStatuses: (options?: ApiOptions): Promise<StatusResponse[]> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+		if (USE_MOCK) {
+			return mockWithDelay([...MOCK_STATUSES], options);
+		}
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve([...MOCK_STATUSES]);
-			}, 300);
-		});
+		return apiRequest<StatusResponse[]>(() => apiClient.get("/data/statuses"), options);
 	},
 
 	getAdditionalCrops: (options?: ApiOptions): Promise<CropOption[]> => {
-		if (!options?.skipGlobalLoading) loadingManager.show();
+		if (USE_MOCK) {
+			return mockWithDelay([...MOCK_CROPS], options);
+		}
 
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				if (!options?.skipGlobalLoading) loadingManager.hide();
-				resolve([...MOCK_CROPS]);
-			}, 300);
-		});
+		return apiRequest<CropOption[]>(() => apiClient.get("/data/crops"), options);
 	},
 };

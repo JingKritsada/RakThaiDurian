@@ -12,12 +12,12 @@ import {
 	Info,
 } from "lucide-react";
 
-import { Orchard } from "../interface/orchardInterface";
-import { useMasterData } from "../context/MasterDataContext";
-import { getImageUrl } from "../utils/constants";
-
 import { Button } from "./Button";
 import { SocialLinks } from "./SocialLinks";
+
+import { Orchard } from "@/interface/orchardInterface";
+import { useMasterData } from "@/context/MasterDataContext";
+import { getImageUrl } from "@/utils/constants";
 
 interface OrchardDetailViewProps {
 	orchard: Orchard;
@@ -71,7 +71,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 									? "bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200"
 									: "bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-300"
 							}`}
-							variant="none"
+							variant="ghost"
 							onClick={onClose}
 						>
 							<X size={20} />
@@ -107,7 +107,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Service Types */}
 				<div className="hidden md:flex justify-between gap-1.5">
-					{orchard.types.map((typeId) => {
+					{orchard.types?.map((typeId) => {
 						const typeInfo = getServiceType(typeId);
 
 						return typeInfo ? (
@@ -135,25 +135,25 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				)}
 
 				{/* Features Tags */}
-				{(orchard.additionalCrops.length > 0 ||
-					orchard.packages.length > 0 ||
-					orchard.accommodations.length > 0) && (
+				{((orchard.additionalCrops?.length ?? 0) > 0 ||
+					(orchard.packages?.length ?? 0) > 0 ||
+					(orchard.accommodations?.length ?? 0) > 0) && (
 					<div className="hidden md:flex flex-wrap gap-2 justify-center text-white text-xs">
-						{orchard.additionalCrops.length > 0 && (
+						{(orchard.additionalCrops?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Sprout size={14} />
 								สวนผสมผสาน
 							</span>
 						)}
 
-						{orchard.packages.length > 0 && (
+						{(orchard.packages?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Users size={14} />
 								แพ็กเกจ/กิจกรรม
 							</span>
 						)}
 
-						{orchard.accommodations.length > 0 && (
+						{(orchard.accommodations?.length ?? 0) > 0 && (
 							<span className="flex items-center gap-1 px-3 py-2 rounded-full bg-forest-800/90 shadow-sm">
 								<Home size={14} />
 								ที่พัก/โฮมสเตย์
@@ -190,7 +190,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				<div className="grid grid-cols-2 gap-3 mt-3">
 					<Button
 						className="flex items-center justify-center gap-2 bg-forest-800 hover:bg-forest-900 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-forest-900/20 whitespace-nowrap"
-						variant="none"
+						variant="ghost"
 						onClick={() => navigate(`/orchard/${orchard.id}`)}
 					>
 						<Info size={16} /> ดูข้อมูลเพิ่มเติม

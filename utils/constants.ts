@@ -1,4 +1,5 @@
 import { DurianStatus, OrchardType } from "./enum";
+import { CONFIG } from "./config";
 
 export const ORCHARD_TYPE_LABELS: Record<OrchardType, string> = {
 	[OrchardType.SELL]: "ซื้อผลผลิต",
@@ -47,7 +48,7 @@ export const STATUS_COLORS: Record<DurianStatus, { tailwind: string; map: string
 /**
  * Base URL for uploaded images from backend
  */
-export const UPLOADS_BASE_URL = "https://platform.psru.ac.th:3022";
+export const UPLOADS_BASE_URL = CONFIG.UPLOADS_BASE_URL;
 
 /**
  * Get full image URL from filename or partial path
@@ -57,6 +58,11 @@ export const UPLOADS_BASE_URL = "https://platform.psru.ac.th:3022";
 export const getImageUrl = (imagePath: string): string => {
 	if (!imagePath) return "";
 
-	// Otherwise, prepend the base URL
-	return `${UPLOADS_BASE_URL}${imagePath}`;
+	// Backend returns paths like /public/uploads/...
+	// but they are proxied/rewritten to /uploads/... on our server
+	const normalizedPath = imagePath.startsWith("/public/")
+		? imagePath.slice("/public".length)
+		: imagePath;
+
+	return `${UPLOADS_BASE_URL}${normalizedPath}`;
 };

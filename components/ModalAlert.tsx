@@ -3,6 +3,8 @@ import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from "lucide-react";
 
 import { Button } from "./Button";
 
+import { Z_INDEX } from "@/utils/zIndex";
+
 export type AlertType = "success" | "error" | "warning" | "info";
 
 export interface ModalAlertProps {
@@ -45,7 +47,10 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 	if (!isOpen) return null;
 
 	return (
-		<div className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-in fade-in duration-200">
+		<div
+			className="fixed inset-0 flex items-center justify-center p-4 animate-in fade-in duration-200"
+			style={{ zIndex: Z_INDEX.alertModal }}
+		>
 			<div
 				className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
 				role="button"
@@ -59,7 +64,7 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 			<div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-sm w-full p-6 transform scale-100 transition-all animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-700">
 				<Button
 					className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors !min-h-0 !w-auto p-0"
-					variant="none"
+					variant="ghost"
 					onClick={onClose}
 				>
 					<X size={20} />

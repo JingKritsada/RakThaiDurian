@@ -2,13 +2,13 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
 
-import { orchardService } from "../services/orchardService";
-import { getErrorMessage } from "../services/api";
-import { useAuth } from "../context/AuthContext";
-import { useAlert } from "../context/AlertContext";
-import { Orchard } from "../interface/orchardInterface";
-import { Button } from "../components/Button";
-import { Card } from "../components/Card";
+import { orchardService } from "@/services/orchardService";
+import { getErrorMessage } from "@/services/api";
+import { useAuth } from "@/context/AuthContext";
+import { useAlert } from "@/context/AlertContext";
+import { Orchard } from "@/interface/orchardInterface";
+import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
 
 export const OwnerDashboard: React.FC = () => {
 	const { user } = useAuth();
@@ -70,7 +70,7 @@ export const OwnerDashboard: React.FC = () => {
 						<Link to="/owner/add">
 							<Button
 								className="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-xl font-bold flex items-center shadow-lg transition-transform transform hover:scale-105 whitespace-nowrap !min-h-0"
-								variant="none"
+								variant="ghost"
 							>
 								<Plus className="mr-2" size={22} />
 								ลงทะเบียนสวนใหม่
@@ -120,14 +120,14 @@ export const OwnerDashboard: React.FC = () => {
 									<Link to={`/owner/edit/${orchard.id}`}>
 										<Button
 											className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-forest-100 hover:text-forest-700 dark:hover:bg-forest-900 transition-colors shadow-sm whitespace-nowrap !min-h-0"
-											variant="none"
+											variant="ghost"
 										>
 											<Edit2 size={16} /> แก้ไขข้อมูล
 										</Button>
 									</Link>
 									<Button
 										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/70 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/60 transition-colors shadow-sm whitespace-nowrap !min-h-0"
-										variant="none"
+										variant="ghost"
 										onClick={() => handleDelete(orchard.id)}
 									>
 										<Trash2 size={16} /> ลบ
