@@ -40,7 +40,7 @@ export const STATUS_COLORS: Record<DurianStatus, { tailwind: string; map: string
 	},
 	[DurianStatus.OUT]: {
 		tailwind:
-			"bg-slate-400 text-slate-800 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700",
+			"bg-slate-300 text-slate-800 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700",
 		map: "#64748b",
 	},
 };

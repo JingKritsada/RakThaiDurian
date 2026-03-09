@@ -28,22 +28,22 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 	onSwitchViewMode,
 }) => {
 	return (
-		<div className="flex gap-3">
+		<div className="flex flex-row gap-2">
 			<InputField
 				className="w-full"
 				disabled={isRouteMode}
 				icon={Search}
-				inputClassName={`w-full !h-full py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none`}
-				placeholder="ค้นหารายชื่อสวนทุเรียน..."
+				inputClassName={`w-full h-full! py-3.5 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none`}
+				placeholder="ค้นหารายชื่อสวน..."
 				type="text"
 				value={searchQuery}
 				onChange={(e) => onSearchChange(e.target.value)}
 			/>
 
 			{showViewToggle && onSwitchViewMode && (
-				<div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-300 dark:border-slate-700 h-[50px] items-center shrink-0">
+				<div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-300 dark:border-slate-700 h-12.5 items-center shrink-0">
 					<Button
-						className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "list" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
+						className={`w-auto h-full aspect-square p-0! flex items-center justify-center rounded-lg transition-all border-none hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "list" ? "bg-white dark:bg-slate-600 shadow-md" : ""}`}
 						title="แสดงรายชื่อ"
 						variant="ghost"
 						onClick={() => onSwitchViewMode("list")}
@@ -51,7 +51,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 						<List size={20} />
 					</Button>
 					<Button
-						className={`w-auto h-full flex items-center justify-center rounded-lg transition-all !px-3 !min-h-0 border-0 ${viewMode === "map" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white" : "text-slate-400 bg-transparent"}`}
+						className={`w-auto h-full aspect-square p-0! flex items-center justify-center rounded-lg transition-all border-none hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "map" ? "bg-white dark:bg-slate-600 shadow-md" : ""}`}
 						title="แสดงแผนที่"
 						variant="ghost"
 						onClick={() => onSwitchViewMode("map")}
@@ -62,7 +62,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 			)}
 
 			<Button
-				className={`relative ${showViewToggle ? "w-[50px] h-[50px] !p-0" : "px-4 py-3.5"} flex items-center justify-center shrink-0 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
+				className={`relative ${showViewToggle ? "w-12.5 h-12.5 p-0!" : "p-4!"} flex items-center justify-center shrink-0 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
 				disabled={isRouteMode}
 				variant="ghost"
 				onClick={onOpenFilter}
@@ -71,7 +71,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 					className={activeFilterCount > 0 ? "text-forest-600" : "text-slate-500"}
 					size={20}
 				/>
-				{showFilterLabel && <span className="text-nowrap ml-2">ตัวกรอง</span>}
+				{showFilterLabel && (
+					<span className="text-nowrap ml-2 hidden lg:block">ตัวกรอง</span>
+				)}
 				{activeFilterCount > 0 && (
 					<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900">
 						{activeFilterCount}

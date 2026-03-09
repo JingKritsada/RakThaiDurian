@@ -170,7 +170,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 		<div className="space-y-4 animate-in slide-in-from-top-2 fade-in duration-300">
 			{/* List of Existing Accommodations */}
 			{accommodations.length > 0 && (
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{accommodations.map((item) => (
 						<div
 							key={item.id}
@@ -191,12 +191,12 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 									</div>
 								)}
 							</div>
-							<div className="flex-grow min-w-0 pr-20">
+							<div className="grow min-w-0 pr-20">
 								<h4 className="font-bold text-sm text-slate-900 dark:text-white truncate">
 									{item.name}
 								</h4>
 								<div className="text-sm text-slate-500 dark:text-slate-400 mt-1 flex flex-col gap-1">
-									<span className="flex items-center gap-1">
+									<span className="flex items-center gap-1 font-semibold text-forest-600 dark:text-forest-400">
 										<Banknote size={14} /> ฿{item.price.toLocaleString()} / คืน
 									</span>
 									<span className="flex items-center gap-1">
@@ -210,7 +210,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 
 							<div className="absolute top-2 right-2 flex gap-0">
 								<Button
-									className="!p-3 text-slate-400 hover:text-forest-600 hover:bg-forest-50 dark:hover:bg-forest-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
+									className="p-3! dark:hover:bg-slate-900"
 									title="แก้ไข"
 									type="button"
 									variant="ghost"
@@ -219,7 +219,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 									<Edit2 size={16} />
 								</Button>
 								<Button
-									className="!p-3 text-slate-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors !min-h-0 !w-auto"
+									className="p-3! dark:hover:bg-slate-900"
 									title="ลบ"
 									type="button"
 									variant="ghost"
@@ -236,7 +236,8 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 			{/* Add/Edit Section */}
 			{!isAdding ? (
 				<Button
-					className="w-full py-3 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-600 dark:hover:border-forest-400 dark:hover:text-forest-300 transition-colors flex items-center justify-center gap-2 font-medium bg-transparent"
+					className="w-full border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl"
+					size="md"
 					type="button"
 					variant="ghost"
 					onClick={() => {
@@ -262,12 +263,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								</>
 							)}
 						</h4>
-						<Button
-							className="text-slate-400 hover:text-slate-600 !min-h-0 !w-auto p-0"
-							type="button"
-							variant="ghost"
-							onClick={resetForm}
-						>
+						<Button className="p-3!" type="button" variant="ghost" onClick={resetForm}>
 							<X size={20} />
 						</Button>
 					</div>
@@ -314,11 +310,11 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 							<p className="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-1">
 								รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 							</p>
-							<div className="flex flex-wrap gap-3">
+							<div className="grid grid-cols-4 md:grid-cols-5 gap-4">
 								{newItem.images.map((img, idx) => (
 									<div
 										key={idx}
-										className="w-20 h-20 rounded-lg overflow-hidden relative group"
+										className="w-full h-full aspect-square rounded-lg overflow-hidden relative group"
 									>
 										<img
 											alt="preview"
@@ -326,23 +322,25 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 											src={getImageUrl(img)}
 										/>
 										<Button
-											className="absolute top-0.5 right-0.5 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity !min-h-0 !w-auto"
+											className="absolute top-1 right-1 p-1.5!"
+											size="xs"
 											type="button"
-											variant="ghost"
+											variant="dangerghost"
 											onClick={() => removeNewItemImage(idx)}
 										>
-											<X size={12} />
+											<X size={18} />
 										</Button>
 									</div>
 								))}
+
 								<Button
-									className="w-20 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center text-slate-400 hover:border-forest-500 hover:text-forest-500 bg-white dark:bg-slate-800 transition-colors !min-h-0 p-0"
+									className="w-full h-full aspect-square rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center"
 									type="button"
 									variant="ghost"
 									onClick={() => fileInputRef.current?.click()}
 								>
-									<Upload size={16} />
-									<span className="text-[10px] mt-1">เพิ่มรูป</span>
+									<Upload size={20} strokeWidth={3} />
+									<span className="text-xs mt-1">เพิ่มรูป</span>
 								</Button>
 							</div>
 							<input
@@ -356,16 +354,11 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 						</div>
 
 						<div className="pt-2 flex justify-end gap-2">
-							<Button
-								className="!px-4"
-								type="button"
-								variant="ghost"
-								onClick={resetForm}
-							>
+							<Button size="md" type="button" variant="ghost" onClick={resetForm}>
 								ยกเลิก
 							</Button>
-							<Button className="!px-6" type="button" onClick={handleSave}>
-								{editingId ? "บันทึกการแก้ไข" : "ยืนยันเพิ่ม"}
+							<Button size="md" type="button" onClick={handleSave}>
+								{editingId ? "บันทึกการแก้ไข" : "ยืนยันห้องพักใหม่"}
 							</Button>
 						</div>
 					</div>

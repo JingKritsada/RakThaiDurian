@@ -200,7 +200,7 @@ export const OrchardDetailPage: React.FC = () => {
 		(orchard.packages?.length ?? 0) > 0;
 
 	return (
-		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-950">
+		<div className="h-full overflow-y-auto bg-slate-100 dark:bg-slate-950">
 			<OrchardHero
 				currentImageIndex={currentImageIndex}
 				images={images}
@@ -213,8 +213,8 @@ export const OrchardDetailPage: React.FC = () => {
 			/>
 
 			{/* Main Content Layout */}
-			<div className="max-w-7xl mx-auto px-4 py-8 pb-24 -mt-36 sm:-mt-40 md:-mt-36 relative z-10">
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+			<div className="max-w-7xl mx-auto px-6 py-6 relative z-10">
+				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 					{/* Left Column (Main Info) */}
 					<div className="lg:col-span-2 space-y-6">
 						<OrchardInfo

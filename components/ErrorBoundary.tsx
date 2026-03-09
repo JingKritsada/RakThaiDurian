@@ -31,7 +31,7 @@ export class ErrorBoundary extends Component<Props, State> {
 		this.setState({ hasError: false, error: null });
 
 		// Redirect to home screen
-		window.location.href = "/";
+		window.location.reload();
 	};
 
 	public render() {

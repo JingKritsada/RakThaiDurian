@@ -39,7 +39,7 @@ export const NotFoundPage: React.FC = () => {
 
 				{/* Error Message Section */}
 				<div className="w-full px-6 py-4 border rounded-lg bg-slate-50 dark:bg-slate-900/20 border-slate-200 dark:border-slate-800">
-					<p className="text-xs font-medium leading-relaxed break-words sm:text-sm md:text-md text-slate-700 dark:text-slate-300">
+					<p className="text-xs font-medium leading-relaxed wrap-break-words sm:text-sm md:text-md text-slate-700 dark:text-slate-300">
 						ขออภัย ไม่พบหน้าที่คุณร้องขอ กรุณาตรวจสอบ URL หรือกลับไปหน้าหลัก
 					</p>
 				</div>
@@ -47,7 +47,8 @@ export const NotFoundPage: React.FC = () => {
 				{/* Action Button */}
 				<div className="flex flex-row justify-center w-full gap-2">
 					<Button
-						className="w-full px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105"
+						className="w-full transition-all duration-200 transform hover:scale-105"
+						size="lg"
 						variant="secondary"
 						onClick={() => {
 							navigate(-1);

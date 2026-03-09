@@ -38,12 +38,13 @@ export const ListView: React.FC<ListViewProps> = ({
 	return (
 		<div
 			className={`
-				absolute inset-0 z-10 bg-white dark:bg-slate-900 transition-transform duration-300 transform flex flex-col
-			 	lg:relative lg:translate-x-0 lg:w-[480px] xl:w-[600px] lg:shrink-0 lg:border-r lg:border-slate-200 lg:dark:border-slate-800 lg:z-0
+				absolute inset-0 z-10 bg-white dark:bg-slate-900 transition-transform duration-300 transform flex flex-col 
+				md:relative md:translate-x-0 md:shrink-0 md:border-r md:border-slate-200 md:dark:border-slate-800 md:z-0
+				md:w-90 lg:w-120 xl:w-150 
 				${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
 			`}
 		>
-			<div className="hidden md:block p-6 pb-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
+			<div className="hidden md:block px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
 				<div className="mb-4">
 					<SearchBar
 						showFilterLabel
@@ -88,7 +89,7 @@ export const ListView: React.FC<ListViewProps> = ({
 				)}
 			</div>
 
-			<div className="flex-grow overflow-y-auto p-4 md:p-6 space-y-4 custom-scrollbar bg-slate-50 dark:bg-slate-950">
+			<div className="grow overflow-y-auto px-4 py-4 sm:px-6 md:py-4 space-y-4 custom-scrollbar bg-slate-100 dark:bg-slate-950">
 				{/* Mobile Sort/Count Header */}
 				<div className="md:hidden flex flex-col gap-2 mb-2">
 					{isRouteMode && (

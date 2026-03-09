@@ -92,7 +92,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 	});
 
 	return (
-		<div className="h-64 w-full rounded-lg overflow-hidden border border-slate-300 dark:border-slate-600 relative z-0 text-slate-800">
+		<div className="h-64 w-full rounded-lg overflow-hidden relative z-0 text-slate-800">
 			<MapContainer
 				center={center}
 				style={{ height: "100%", width: "100%" }}

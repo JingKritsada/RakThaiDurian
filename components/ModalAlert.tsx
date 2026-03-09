@@ -61,9 +61,10 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 				}}
 			/>
 
-			<div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-sm w-full p-6 transform scale-100 transition-all animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-700">
+			<div className="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl max-w-sm w-full p-4 transform scale-100 transition-all animate-in zoom-in-95 duration-200 border border-slate-100 dark:border-slate-700">
 				<Button
-					className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors !min-h-0 !w-auto p-0"
+					className="absolute top-4 right-4 p-2! dark:hover:bg-slate-900"
+					size="sm"
 					variant="ghost"
 					onClick={onClose}
 				>
@@ -71,9 +72,9 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 				</Button>
 
 				<div className="flex flex-col items-center text-center">
-					<div className={`p-4 rounded-full mb-4 ${bgColors[type]}`}>{icons[type]}</div>
+					<div className={`p-4 rounded-full mb-6 ${bgColors[type]}`}>{icons[type]}</div>
 
-					<h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
+					<h3 className="text-xl font-bold text-slate-900 dark:text-white mb-1">
 						{title}
 					</h3>
 
@@ -85,14 +86,17 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 						{isConfirm ? (
 							<>
 								<Button
-									className="flex-1 !rounded-xl"
+									className="w-full"
+									size="md"
 									variant="secondary"
 									onClick={onClose}
 								>
 									{cancelText}
 								</Button>
 								<Button
-									className={`flex-1 !rounded-xl ${type === "error" ? "!bg-red-600 hover:!bg-red-700" : ""}`}
+									className="w-full"
+									size="md"
+									variant={type === "error" ? "danger" : "primary"}
 									onClick={() => {
 										if (onConfirm) onConfirm();
 										onClose();
@@ -102,7 +106,7 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 								</Button>
 							</>
 						) : (
-							<Button className="w-full !rounded-xl" onClick={onClose}>
+							<Button className="w-full" size="md" onClick={onClose}>
 								{confirmText}
 							</Button>
 						)}

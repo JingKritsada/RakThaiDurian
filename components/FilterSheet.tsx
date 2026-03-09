@@ -80,17 +80,13 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 					<h3 className="text-xl font-bold text-slate-900 dark:text-white">
 						ตัวกรองและจัดเรียง
 					</h3>
-					<Button
-						className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors !min-h-0 !w-auto"
-						variant="ghost"
-						onClick={onClose}
-					>
+					<Button className="p-2!" size="md" variant="ghost" onClick={onClose}>
 						<X size={24} />
 					</Button>
 				</div>
 
 				{/* Scrollable Content */}
-				<div className="flex-grow overflow-y-auto p-5 space-y-8">
+				<div className="grow overflow-y-auto p-5 space-y-8">
 					{/* Section 1: Sort */}
 					<div>
 						<h4 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
@@ -186,13 +182,13 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 										<Button
 											key={type.id}
 											className={`
-                        relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-24
-                        ${
-							isSelected
-								? "border-forest-500 bg-forest-50 dark:bg-forest-900/20 text-forest-800 dark:text-forest-300"
-								: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
-						}
-                      `}
+												relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-24
+												${
+													isSelected
+														? "border-forest-500 bg-forest-50 dark:bg-forest-900/20 text-forest-800 dark:text-forest-300"
+														: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
+												}
+											`}
 											variant="ghost"
 											onClick={() => toggleFilter(type.id as OrchardType)}
 										>
@@ -201,7 +197,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 													<Check size={16} strokeWidth={3} />
 												</div>
 											)}
-											<span className="font-semibold text-sm text-center">
+											<span className="font-semibold text-md text-center">
 												{type.label}
 											</span>
 										</Button>
@@ -216,14 +212,16 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 				<div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-b-3xl">
 					<div className="flex gap-3">
 						<Button
-							className="flex-1 !py-3 !rounded-xl"
+							className="flex-1 py-3! rounded-xl!"
+							size="lg"
 							variant="secondary"
 							onClick={handleLocalReset}
 						>
 							<RefreshCw className="mr-2" size={18} /> ล้างค่า
 						</Button>
 						<Button
-							className="flex-[2] !py-3 !rounded-xl !text-lg shadow-lg shadow-forest-900/20"
+							className="flex-2 py-3! rounded-xl! text-lg! shadow-lg shadow-forest-900/20"
+							size="lg"
 							onClick={handleApply}
 						>
 							ดูผลลัพธ์

@@ -49,7 +49,7 @@ export const HomePage: React.FC = () => {
 	const hasAutoCentered = useRef(false);
 	const [viewMode, setViewMode] = useState<"map" | "list">("map");
 	const windowSize = useWindowSize();
-	const isMobile = windowSize.width < 1024;
+	const isMobile = windowSize.width < 768;
 
 	const showMapControls = !isMobile || viewMode === "map";
 
@@ -108,8 +108,8 @@ export const HomePage: React.FC = () => {
 			result = result.filter(
 				(o) =>
 					o.name.toLowerCase().includes(lowerQuery) ||
-					o.description.toLowerCase().includes(lowerQuery) ||
-					o.address.toLowerCase().includes(lowerQuery)
+					o.description?.toLowerCase().includes(lowerQuery) ||
+					o.address?.toLowerCase().includes(lowerQuery)
 			);
 		}
 
@@ -325,7 +325,7 @@ export const HomePage: React.FC = () => {
 	const activeFilterCount = selectedTypes.length + (sortBy !== "default" ? 1 : 0);
 
 	return (
-		<div className="flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
+		<div className="flex flex-col h-full overflow-hidden bg-slate-100 dark:bg-slate-950">
 			{/* New Filter Sheet Modal */}
 			<FilterSheet
 				currentFilters={selectedTypes}
@@ -341,7 +341,7 @@ export const HomePage: React.FC = () => {
 			/>
 
 			{/* Mobile Sticky Header */}
-			<div className="lg:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-3 shadow-sm">
+			<div className="flex-initial md:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sm:px-6 shadow-sm">
 				<SearchBar
 					showViewToggle
 					activeFilterCount={activeFilterCount}
@@ -354,7 +354,7 @@ export const HomePage: React.FC = () => {
 				/>
 			</div>
 
-			<div className="flex flex-grow overflow-hidden relative">
+			<div className="flex grow overflow-hidden relative">
 				{/* Sidebar with list */}
 				<ListView
 					activeFilterCount={activeFilterCount}

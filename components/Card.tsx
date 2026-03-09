@@ -1,8 +1,6 @@
 import React from "react";
 import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
-import { SocialLinks } from "./SocialLinks";
-
 import { Orchard } from "@/interface/orchardInterface";
 import { useMasterData } from "@/context/MasterDataContext";
 import { getImageUrl } from "@/utils/constants";
@@ -28,9 +26,9 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 	return (
 		<div
 			className={`
-				group flex flex-col sm:flex-row lg:flex-col xl:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
+				group flex flex-col sm:flex-row md:flex-col xl:flex-row bg-white dark:bg-slate-800 rounded-2xl overflow-hidden cursor-pointer transition-all duration-300
 				border ${isSelected ? "border-forest-500 ring-2 ring-forest-500 shadow-lg" : "border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl hover:border-forest-200 dark:hover:border-forest-800"}
-				h-full min-h-[13rem] relative
+				h-full min-h-52 relative
 			`}
 			role="button"
 			tabIndex={0}
@@ -42,7 +40,15 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 			}}
 		>
 			{/* Image Section */}
-			<div className="w-full sm:w-[200px] lg:w-full xl:w-[200px] aspect-video sm:h-auto bg-slate-200 dark:bg-slate-700 relative shrink-0 overflow-hidden">
+			<div
+				className={`
+					w-full h-auto aspect-video 
+					sm:w-56 sm:h-64 sm:max-h-64 sm:aspect-auto
+					md:w-full md:h-auto md:max-h-full md:aspect-video 
+					xl:w-56 xl:h-64 xl:max-h-64 xl:aspect-auto
+					bg-slate-200 dark:bg-slate-700 relative overflow-hidden shrink-0
+				`}
+			>
 				{coverImage ? (
 					<img
 						alt={orchard.name}
@@ -64,15 +70,15 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 				</div>
 
 				{orchard.images.length > 1 && (
-					<div className="absolute bottom-2 right-2 bg-black/50 text-white text-[10px] px-1.5 py-0.5 rounded-md backdrop-blur-sm">
+					<div className="absolute bottom-2 right-2 bg-black/50 text-white text-sm px-1.5 py-0.5 rounded-md backdrop-blur-sm">
 						+{orchard.images.length - 1} รูป
 					</div>
 				)}
 			</div>
 
 			{/* Content Section */}
-			<div className="p-4 flex flex-col flex-grow min-w-0">
-				<div className="flex-grow">
+			<div className="p-4 flex flex-col grow min-w-0">
+				<div className="grow">
 					<div className="flex justify-between items-start gap-2 mb-1">
 						<h3 className="text-lg font-bold text-slate-900 dark:text-white truncate leading-tight group-hover:text-forest-700 dark:group-hover:text-forest-400 transition-colors">
 							{orchard.name}
@@ -92,38 +98,19 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 					</p>
 				</div>
 
-				<div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-between items-start sm:items-end lg:items-start xl:items-end pt-3 border-t border-slate-100 dark:border-slate-700 gap-3 mt-auto">
-					<div className="flex flex-wrap gap-2">
-						{orchard.types?.map((typeId) => {
-							const typeInfo = getServiceType(typeId);
+				<div className="flex flex-wrap gap-2 pt-3 border-t border-slate-100 dark:border-slate-700">
+					{orchard.types?.map((typeId) => {
+						const typeInfo = getServiceType(typeId);
 
-							return typeInfo ? (
-								<span
-									key={typeId}
-									className="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg whitespace-nowrap"
-								>
-									{typeInfo.label}
-								</span>
-							) : null;
-						})}
-					</div>
-
-					{/* Social Icons in Card */}
-					{orchard.socialMedia && (
-						<div
-							className="self-end sm:self-auto lg:self-end xl:self-auto"
-							role="button"
-							tabIndex={0}
-							onClick={(e) => e.stopPropagation()}
-							onKeyDown={(e) => e.stopPropagation()}
-						>
-							<SocialLinks
-								className="flex gap-1.5"
-								itemClassName="!w-7 !h-7"
-								links={orchard.socialMedia}
-							/>
-						</div>
-					)}
+						return typeInfo ? (
+							<span
+								key={typeId}
+								className="px-2.5 py-1 text-xs font-medium bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg whitespace-nowrap"
+							>
+								{typeInfo.label}
+							</span>
+						) : null;
+					})}
 				</div>
 			</div>
 		</div>

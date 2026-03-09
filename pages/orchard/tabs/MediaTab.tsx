@@ -112,22 +112,24 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 	};
 
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8 animate-in slide-in-from-right-2 duration-300">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 animate-in slide-in-from-right-2 duration-300">
+			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-1 flex items-center gap-3">
 				<Image className="text-forest-600" /> รูปภาพและโซเชียล
 			</h2>
 
 			<div className="space-y-8">
 				{/* Images */}
-				<div>
-					<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
-						รูปภาพบรรยากาศสวน
-					</span>
-					<p className="text-xs text-slate-500 dark:text-slate-400 mb-4 ml-1">
-						รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
-					</p>
+				<div className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+					<div>
+						<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+							รูปภาพบรรยากาศสวน
+						</span>
+						<p className="text-xs text-slate-500 dark:text-slate-400 mb-4 ml-1">
+							รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
+						</p>
+					</div>
 
-					<div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
 						{formData.images.map((img, index) => (
 							<div
 								key={index}
@@ -139,10 +141,11 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 									src={getImageUrl(img)}
 								/>
 								<Button
-									className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1.5 shadow-md opacity-0 group-hover:opacity-100 transition-opacity !w-auto !h-auto min-h-0"
+									className="absolute top-1 right-1 p-1.5!"
+									size="xs"
 									title="ลบรูปภาพ"
 									type="button"
-									variant="ghost"
+									variant="dangerghost"
 									onClick={() => removeImage(index)}
 								>
 									<X size={14} />
@@ -151,7 +154,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 						))}
 
 						<Button
-							className="!h-full w-full aspect-square rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
+							className="h-full! w-full aspect-square border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
 							type="button"
 							variant="ghost"
 							onClick={() => imageInputRef.current?.click()}
@@ -173,7 +176,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 				</div>
 
 				{/* Videos */}
-				<div>
+				<div className="pt-4 border-t border-slate-100 dark:border-slate-700">
 					<div className="flex items-center gap-2 mb-2 ml-1">
 						<Video className="text-slate-700 dark:text-slate-300" size={18} />
 						<h3 className="text-sm font-bold text-slate-700 dark:text-slate-300">
@@ -183,7 +186,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 
 					<div className="flex gap-2 mb-4">
 						<input
-							className="flex-grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm outline-none"
+							className="grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm outline-none"
 							placeholder="วางลิงก์วิดีโอที่นี่..."
 							type="text"
 							value={tempVideoUrl}
@@ -196,7 +199,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 							}}
 						/>
 						<Button
-							className="!px-4"
+							className="px-4!"
 							disabled={!tempVideoUrl}
 							type="button"
 							onClick={handleAddVideo}
@@ -226,7 +229,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 										</a>
 									</div>
 									<Button
-										className="text-slate-400 hover:text-red-500 transition-colors p-1 !w-auto !h-auto min-h-0"
+										className="text-slate-400 hover:text-red-500 transition-colors p-1 w-auto! h-auto! min-h-0"
 										type="button"
 										variant="ghost"
 										onClick={() => handleRemoveVideo(index)}

@@ -25,7 +25,7 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 
 	return (
 		<div
-			className="absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-[420px]"
+			className="absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-105"
 			style={{ zIndex: Z_INDEX.mapPanel }}
 		>
 			<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-5 border border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom duration-300">
@@ -64,19 +64,17 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 					</div>
 				</div>
 				<div className="flex gap-3">
-					<Button
-						className="flex-1 !py-3 text-sm font-medium"
-						variant="secondary"
-						onClick={onClearRoute}
-					>
+					<Button className="flex-1" size="lg" variant="secondary" onClick={onClearRoute}>
 						ล้างค่า
 					</Button>
 					<Button
-						className="flex-[2] !bg-blue-600 hover:!bg-blue-700 !py-3 text-sm shadow-lg shadow-blue-600/20"
+						className="flex-3 bg-blue-600 hover:bg-blue-700"
 						disabled={routeIds.length === 0}
+						size="lg"
+						variant="primary"
 						onClick={openGoogleMapsRoute}
 					>
-						<Navigation className="mr-2" size={18} />
+						<Navigation size={18} strokeWidth={3} />
 						นำทางด้วย Google Maps
 					</Button>
 				</div>

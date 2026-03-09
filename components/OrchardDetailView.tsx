@@ -43,13 +43,15 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 	// Popup variant specific classes: wider width, transparent background (handled by parent/CSS)
 	const containerClasses = isSheet
 		? "w-full bg-white dark:bg-slate-900 rounded-t-3xl"
-		: "w-[480px] bg-transparent";
+		: "w-100 lg:w-120 bg-transparent";
 
 	return (
 		<div className={containerClasses}>
-			<div className={`flex flex-col gap-4 ${isSheet ? "p-6 pt-2 pb-8" : "p-5"}`}>
+			<div className={`flex flex-col gap-4 ${isSheet ? "p-6 pt-4 pb-8" : "p-5"}`}>
 				{/* Header */}
-				<div className={`flex justify-between items-end mb-2 ${isSheet ? "mt-2" : "mt-0"}`}>
+				<div
+					className={`flex justify-between items-center mb-2 ${isSheet ? "mt-2" : "mt-0"}`}
+				>
 					<div className="flex gap-4 mr-4 min-w-0">
 						<h3 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight truncate">
 							{orchard.name}
@@ -66,12 +68,8 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 					{onClose && (
 						<Button
 							aria-label="Close details"
-							className={`!p-2 rounded-full transition-colors shrink-0 !min-h-0 !w-auto ${
-								isSheet
-									? "bg-slate-100 dark:bg-slate-800 text-slate-500 hover:bg-slate-200"
-									: "bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 text-slate-500 dark:text-slate-300"
-							}`}
-							variant="ghost"
+							className="p-2! border-none!"
+							variant="secondary"
 							onClick={onClose}
 						>
 							<X size={20} />
@@ -81,7 +79,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Image Gallery */}
 				{orchard.images && orchard.images.length > 0 ? (
-					<div className="relative rounded-2xl overflow-hidden bg-slate-200 h-[200px] w-full shadow-md group">
+					<div className="relative rounded-2xl overflow-hidden bg-slate-200 h-50 w-full shadow-md group">
 						<div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full">
 							{orchard.images.map((img, idx) => (
 								<img
@@ -124,13 +122,13 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				{/* Location Section */}
 				{orchard.address && (
 					<div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700">
-						<div className="flex items-center gap-2 mb-1 text-forest-700 dark:text-forest-400">
+						<div className="flex items-center gap-2 mb-2 text-forest-700 dark:text-forest-400">
 							<MapPin size={14} />
 							<h4 className="font-bold text-xs">ข้อมูลสถานที่</h4>
 						</div>
-						<p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3">
+						<div className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
 							{orchard.address}
-						</p>
+						</div>
 					</div>
 				)}
 
@@ -164,7 +162,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Social Links */}
 				{orchard.socialMedia && (
-					<div className="flex flex-col items-center gap-2 pt-2 !text-white">
+					<div className="flex flex-col items-center gap-2 pt-2 text-white!">
 						<span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">
 							ช่องทางติดตาม
 						</span>
@@ -188,21 +186,22 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 				{/* Action Buttons */}
 				<div className="grid grid-cols-2 gap-3 mt-3">
-					<Button
-						className="flex items-center justify-center gap-2 bg-forest-800 hover:bg-forest-900 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-forest-900/20 whitespace-nowrap"
-						variant="ghost"
-						onClick={() => navigate(`/orchard/${orchard.id}`)}
-					>
-						<Info size={16} /> ดูข้อมูลเพิ่มเติม
+					<Button variant="secondary" onClick={() => navigate(`/orchard/${orchard.id}`)}>
+						<Info size={16} strokeWidth={3} /> ดูข้อมูลเพิ่มเติม
 					</Button>
-					<a
-						className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 !text-white py-3 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-blue-900/20 whitespace-nowrap"
-						href={`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`}
-						rel="noreferrer"
-						target="_blank"
+					<Button
+						className="bg-blue-600 hover:bg-blue-700"
+						variant="primary"
+						onClick={() =>
+							window.open(
+								`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`,
+								"_blank",
+								"noreferrer"
+							)
+						}
 					>
-						<Navigation size={16} /> นำทาง
-					</a>
+						<Navigation size={16} strokeWidth={3} /> นำทาง
+					</Button>
 				</div>
 			</div>
 		</div>

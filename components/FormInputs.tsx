@@ -35,19 +35,17 @@ export const InputField: React.FC<InputFieldProps> = ({
 						${
 							inputClassName
 								? inputClassName
-								: "w-full h-[48px] py-3.5 rounded-xl border bg-white dark:bg-slate-700 !text-slate-900 dark:!text-white shadow-sm transition-all outline-none relative appearance-none"
+								: "w-full h-12 py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900! dark:text-white! shadow-sm transition-all outline-none relative appearance-none"
 						}
 						${Icon ? "pl-12" : "pl-4"}
 						${suffix ? "pr-12" : "pr-4"}
-						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"}
-            			[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none 
-          			`}
+						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"} 
+						[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none 
+					`}
 					{...props}
 				/>
-				{Icon && <Icon className="absolute left-4 top-[14px] text-slate-400" size={20} />}
-				{suffix && (
-					<div className="absolute right-4 top-[14px] text-slate-400">{suffix}</div>
-				)}
+				{Icon && <Icon className="absolute left-4 top-3.5 text-slate-400" size={20} />}
+				{suffix && <div className="absolute right-2 top-1.5 text-slate-400">{suffix}</div>}
 			</div>
 			{error && <p className="text-red-500 text-xs mt-1 ml-1">{error}</p>}
 		</div>
@@ -171,7 +169,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 			<div className="relative">
 				<div
 					className={`
-						w-full min-h-[54px] px-3 py-2 rounded-xl border bg-white dark:bg-slate-700 cursor-pointer flex items-center justify-between flex-wrap gap-2
+						w-full min-h-13.5 px-3 py-2 rounded-xl border bg-white dark:bg-slate-700 cursor-pointer flex items-center justify-between flex-wrap gap-2
 						${error ? "border-red-500" : "border-slate-300 dark:border-slate-600 hover:border-forest-500"}
 						${isOpen ? "ring-2 ring-forest-200 border-forest-500" : ""}
           			`}
@@ -191,15 +189,15 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 								>
 									{opt.label}
 									<Button
-										className="hover:text-forest-900 !min-h-0 !w-auto !p-0 text-inherit"
+										className="bg-danger-200! min-h-0! w-auto! p-1! bg-opcity-0! hover:bg-opacity-100!"
 										type="button"
-										variant="ghost"
+										variant="dangerghost"
 										onClick={(e) => {
 											e.stopPropagation();
 											handleSelect(opt.id);
 										}}
 									>
-										<X size={14} />
+										<X size={14} strokeWidth={3} />
 									</Button>
 								</span>
 							))}

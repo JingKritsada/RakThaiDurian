@@ -41,7 +41,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 
 				{/* Error Message Section */}
 				<div className="w-full px-6 py-4 border rounded-lg bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
-					<p className="text-xs font-medium leading-relaxed break-words sm:text-sm md:text-md text-red-700 dark:text-red-300">
+					<p className="text-xs font-medium leading-relaxed warp-break-words sm:text-sm md:text-md text-red-700 dark:text-red-300">
 						{error.message || "An unexpected error occurred."}
 					</p>
 				</div>
@@ -49,7 +49,8 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 				{/* Action Button */}
 				<div className="flex justify-center w-full">
 					<Button
-						className="w-full px-8 py-3 font-semibold transition-all duration-200 transform hover:scale-105"
+						className="w-full transition-all duration-200 transform hover:scale-105"
+						size="lg"
 						variant="danger"
 						onClick={() => reset()}
 					>

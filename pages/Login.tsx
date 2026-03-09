@@ -73,7 +73,7 @@ export const Login: React.FC = () => {
 							placeholder="ระบุรหัสผ่าน"
 							suffix={
 								<Button
-									className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors !p-0 rounded-full"
+									className="transition-colors p-2! rounded-full!"
 									tabIndex={-1}
 									type="button"
 									variant="ghost"
@@ -89,9 +89,11 @@ export const Login: React.FC = () => {
 
 						<div className="pt-2">
 							<Button
-								className="w-full justify-center py-3.5 text-lg shadow-lg shadow-forest-900/20"
+								className="w-full"
 								isLoading={isSubmitting}
+								size="lg"
 								type="submit"
+								variant="primary"
 							>
 								เข้าสู่ระบบ
 							</Button>

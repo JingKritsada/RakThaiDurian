@@ -34,7 +34,7 @@ export interface Package {
 
 export interface OrchardFormData {
 	name: string;
-	description: string;
+	description?: string;
 	history?: string;
 	types?: OrchardTypeString[];
 	status: DurianStatusString;
@@ -42,7 +42,7 @@ export interface OrchardFormData {
 	lng: number;
 	images: string[];
 	videos?: string[];
-	address: string;
+	address?: string;
 	phoneNumber?: string;
 	socialMedia?: SocialMediaLinks;
 	additionalCrops?: string[];

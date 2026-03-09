@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { X } from "lucide-react";
 
 import { Button } from "./Button";
 
@@ -34,21 +34,30 @@ export const Lightbox: React.FC<LightboxProps> = ({
 		};
 	}, [isOpen]);
 
+	// Handle keyboard navigation
+	useEffect(() => {
+		if (!isOpen) return;
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === "ArrowLeft") {
+				setIndex((currentIndex - 1 + images.length) % images.length);
+			} else if (e.key === "ArrowRight") {
+				setIndex((currentIndex + 1) % images.length);
+			} else if (e.key === "Escape") {
+				onClose();
+			}
+		};
+
+		document.addEventListener("keydown", handleKeyDown);
+
+		return () => document.removeEventListener("keydown", handleKeyDown);
+	}, [isOpen, currentIndex, images.length, setIndex, onClose]);
+
 	if (!isOpen || images.length === 0) return null;
-
-	const handleNext = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIndex(currentIndex < images.length - 1 ? currentIndex + 1 : 0);
-	};
-
-	const handlePrev = (e: React.MouseEvent) => {
-		e.stopPropagation();
-		setIndex(currentIndex > 0 ? currentIndex - 1 : images.length - 1);
-	};
 
 	return (
 		<div
-			className="fixed inset-0 bg-black/95 flex flex-col pt-16 animate-in fade-in duration-200"
+			className="fixed inset-0 bg-black/95 flex flex-col pt-9 animate-in fade-in duration-200"
 			role="button"
 			style={{ zIndex: Z_INDEX.lightbox }}
 			tabIndex={0}
@@ -57,11 +66,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 					onClose();
 				}
 			}}
-			onKeyDown={(e) => {
-				if (e.key === "Escape") {
-					onClose();
-				}
-			}}
+			onKeyDown={() => {}}
 		>
 			{/* Main Image Area */}
 			<div
@@ -82,37 +87,17 @@ export const Lightbox: React.FC<LightboxProps> = ({
 				<div className=" relative max-w-full max-h-full flex justify-center items-center">
 					<img
 						alt={`Gallery ${currentIndex + 1}`}
-						className="w-[90vw] h-[80vh] object-cover rounded-xl shadow-2xl"
+						className="max-w-[90vw] h-[80vh] object-cover rounded-xl shadow-2xl"
 						src={getImageUrl(images[currentIndex])}
 					/>
 
 					<Button
-						className="absolute right-4 top-10 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-						variant="ghost"
+						className="absolute right-4 top-4 p-3! bg-opacity-50 dark:bg-opacity-50 backdrop-blur-md border-none!"
+						variant="secondary"
 						onClick={onClose}
 					>
-						<X size={36} />
+						<X size={32} strokeWidth={3} />
 					</Button>
-
-					{/* Navigation Buttons */}
-					{images.length > 1 && (
-						<>
-							<Button
-								className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-								variant="ghost"
-								onClick={handlePrev}
-							>
-								<ChevronLeft size={36} />
-							</Button>
-							<Button
-								className="absolute right-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white hover:bg-black/50 rounded-full !p-3 w-14 h-14 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-all z-20"
-								variant="ghost"
-								onClick={handleNext}
-							>
-								<ChevronRight size={36} />
-							</Button>
-						</>
-					)}
 				</div>
 			</div>
 
@@ -122,7 +107,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 					{images.map((img, idx) => (
 						<button
 							key={idx}
-							className={`relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 transition-all duration-200 border-2 ${
+							className={`relative w-16 h-16 rounded-lg overflow-hidden shrink-0 transition-all duration-200 border-2 ${
 								idx === currentIndex
 									? "border-forest-500 scale-105 opacity-100 ring-2 ring-forest-500/50"
 									: "border-transparent opacity-50 hover:opacity-80 hover:scale-105"

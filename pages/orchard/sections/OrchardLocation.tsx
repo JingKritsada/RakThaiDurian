@@ -33,7 +33,7 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 						orchard.lng !== undefined &&
 						!isNaN(orchard.lat) &&
 						!isNaN(orchard.lng) && (
-							<div className="h-[250px] w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 relative group">
+							<div className="h-62.5 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 relative group">
 								<OrchardMap
 									disablePopup
 									orchards={[orchard]}
@@ -45,9 +45,11 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 								<div className="absolute bottom-4 right-4 flex gap-2">
 									<Button
 										aria-label="รีเซ็ตตำแหน่งแผนที่"
-										className="bg-slate-700 hover:bg-slate-800 text-white !px-3 rounded-xl shadow-lg transition-transform hover:scale-105"
+										className="transition-transform hover:scale-105 border-none px-3!"
+										size="md"
 										title="รีเซ็ตตำแหน่งแผนที่"
 										type="button"
+										variant="secondary"
 										onClick={() => {
 											if (mapRef.current && orchard.lat && orchard.lng) {
 												mapRef.current.flyTo(
@@ -60,14 +62,21 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 									>
 										<RotateCcw size={18} />
 									</Button>
-									<a
-										className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow-lg font-bold flex items-center gap-2 transition-transform hover:scale-105"
-										href={`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`}
-										rel="noreferrer"
-										target="_blank"
+
+									<Button
+										className="bg-blue-600 hover:bg-blue-700 h-full"
+										size="md"
+										variant="primary"
+										onClick={() =>
+											window.open(
+												`https://www.google.com/maps/dir/?api=1&destination=${orchard.lat},${orchard.lng}`,
+												"_blank",
+												"noreferrer"
+											)
+										}
 									>
-										<Navigation size={18} /> นำทาง
-									</a>
+										<Navigation size={16} strokeWidth={3} /> นำทาง
+									</Button>
 								</div>
 							</div>
 						)}

@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 body {
 	font-family: "Anuphan", sans-serif;
 	letter-spacing: 0.25px;

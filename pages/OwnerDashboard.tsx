@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
 
 import { orchardService } from "@/services/orchardService";
@@ -11,6 +11,7 @@ import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 
 export const OwnerDashboard: React.FC = () => {
+	const navigate = useNavigate();
 	const { user } = useAuth();
 	const { showConfirm, showAlert } = useAlert();
 	const [orchards, setOrchards] = useState<Orchard[]>([]);
@@ -64,15 +65,16 @@ export const OwnerDashboard: React.FC = () => {
 						<div>
 							<h1 className="text-3xl font-bold mb-2">ระบบจัดการสวน</h1>
 							<p className="text-forest-100 text-lg opacity-90">
-								ยินดีต้อนรับ, คุณ{user?.name}
+								ยินดีต้อนรับ, คุณ {user?.name}
 							</p>
 						</div>
 						<Link to="/owner/add">
 							<Button
-								className="bg-gold-400 hover:bg-gold-500 text-slate-900 px-6 py-3 rounded-xl font-bold flex items-center shadow-lg transition-transform transform hover:scale-105 whitespace-nowrap !min-h-0"
-								variant="ghost"
+								className="dark:bg-opacity-50 dark:border-none shadow-xl transition-transform transform hover:scale-105 whitespace-nowrap font-semibold!"
+								size="lg"
+								variant="secondary"
 							>
-								<Plus className="mr-2" size={22} />
+								<Plus size={22} strokeWidth={3} />
 								ลงทะเบียนสวนใหม่
 							</Button>
 						</Link>
@@ -101,33 +103,32 @@ export const OwnerDashboard: React.FC = () => {
 							เพื่อให้นักท่องเที่ยวและลูกค้าค้นพบได้ง่ายขึ้น
 						</p>
 						<Link to="/owner/add">
-							<Button>เริ่มสร้างข้อมูลสวนแรกของคุณ</Button>
+							<Button size="lg">เริ่มสร้างข้อมูลสวนแรกของคุณ</Button>
 						</Link>
 					</div>
 				) : (
-					<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
 						{orchards.map((orchard) => (
 							<div
 								key={orchard.id}
-								className="relative group bg-white dark:bg-slate-800 rounded-2xl p-1 pb-2 sm:pb-1 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col"
+								className="relative group bg-white dark:bg-slate-800 rounded-2xl p-1 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col"
 							>
-								<div className="flex-grow">
-									<Card orchard={orchard} />
+								<div className="grow">
+									<Card
+										orchard={orchard}
+										onClick={() => navigate(`/owner/edit/${orchard.id}`)}
+									/>
 								</div>
 
 								{/* Action Buttons Toolbar */}
-								<div className="mt-2 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 p-3 sm:p-0 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
+								<div className="mt-1 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 px-4 py-2 sm:p-0 sm:opacity-70 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
 									<Link to={`/owner/edit/${orchard.id}`}>
-										<Button
-											className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium hover:bg-forest-100 hover:text-forest-700 dark:hover:bg-forest-900 transition-colors shadow-sm whitespace-nowrap !min-h-0"
-											variant="ghost"
-										>
-											<Edit2 size={16} /> แก้ไขข้อมูล
+										<Button variant="secondary">
+											<Edit2 size={16} /> แก้ไข
 										</Button>
 									</Link>
 									<Button
-										className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/70 text-red-600 dark:text-red-300 rounded-xl font-medium hover:bg-red-100 dark:hover:bg-red-900/60 transition-colors shadow-sm whitespace-nowrap !min-h-0"
-										variant="ghost"
+										variant="danger"
 										onClick={() => handleDelete(orchard.id)}
 									>
 										<Trash2 size={16} /> ลบ

@@ -59,7 +59,7 @@ export const MapView: React.FC<MapViewProps> = ({
 	onCloseDetail,
 }) => {
 	return (
-		<div className="flex-grow h-full w-full relative bg-slate-100 dark:bg-slate-800">
+		<div className="grow h-full w-full relative bg-slate-100 dark:bg-slate-800">
 			<OrchardMap
 				disablePopup={isMobile || isRouteMode}
 				isRouteMode={isRouteMode}
@@ -77,12 +77,12 @@ export const MapView: React.FC<MapViewProps> = ({
 			{/* Top Right Controls */}
 			{showMapControls && (
 				<div
-					className="absolute top-4 right-4 flex flex-col gap-3 items-end"
+					className="absolute top-4 right-4 sm:right-6 flex flex-col gap-3 items-end"
 					style={{ zIndex: Z_INDEX.mapButtons }}
 				>
 					<div className="flex items-center gap-3">
 						<Button
-							className={`h-12 !px-5 shadow-lg border-0 transition-all ${isRouteMode ? "!bg-blue-600 hover:!bg-blue-700 ring-4 ring-blue-500/20" : "bg-white text-slate-700 hover:bg-slate-50 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"}`}
+							className={`h-12 px-5! shadow-lg border-none transition-all ${isRouteMode ? "bg-blue-600! hover:bg-blue-700!" : ""}`}
 							variant={isRouteMode ? "primary" : "secondary"}
 							onClick={toggleRouteMode}
 						>
@@ -91,9 +91,9 @@ export const MapView: React.FC<MapViewProps> = ({
 						</Button>
 
 						<Button
-							className="!p-0 h-12 w-12 flex items-center justify-center rounded-xl bg-white dark:bg-slate-800 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors p-0 !min-h-0"
+							className="h-12 w-12 p-0! border-none"
 							title="ตำแหน่งปัจจุบัน"
-							variant="ghost"
+							variant="secondary"
 							onClick={handleLocate}
 						>
 							{isLocating ? (

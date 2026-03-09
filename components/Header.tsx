@@ -29,9 +29,9 @@ const FontSizeControls = ({
 	fontSize: FontSize;
 	setFontSize: (size: FontSize) => void;
 }) => (
-	<div className="flex items-center h-full bg-slate-100 dark:bg-slate-800 rounded-xl p-0.5 border border-slate-200 dark:border-slate-700">
+	<div className="flex items-center h-full p-0.5 bg-transparent border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 gap-0.5 rounded-xl">
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรเล็ก"
 			variant="ghost"
 			onClick={() => setFontSize("small")}
@@ -39,7 +39,7 @@ const FontSizeControls = ({
 			<span className="text-xs">ก</span>
 		</Button>
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรปกติ"
 			variant="ghost"
 			onClick={() => setFontSize("medium")}
@@ -47,7 +47,7 @@ const FontSizeControls = ({
 			<span className="text-sm">ก</span>
 		</Button>
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all !p-0 !min-h-0 ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all p-0! min-h-0! ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรใหญ่"
 			variant="ghost"
 			onClick={() => setFontSize("large")}
@@ -92,8 +92,8 @@ export const Header: React.FC = () => {
 				className="sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
 				style={{ zIndex: Z_INDEX.mobileNavHeader }}
 			>
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between items-center h-16 py-2.5">
+				<div className="max-w-7xl mx-auto px-4 sm:px-6">
+					<div className="flex justify-between items-center h-18 py-3">
 						{/* Logo */}
 						<Link
 							className="flex items-center gap-3 h-full group hover:scale-105 transition-transform"
@@ -116,48 +116,44 @@ export const Header: React.FC = () => {
 						</Link>
 
 						{/* Desktop Controls */}
-						<div className="hidden lg:flex items-center gap-4 h-full">
+						<div className="hidden md:flex items-center gap-2 h-full">
 							<div className="flex items-center gap-2 h-full">
-								<span className="text-xs text-slate-400 font-medium mr-1">
-									ขนาดอักษร
-								</span>
 								<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
 							</div>
 
 							<Button
-								className="h-full aspect-square !p-0 rounded-xl text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 !min-h-0 !w-auto"
+								className="h-full aspect-square p-0! border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
 								title="เปลี่ยนโหมดสี"
-								variant="ghost"
+								variant="outline"
 								onClick={toggleTheme}
 							>
 								<ThemeIcon theme={theme} />
 							</Button>
 
-							<div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2" />
+							<div className="h-full w-px bg-slate-200 dark:bg-slate-700 mx-2" />
 
 							{user ? (
-								<div className="flex items-center gap-3 h-full	">
-									<Link to="/owner">
+								<div className="flex items-center gap-2 h-full">
+									<Link className="h-full" to="/owner">
 										<Button
-											className="h-full !px-3 !rounded-xl"
-											variant="ghost"
+											className="h-full aspect-square p-0! border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+											variant="secondary"
 										>
-											<UserIcon className="mr-2" size={20} />
-											<span className="font-medium">{user.name}</span>
+											<UserIcon size={20} strokeWidth={3} />
 										</Button>
 									</Link>
 									<Button
-										className="h-full !px-4 !py-2 !rounded-xl text-sm"
+										className="h-full"
 										variant="secondary"
 										onClick={handleLogout}
 									>
-										<LogOut className="mr-2" size={18} />
+										<LogOut className="mr-2" size={20} strokeWidth={3} />
 										ออกจากระบบ
 									</Button>
 								</div>
 							) : (
 								<Link to="/login">
-									<Button className="h-full !rounded-xl !py-2.5 !shadow-md shadow-forest-800/20">
+									<Button className="h-full" variant="primary">
 										เข้าสู่ระบบเจ้าของสวน
 									</Button>
 								</Link>
@@ -166,7 +162,7 @@ export const Header: React.FC = () => {
 
 						{/* Mobile Menu Button */}
 						<Button
-							className="lg:hidden !p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 !min-h-0 !w-auto"
+							className="md:hidden h-full aspect-square p-0!"
 							variant="ghost"
 							onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
 						>
@@ -191,11 +187,7 @@ export const Header: React.FC = () => {
 								<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
 									โหมดการแสดงผล
 								</span>
-								<Button
-									className="flex items-center gap-2 h-full px-3 py-1.5 bg-white dark:bg-slate-700 rounded-lg shadow-sm border border-slate-200 dark:border-slate-600 !min-h-0"
-									variant="ghost"
-									onClick={toggleTheme}
-								>
+								<Button className="gap-3" variant="outline" onClick={toggleTheme}>
 									<ThemeIcon theme={theme} />
 									<span className="text-sm">
 										{theme === "light"
@@ -213,25 +205,31 @@ export const Header: React.FC = () => {
 								<>
 									<Link to="/owner" onClick={() => setIsMobileMenuOpen(false)}>
 										<Button
-											className="w-full justify-center !bg-forest-800"
+											className="w-full justify-center py-3!"
+											size="md"
 											variant="primary"
 										>
-											<UserIcon className="mr-2" size={20} />
+											<UserIcon className="mr-2" size={20} strokeWidth={3} />
 											จัดการสวน ({user.name})
 										</Button>
 									</Link>
 									<Button
-										className="w-full justify-center"
+										className="w-full justify-center py-3!"
+										size="md"
 										variant="danger"
 										onClick={handleLogout}
 									>
-										<LogOut className="mr-2" size={20} />
+										<LogOut className="mr-2" size={20} strokeWidth={3} />
 										ออกจากระบบ
 									</Button>
 								</>
 							) : (
 								<Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-									<Button className="w-full justify-center !py-3">
+									<Button
+										className="w-full justify-center py-3!"
+										size="md"
+										variant="primary"
+									>
 										เข้าสู่ระบบเจ้าของสวน
 									</Button>
 								</Link>

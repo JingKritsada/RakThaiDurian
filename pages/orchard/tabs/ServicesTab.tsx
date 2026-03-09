@@ -35,14 +35,14 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 	cropOptions,
 }) => {
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8 animate-in slide-in-from-right-2 duration-300">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 animate-in slide-in-from-right-2 duration-300">
+			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-1 flex items-center gap-3">
 				<Layers className="text-forest-600" /> บริการเสริมและสินค้าอื่น
 			</h2>
 
 			<div className="space-y-8">
 				{/* Mixed Agriculture */}
-				<div className="space-y-4">
+				<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
 					<ToggleSwitch
 						checked={isMixedAgro}
 						description="หากสวนของคุณมีการปลูกพืชผักหรือผลไม้อื่นๆ แซมในสวนทุเรียน"

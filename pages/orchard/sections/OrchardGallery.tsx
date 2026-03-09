@@ -34,12 +34,12 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 }) => {
 	return (
 		<>
-			<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8 hidden lg:block">
+			<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
 				<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
 					<Layers className="text-red-600" /> วิดีโอและสื่อ
 				</h2>
 
-				<div className="space-y-4">
+				<div className="flex flex-col gap-6">
 					{/* Main Video Display */}
 					{videos.length > 0 && (
 						<div className="relative group rounded-2xl overflow-hidden bg-black">
@@ -48,18 +48,18 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 							{videos.length > 1 && (
 								<>
 									<Button
-										className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
-										variant="ghost"
+										className="absolute left-4 top-1/2 -translate-y-1/2 p-2! border-none"
+										variant="secondary"
 										onClick={onPrevVideo}
 									>
-										<ChevronLeft size={36} />
+										<ChevronLeft size={30} />
 									</Button>
 									<Button
-										className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full !p-2 backdrop-blur-sm !w-auto !h-auto min-h-0 transition-opacity"
-										variant="ghost"
+										className="absolute right-4 top-1/2 -translate-y-1/2 p-2! border-none"
+										variant="secondary"
 										onClick={onNextVideo}
 									>
-										<ChevronRight size={36} />
+										<ChevronRight size={30} />
 									</Button>
 
 									<div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-md pointer-events-none">
@@ -72,11 +72,11 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 
 					{/* Pictures Thumbnail Grid */}
 					{images.length > 0 && (
-						<div className="hidden md:grid grid-cols-6 gap-4 h-28">
+						<div className="grid grid-cols-5 md:grid-cols-6 gap-2 md:gap-4">
 							{images.slice(0, 6).map((img, idx) => (
 								<div
 									key={idx}
-									className="relative rounded-xl overflow-hidden cursor-pointer group h-full border-2 border-transparent hover:border-forest-500 transition-all"
+									className={`relative rounded-xl overflow-hidden cursor-pointer group w-full h-full aspect-square border-2 border-transparent hover:border-forest-500 transition-all${idx === 5 ? " hidden md:block" : ""}`}
 									role="button"
 									tabIndex={0}
 									onClick={() => onOpenLightbox(idx)}
@@ -91,7 +91,15 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 										className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
 										src={getImageUrl(img)}
 									/>
-									{/* Overlay for +More images */}
+
+									{/* Overlay for +More images on mobile (5-col grid) */}
+									{idx === 4 && images.length > 5 && (
+										<div className="md:hidden absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
+											+{images.length - 5}
+										</div>
+									)}
+
+									{/* Overlay for +More images on desktop (6-col grid) */}
 									{idx === 5 && images.length > 6 && (
 										<div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
 											+{images.length - 6}

@@ -40,7 +40,7 @@ export const OrchardPackages: React.FC<OrchardPackagesProps> = ({
 								/>
 							</div>
 						)}
-						<div className="flex-grow p-4">
+						<div className="grow p-4">
 							<div className="flex justify-between items-start mb-2">
 								<h4 className="font-bold text-slate-900 dark:text-white">
 									{pkg.name}

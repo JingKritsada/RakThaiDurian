@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Save, X, Image, Layers, Map as MapIcon, Info, ArrowRight } from "lucide-react";
+import { ArrowLeft, Save, Image, Layers, Map as MapIcon, Info, ArrowRight } from "lucide-react";
 
 import { orchardService } from "@/services/orchardService";
 import { getErrorMessage } from "@/services/api";
@@ -165,30 +165,6 @@ export const OrchardForm: React.FC = () => {
 			e.stopPropagation();
 		}
 
-		if (activeTab === "general") {
-			if (!formData.name.trim()) {
-				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุชื่อสวนทุเรียน", "warning");
-
-				return;
-			}
-			if (!formData.description.trim()) {
-				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุรายละเอียดและจุดเด่น", "warning");
-
-				return;
-			}
-		} else if (activeTab === "location") {
-			if (!formData.address.trim()) {
-				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุที่อยู่", "warning");
-
-				return;
-			}
-			if (formData.lat === 0 || formData.lng === 0) {
-				showAlert("ข้อมูลไม่ครบถ้วน", "กรุณาระบุตำแหน่งพิกัดบนแผนที่", "warning");
-
-				return;
-			}
-		}
-
 		const currentIndex = TABS.indexOf(activeTab);
 
 		if (currentIndex < TABS.length - 1) {
@@ -210,7 +186,7 @@ export const OrchardForm: React.FC = () => {
 		e.preventDefault();
 		if (!user) return;
 
-		if (!formData.name || !formData.description || !formData.address || formData.lat === 0) {
+		if (!formData.name || formData.lat === 0) {
 			showAlert("ข้อมูลไม่ครบถ้วน", "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน", "warning");
 
 			return;
@@ -290,20 +266,14 @@ export const OrchardForm: React.FC = () => {
 		icon: React.ElementType;
 	}) => (
 		<Button
-			className={`
-        flex items-center gap-2 px-4 py-3 text-sm font-medium rounded-xl transition-all whitespace-nowrap
-        ${
-			activeTab === id
-				? "bg-forest-800 text-white shadow-md shadow-forest-900/20"
-				: "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700"
-		}
-      `}
+			className="px-4!"
+			size="lg"
 			type="button"
-			variant="ghost"
+			variant={activeTab === id ? "secondary" : "outline"}
 			onClick={() => setActiveTab(id)}
 		>
 			<Icon size={18} />
-			<span>{label}</span>
+			{activeTab === id ? <span>{label}</span> : null}
 		</Button>
 	);
 
@@ -316,39 +286,22 @@ export const OrchardForm: React.FC = () => {
 	}
 
 	return (
-		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-950">
+		<div className="h-full overflow-y-auto bg-slate-100 dark:bg-slate-950">
 			<div className="max-w-4xl mx-auto px-4 pt-8">
 				{/* Header */}
-				<div className="mb-6">
-					<Button
-						className="pl-0 hover:bg-transparent text-slate-500 hover:text-forest-700 mb-2"
-						variant="ghost"
-						onClick={() => navigate("/owner")}
-					>
-						{isEditMode ? (
-							<>
-								<ArrowLeft className="mr-1" size={20} /> ย้อนกลับ
-							</>
-						) : (
-							<>
-								<X className="mr-1" size={20} /> ยกเลิก
-							</>
-						)}
-					</Button>
-					<div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-						<div>
-							<h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-								{isEditMode ? "แก้ไขข้อมูลสวน" : "ลงทะเบียนสวนใหม่"}
-							</h1>
-							<p className="text-slate-500 mt-1">
-								กรอกข้อมูลให้ครบถ้วนเพื่อการประชาสัมพันธ์ที่มีประสิทธิภาพ
-							</p>
-						</div>
+				<div className="mb-6 flex flex-col items-start gap-6">
+					<div className="flex flex-col items-start gap-1">
+						<h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+							{isEditMode ? "แก้ไขข้อมูลสวน" : "ลงทะเบียนสวนใหม่"}
+						</h1>
+						<p className="text-slate-500 mt-1">
+							กรอกข้อมูลให้ครบถ้วนเพื่อการประชาสัมพันธ์ที่มีประสิทธิภาพ
+						</p>
 					</div>
 				</div>
 
 				{/* Tab Navigation */}
-				<div className="mb-6 overflow-x-auto pb-2 scrollbar-hide">
+				<div className="mb-6 overflow-x-auto scrollbar-hide">
 					<div className="flex gap-2 min-w-max">
 						<TabButton icon={Info} id="general" label="ข้อมูลทั่วไป" />
 						<TabButton icon={MapIcon} id="location" label="ที่ตั้ง & แผนที่" />
@@ -402,11 +355,12 @@ export const OrchardForm: React.FC = () => {
 					)}
 
 					{/* Footer Actions */}
-					<div className="sticky bottom-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md p-4 border-t border-slate-200 dark:border-slate-800 -mx-4 sm:mx-0 flex flex-col sm:flex-row justify-end gap-4 z-10">
+					<div className="sticky bottom-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md p-4 sm:px-0 sm:py-6 border-t border-slate-200 dark:border-slate-800 -mx-4 sm:mx-0 flex flex-row justify-end gap-4 z-10">
 						{isEditMode ? (
 							<>
 								<Button
-									className="w-full sm:w-auto order-2 sm:order-1"
+									className="w-full sm:w-auto flex-1 sm:flex-initial"
+									size="lg"
 									type="button"
 									variant="secondary"
 									onClick={() => navigate("/owner")}
@@ -414,30 +368,34 @@ export const OrchardForm: React.FC = () => {
 									ยกเลิก
 								</Button>
 								<Button
-									className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20"
+									className="w-full sm:w-auto flex-2 sm:flex-initial"
 									isLoading={isLoading}
+									size="lg"
 									type="submit"
+									variant="primary"
 								>
 									<Save className="mr-2" size={20} /> บันทึกข้อมูลสวน
 								</Button>
 							</>
 						) : (
 							<>
-								{activeTab !== "general" && (
-									<Button
-										className="w-full sm:w-auto order-2 sm:order-1"
-										type="button"
-										variant="secondary"
-										onClick={handleBack}
-									>
-										<ArrowLeft className="mr-2" size={20} /> ย้อนกลับ
-									</Button>
-								)}
+								<Button
+									className="w-full sm:w-auto"
+									type="button"
+									variant="secondary"
+									onClick={
+										activeTab !== "general"
+											? handleBack
+											: () => navigate("/owner")
+									}
+								>
+									<ArrowLeft className="mr-2" size={20} /> ย้อนกลับ
+								</Button>
 
 								{activeTab !== "services" ? (
 									<Button
 										key="next-btn"
-										className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20 !bg-forest-800"
+										className="w-full sm:w-auto shadow-lg shadow-forest-900/20 bg-forest-800!"
 										type="button"
 										onClick={handleNext}
 									>
@@ -446,7 +404,7 @@ export const OrchardForm: React.FC = () => {
 								) : (
 									<Button
 										key="save-btn"
-										className="w-full sm:w-auto order-1 sm:order-2 shadow-lg shadow-forest-900/20"
+										className="w-full sm:w-auto shadow-lg shadow-forest-900/20"
 										isLoading={isLoading}
 										type="submit"
 									>
