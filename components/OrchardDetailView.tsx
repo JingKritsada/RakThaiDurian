@@ -47,11 +47,9 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 
 	return (
 		<div className={containerClasses}>
-			<div className={`flex flex-col gap-4 ${isSheet ? "p-6 pt-4 pb-8" : "p-5"}`}>
+			<div className={`flex flex-col gap-4 ${isSheet ? "p-6" : "p-5"}`}>
 				{/* Header */}
-				<div
-					className={`flex justify-between items-center mb-2 ${isSheet ? "mt-2" : "mt-0"}`}
-				>
+				<div className="flex justify-between items-center mb-2 mt-0">
 					<div className="flex gap-4 mr-4 min-w-0">
 						<h3 className="text-2xl font-bold text-slate-900 dark:text-white leading-tight truncate">
 							{orchard.name}
@@ -187,7 +185,7 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 				{/* Action Buttons */}
 				<div className="grid grid-cols-2 gap-3 mt-3">
 					<Button variant="secondary" onClick={() => navigate(`/orchard/${orchard.id}`)}>
-						<Info size={16} strokeWidth={3} /> ดูข้อมูลเพิ่มเติม
+						<Info size={16} strokeWidth={3} /> ดูข้อมูล
 					</Button>
 					<Button
 						className="bg-blue-600 hover:bg-blue-700"

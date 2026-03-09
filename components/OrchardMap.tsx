@@ -27,8 +27,7 @@ const userLocationIcon = L.divIcon({
 	className: "bg-transparent border-none",
 	html: `
 		<div class="relative w-full h-full flex items-center justify-center">
-		<div class="absolute w-full h-full bg-blue-500/30 rounded-full animate-ping"></div>
-		<div class="relative w-4 h-4 bg-blue-600 border-2 border-white rounded-full shadow-lg ring-1 ring-black/5"></div>
+			<div class="relative w-4 h-4 bg-blue-600 border-2 border-white rounded-full shadow-lg ring-1 ring-black/5"></div>
 		</div>
 	`,
 	iconSize: [32, 32],
@@ -360,11 +359,7 @@ export const OrchardMap: React.FC<MapProps> = ({
 						icon={userLocationIcon}
 						position={userLocation}
 						zIndexOffset={1000} // Ensure it sits on top of other markers
-					>
-						<Popup autoClose={false}>
-							<div className="text-center font-bold text-blue-600">ตำแหน่งของคุณ</div>
-						</Popup>
-					</Marker>
+					/>
 				)}
 
 				{validOrchards.map((orchard) => {

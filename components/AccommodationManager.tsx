@@ -310,7 +310,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 							<p className="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-1">
 								รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 							</p>
-							<div className="grid grid-cols-4 md:grid-cols-5 gap-4">
+							<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
 								{newItem.images.map((img, idx) => (
 									<div
 										key={idx}

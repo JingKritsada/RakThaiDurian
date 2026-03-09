@@ -51,7 +51,7 @@ export const LocationTab: React.FC<LocationTabProps> = ({
 						</div>
 
 						<Button
-							className="text-forest-700 w-full md:w-auto md:py-2 dark:text-forest-300 rounded-lg md:rounded-xl shadow-sm transition-all disabled:opacity-50"
+							className="text-forest-500 w-full md:w-auto md:py-2 dark:text-forest-300 rounded-lg md:rounded-xl shadow-sm transition-all disabled:opacity-50"
 							disabled={isLocating}
 							isLoading={isLocating}
 							size="sm"

@@ -35,7 +35,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 						${
 							inputClassName
 								? inputClassName
-								: "w-full h-12 py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900! dark:text-white! shadow-sm transition-all outline-none relative appearance-none"
+								: "w-full h-12 py-3.5 rounded-xl border bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm transition-all outline-none relative appearance-none"
 						}
 						${Icon ? "pl-12" : "pl-4"}
 						${suffix ? "pr-12" : "pr-4"}
@@ -106,7 +106,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 			</div>
 			<button
 				className={`
-					relative inline-flex h-7 w-12 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out
+					relative inline-flex h-7 w-13 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out
 					${checked ? "bg-forest-600" : "bg-slate-200 dark:bg-slate-600"}
 				`}
 				type="button"
@@ -117,7 +117,7 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 					aria-hidden="true"
 					className={`
 						pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out
-						${checked ? "translate-x-5" : "translate-x-0"}
+						${checked ? "translate-x-3" : "translate-x-0"}
 					`}
 				/>
 			</button>

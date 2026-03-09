@@ -37,7 +37,7 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 		{
 			key: "instagram",
 			icon: Instagram,
-			color: "bg-gradient-to-tr from-[#f09433] via-[#dc2743] to-[#bc1888] text-white",
+			color: "bg-[linear-gradient(to_top_right,#f09433,#e6683c,#dc2743,#cc2366,#bc1888)] text-white",
 			label: "Instagram",
 			url: links.instagram,
 		},

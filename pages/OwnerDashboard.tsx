@@ -121,7 +121,7 @@ export const OwnerDashboard: React.FC = () => {
 								</div>
 
 								{/* Action Buttons Toolbar */}
-								<div className="mt-1 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 px-4 py-2 sm:p-0 sm:opacity-70 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
+								<div className="mt-1 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 px-4 py-2 sm:p-0 sm:opacity-80 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
 									<Link to={`/owner/edit/${orchard.id}`}>
 										<Button variant="secondary">
 											<Edit2 size={16} /> แก้ไข

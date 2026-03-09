@@ -1,5 +1,5 @@
 import React from "react";
-import { Layers, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Image } from "lucide-react";
 
 import { Button } from "@/components/Button";
 import { Lightbox } from "@/components/Lightbox";
@@ -36,7 +36,7 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 		<>
 			<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
 				<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
-					<Layers className="text-red-600" /> วิดีโอและสื่อ
+					<Image className="text-forest-600" /> วิดีโอและสื่อ
 				</h2>
 
 				<div className="flex flex-col gap-6">
@@ -71,7 +71,7 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 					)}
 
 					{/* Pictures Thumbnail Grid */}
-					{images.length > 0 && (
+					{images.length > 0 ? (
 						<div className="grid grid-cols-5 md:grid-cols-6 gap-2 md:gap-4">
 							{images.slice(0, 6).map((img, idx) => (
 								<div
@@ -107,6 +107,15 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 									)}
 								</div>
 							))}
+						</div>
+					) : (
+						<div className="flex flex-col items-center justify-center py-10 bg-white dark:bg-slate-800 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
+							<div className="bg-forest-50 dark:bg-forest-900/30 p-6 rounded-full mb-6">
+								<Image className="text-forest-600 dark:text-forest-400" size={36} />
+							</div>
+							<span className="text-lg font-medium text-slate-900 dark:text-white mb-2">
+								ยังไม่มีข้อมูลรูปภาพในสวน
+							</span>
 						</div>
 					)}
 				</div>

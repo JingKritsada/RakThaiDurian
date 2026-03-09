@@ -31,25 +31,25 @@ const FontSizeControls = ({
 }) => (
 	<div className="flex items-center h-full p-0.5 bg-transparent border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 gap-0.5 rounded-xl">
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "small" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "small" ? "bg-slate-200 dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรเล็ก"
-			variant="ghost"
+			variant="none"
 			onClick={() => setFontSize("small")}
 		>
 			<span className="text-xs">ก</span>
 		</Button>
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "medium" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-ld transition-all p-0! min-h-0! ${fontSize === "medium" ? "bg-slate-200 dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรปกติ"
-			variant="ghost"
+			variant="none"
 			onClick={() => setFontSize("medium")}
 		>
 			<span className="text-sm">ก</span>
 		</Button>
 		<Button
-			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all p-0! min-h-0! ${fontSize === "large" ? "bg-white dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
+			className={`h-full aspect-square flex items-center justify-center rounded-lg transition-all p-0! min-h-0! ${fontSize === "large" ? "bg-slate-200 dark:bg-slate-600 shadow-sm text-forest-800 dark:text-white font-bold" : "text-slate-400"}`}
 			title="ขนาดตัวอักษรใหญ่"
-			variant="ghost"
+			variant="none"
 			onClick={() => setFontSize("large")}
 		>
 			<span className="text-lg">ก</span>
@@ -65,6 +65,7 @@ export const Header: React.FC = () => {
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
 	const handleLogout = () => {
+		isMobileMenuOpen && setIsMobileMenuOpen(false);
 		showConfirm(
 			"ยืนยันการออกจากระบบ",
 			"คุณต้องการออกจากระบบใช่หรือไม่?",
@@ -122,7 +123,7 @@ export const Header: React.FC = () => {
 							</div>
 
 							<Button
-								className="h-full aspect-square p-0! border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+								className="h-full aspect-square p-0!"
 								title="เปลี่ยนโหมดสี"
 								variant="outline"
 								onClick={toggleTheme}
@@ -136,7 +137,7 @@ export const Header: React.FC = () => {
 								<div className="flex items-center gap-2 h-full">
 									<Link className="h-full" to="/owner">
 										<Button
-											className="h-full aspect-square p-0! border border-transparent hover:border-slate-200 dark:hover:border-slate-700"
+											className="h-full aspect-square p-0!"
 											variant="secondary"
 										>
 											<UserIcon size={20} strokeWidth={3} />
@@ -175,7 +176,7 @@ export const Header: React.FC = () => {
 				{isMobileMenuOpen && (
 					<div className="md:hidden bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 p-4 shadow-xl animate-in slide-in-from-top-2">
 						<div className="flex flex-col gap-2">
-							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
+							<div className="flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
 								<div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
 									<Type size={18} />
 									<span className="text-sm font-medium">ขนาดตัวอักษร</span>
@@ -183,7 +184,7 @@ export const Header: React.FC = () => {
 								<FontSizeControls fontSize={fontSize} setFontSize={setFontSize} />
 							</div>
 
-							<div className="flex justify-between items-center bg-slate-50 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
+							<div className="flex justify-between items-center bg-slate-100 dark:bg-slate-800 p-2 pl-4 rounded-2xl h-14">
 								<span className="text-sm font-medium text-slate-600 dark:text-slate-300">
 									โหมดการแสดงผล
 								</span>

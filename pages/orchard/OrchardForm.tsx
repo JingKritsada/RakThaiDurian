@@ -135,6 +135,7 @@ export const OrchardForm: React.FC = () => {
 		}
 
 		setIsLocating(true);
+
 		navigator.geolocation.getCurrentPosition(
 			(position) => {
 				setFormData((prev) => ({
@@ -142,7 +143,10 @@ export const OrchardForm: React.FC = () => {
 					lat: position.coords.latitude,
 					lng: position.coords.longitude,
 				}));
-				setIsLocating(false);
+
+				setTimeout(() => {
+					setIsLocating(false);
+				}, 1000);
 			},
 			(error) => {
 				if (error.code) {
@@ -355,7 +359,7 @@ export const OrchardForm: React.FC = () => {
 					)}
 
 					{/* Footer Actions */}
-					<div className="sticky bottom-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md p-4 sm:px-0 sm:py-6 border-t border-slate-200 dark:border-slate-800 -mx-4 sm:mx-0 flex flex-row justify-end gap-4 z-10">
+					<div className="sticky bottom-0 bg-slate-100/80 dark:bg-slate-950/80 backdrop-blur-md p-4 sm:px-0 sm:py-6 border-t border-slate-200 dark:border-slate-800 -mx-4 sm:mx-0 flex flex-row justify-end gap-4 z-10">
 						{isEditMode ? (
 							<>
 								<Button

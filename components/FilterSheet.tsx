@@ -76,7 +76,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 			{/* Modal Content */}
 			<div className="relative w-full sm:max-w-md bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[90vh] animate-in slide-in-from-bottom duration-300 sm:zoom-in-95">
 				{/* Header */}
-				<div className="flex items-center justify-between p-5 border-b border-slate-100 dark:border-slate-800">
+				<div className="flex items-center justify-between px-5 pb-4 pt-6 border-b border-slate-100 dark:border-slate-800">
 					<h3 className="text-xl font-bold text-slate-900 dark:text-white">
 						ตัวกรองและจัดเรียง
 					</h3>
@@ -95,13 +95,13 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 						<div className="space-y-3">
 							<label
 								className={`
-                flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
-                ${
-					tempSort === "default"
-						? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
-						: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-				}
-              `}
+									flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
+									${
+										tempSort === "default"
+											? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
+											: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+									}
+								`}
 							>
 								<div className="flex items-center gap-3">
 									<div
@@ -130,13 +130,13 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 
 							<label
 								className={`
-                flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
-                ${
-					tempSort === "nearest"
-						? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
-						: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-				}
-              `}
+									flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
+									${
+										tempSort === "nearest"
+											? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
+											: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+									}
+								`}
 							>
 								<div className="flex items-center gap-3">
 									<div
@@ -182,7 +182,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 										<Button
 											key={type.id}
 											className={`
-												relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-24
+												relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-18
 												${
 													isSelected
 														? "border-forest-500 bg-forest-50 dark:bg-forest-900/20 text-forest-800 dark:text-forest-300"
@@ -220,7 +220,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 							<RefreshCw className="mr-2" size={18} /> ล้างค่า
 						</Button>
 						<Button
-							className="flex-2 py-3! rounded-xl! text-lg! shadow-lg shadow-forest-900/20"
+							className="flex-1 py-3! rounded-xl! text-lg! shadow-lg shadow-forest-900/20"
 							size="lg"
 							onClick={handleApply}
 						>

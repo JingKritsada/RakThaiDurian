@@ -75,7 +75,7 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 						onClick={openGoogleMapsRoute}
 					>
 						<Navigation size={18} strokeWidth={3} />
-						นำทางด้วย Google Maps
+						นำทาง
 					</Button>
 				</div>
 			</div>

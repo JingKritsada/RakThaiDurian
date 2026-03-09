@@ -24,14 +24,14 @@ export const Z_INDEX = {
 	/** Mobile navigation overlay backdrop */
 	mobileNavBackdrop: 1500,
 
-	/** Alert/Confirm modals (above lightbox) */
-	alertModal: 2000,
-
 	/** Mobile navigation header */
-	mobileNavHeader: 3000,
+	mobileNavHeader: 2500,
 
 	/** Filter modals */
-	filterModal: 3500,
+	filterModal: 3000,
+
+	/** Alert/Confirm modals (above lightbox) */
+	alertModal: 3500,
 
 	/** Global loading overlay */
 	globalLoading: 9999,
