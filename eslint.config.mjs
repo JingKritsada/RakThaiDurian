@@ -1,7 +1,9 @@
 import { fixupConfigRules, fixupPluginRules } from "@eslint/compat";
+import tailwind from "eslint-plugin-tailwindcss";
 import react from "eslint-plugin-react";
 import unusedImports from "eslint-plugin-unused-imports";
 import _import from "eslint-plugin-import";
+import noRelativeImportPaths from "eslint-plugin-no-relative-import-paths";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import jsxA11Y from "eslint-plugin-jsx-a11y";
 import prettier from "eslint-plugin-prettier";
@@ -21,6 +23,14 @@ const compat = new FlatCompat({
 });
 
 export default [
+	...tailwind.configs["flat/recommended"],
+	{
+		settings: {
+			tailwindcss: {
+				config: path.join(__dirname, "src/index.css"),
+			},
+		},
+	},
 	{
 		ignores: [
 			".now/*",
@@ -70,6 +80,7 @@ export default [
 			"@typescript-eslint": typescriptEslint,
 			"jsx-a11y": fixupPluginRules(jsxA11Y),
 			prettier: fixupPluginRules(prettier),
+			"no-relative-import-paths": noRelativeImportPaths,
 		},
 
 		languageOptions: {
@@ -115,6 +126,7 @@ export default [
 					ignoreRestSiblings: false,
 					argsIgnorePattern: "^_.*?$",
 					varsIgnorePattern: "^_.*?$",
+					caughtErrorsIgnorePattern: "^_.*?$",
 				},
 			],
 
@@ -143,6 +155,16 @@ export default [
 					"newlines-between": "always",
 				},
 			],
+
+			"no-relative-import-paths/no-relative-import-paths": [
+				"warn",
+				{ allowSameFolder: true, rootDir: "src", prefix: "@" },
+			],
+
+			"tailwindcss/classnames-order": "warn",
+			"tailwindcss/enforces-shorthand": "warn",
+			"tailwindcss/no-contradicting-classname": "off",
+			"tailwindcss/no-custom-classname": "off",
 
 			"react/self-closing-comp": "warn",
 
