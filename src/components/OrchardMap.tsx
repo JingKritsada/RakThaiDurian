@@ -1,6 +1,8 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React, { useEffect, useRef } from "react";
+import React,  { useEffect, useRef } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { Check, AlertTriangle, Clock, X } from "lucide-react";
 import L from "leaflet";
 import {
 	MapContainer,
@@ -14,14 +16,29 @@ import {
 
 import { OrchardDetailView } from "./OrchardDetailView";
 
-import { useMasterData } from "@/providers/MasterDataContext";
-
-const ICONS = {
-	check: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`,
-	alert: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`,
-	clock: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
-	x: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`,
+const ICON_COMPONENTS: Record<string, React.FC<any>> = {
+	check: Check,
+	alert: AlertTriangle,
+	clock: Clock,
+	x: X,
 };
+
+type PinStyle = { pin: string; circle: string; icon: string; glow: string };
+
+const STATUS_STYLES: Record<string, PinStyle> = {
+	available: { pin: "#16a34a", circle: "#dcfce7", icon: "#15803d", glow: "rgba(22,163,74,0.45)" },
+	low:       { pin: "#d97706", circle: "#fef9c3", icon: "#92400e", glow: "rgba(217,119,6,0.45)" },
+	reserved:  { pin: "#2563eb", circle: "#dbeafe", icon: "#1e40af", glow: "rgba(37,99,235,0.45)" },
+	out:       { pin: "#6b7280", circle: "#f3f4f6", icon: "#374151", glow: "rgba(107,114,128,0.35)" },
+};
+
+const ROUTE_STYLE: PinStyle = {
+	pin: "#7c3aed", circle: "#ede9fe", icon: "#4c1d95", glow: "rgba(124,58,237,0.5)",
+};
+
+const W = 52;
+const H = 68;
+const PIN_PATH = "M26,4 C14,4 4,14 4,26 C4,40 26,64 26,64 C26,64 48,40 48,26 C48,14 38,4 26,4 Z";
 
 // Custom Icon for User Location (Blue Pulse Dot)
 const userLocationIcon = L.divIcon({
@@ -189,7 +206,6 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 	routeIndex,
 }) => {
 	const markerRef = useRef<L.Marker>(null);
-	const { getStatus } = useMasterData();
 
 	useEffect(() => {
 		if (markerRef.current) {
@@ -212,51 +228,63 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 		}
 	};
 
-	const getStatusIcon = (status: string, rIndex?: number) => {
-		const config = getStatus(status) || { mapColor: "#555", label: "Unknown", color: "" };
-		const color = rIndex !== undefined ? "#2563eb" : config.mapColor;
+	const getStatusIcon = (status: string, rIndex?: number): L.DivIcon => {
+		const isRoute = rIndex !== undefined;
+		const style   = isRoute ? ROUTE_STYLE : (STATUS_STYLES[status] ?? STATUS_STYLES["out"]);
 
-		let innerContent = "";
+		// Choose the icon path based on status
+		let iconPathKey = "check";
+		if (status === "low")      iconPathKey = "alert";
+		if (status === "reserved") iconPathKey = "clock";
+		if (status === "out")      iconPathKey = "x";
+		const Icon = ICON_COMPONENTS[iconPathKey];
 
-		if (rIndex !== undefined) {
-			// Route Mode: Show Number
-			innerContent = `<span style="color: white; font-weight: bold; font-size: 18px; transform: rotate(-45deg);">${rIndex + 1}</span>`;
-		} else {
-			// Normal Mode: Show Status Icon based on ID mapping to simple icon logic or just use check as fallback
-			let svgIcon = ICONS.check;
+		const innerContent = isRoute
+		?
+			`<text
+				x="26" y="25"
+				text-anchor="middle" dominant-baseline="central"
+				font-family="'Helvetica Neue', Arial, sans-serif"
+				font-size="20" font-weight="800"
+				fill="${style.icon}"
+			>
+				${rIndex! + 1}
+			</text>`
+		:
+			renderToStaticMarkup(
+				<Icon x="15" y="15" width="22" height="22" color={style.icon} strokeWidth={2.5} style={{ overflow: 'visible' }} />
+			);
 
-			if (status === "low") svgIcon = ICONS.alert;
-			if (status === "reserved") svgIcon = ICONS.clock;
-			if (status === "out") svgIcon = ICONS.x;
-			innerContent = `<div style="transform: rotate(-45deg); display: flex; align-items: center; justify-content: center;">${svgIcon}</div>`;
-		}
+		const svgHTML = `
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				width="${W}" height="${H}"
+				viewBox="0 0 ${W} ${H}"
+				style="
+				display:block;
+					filter:
+						drop-shadow(0 4px 10px ${style.glow})
+						drop-shadow(0 1px 4px rgba(0,0,0,0.28));
+					overflow:visible;
+				"
+			>
+				<path d="${PIN_PATH}" fill="${style.pin}"/>
+				<path d="${PIN_PATH}" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
+				<ellipse cx="20" cy="17" rx="5.5" ry="8" fill="rgba(255,255,255,0.22)" transform="rotate(-22 20 17)"/>
+				<circle cx="26" cy="26" r="16" fill="#ffffff"/>
+				<circle cx="26" cy="26" r="13.5" fill="${style.circle}"/>
+				<circle cx="26" cy="26" r="13.5" fill="none" stroke="${style.pin}" stroke-width="0.8" stroke-opacity="0.2"/>
 
-		const html = `
-			<div style="
-				background-color: ${color};
-				width: 40px;
-				height: 40px;
-				border-radius: 12px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-				border: 2px solid white;
-				position: relative;
-				transform: rotate(45deg);
-				transition: all 0.3s ease;
-				${rIndex !== undefined ? "z-index: 1000;" : ""}
-			">
 				${innerContent}
-			</div>
+			</svg>
 		`;
 
 		return L.divIcon({
-			className: "bg-transparent border-none group hover:z-50",
-			html: html,
-			iconSize: [40, 40],
-			iconAnchor: [20, 20],
-			popupAnchor: [0, -25],
+			className:    "bg-transparent border-none",
+			html:         svgHTML,
+			iconSize:     [W, H],
+			iconAnchor:   [W / 2, H],
+			popupAnchor:  [0, -H],
 		});
 	};
 

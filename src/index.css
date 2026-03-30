@@ -154,6 +154,15 @@ input:-webkit-autofill {
 	display: none; /* Chrome, Safari, Opera */
 }
 
+.leaflet-container {
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+.dark .leaflet-tile-container {
+	filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(95%);
+}
+
 /* Leaflet specific overrides for dark mode */
 .leaflet-popup-content-wrapper,
 .leaflet-popup-tip {
