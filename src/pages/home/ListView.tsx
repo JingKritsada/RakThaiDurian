@@ -45,7 +45,7 @@ export const ListView: React.FC<ListViewProps> = ({
 				${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
 			`}
 		>
-			<div className="hidden md:block px-6 py-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
+			<div className="hidden md:block px-4 py-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
 				<div className="mb-4">
 					<SearchBar
 						showFilterLabel
@@ -90,7 +90,7 @@ export const ListView: React.FC<ListViewProps> = ({
 				)}
 			</div>
 
-			<div className="grow overflow-y-auto px-4 py-4 sm:px-6 md:py-4 space-y-4 custom-scrollbar bg-slate-100 dark:bg-slate-950">
+			<div className="grow overflow-y-auto px-4 py-4 md:py-4 space-y-4 custom-scrollbar bg-slate-100 dark:bg-slate-950">
 				{/* Mobile Sort/Count Header */}
 				<div className="md:hidden flex flex-col gap-2 mb-2">
 					{isRouteMode && (

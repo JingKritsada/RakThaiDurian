@@ -4,7 +4,7 @@ import { Header } from "./components/Header";
 import { HomePage } from "./pages/home/HomePage";
 import { OrchardDetailPage } from "./pages/orchard/OrchardDetailPage";
 import { Login } from "./pages/Login";
-import { OwnerDashboard } from "./pages/OwnerDashboard";
+import ProfilePage from "@/pages/profile/ProfilePage";
 import { OrchardForm } from "./pages/orchard/OrchardForm";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { NotFoundPage } from "./pages/NotFoundPage";
@@ -24,7 +24,7 @@ function App() {
 
 						{/* Protected Owner Routes */}
 						<Route element={<PrivateRoute />}>
-							<Route element={<OwnerDashboard />} path="/owner" />
+							<Route element={<ProfilePage />} path="/owner" />
 							<Route element={<OrchardForm />} path="/owner/add" />
 							<Route element={<OrchardForm />} path="/owner/edit/:id" />
 						</Route>

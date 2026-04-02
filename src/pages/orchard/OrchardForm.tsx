@@ -12,6 +12,7 @@ import { useMasterData } from "@/providers/MasterDataContext";
 import { useAlert } from "@/providers/AlertContext";
 import { OrchardType, DurianStatus } from "@/utils/enum";
 import { Button } from "@/components/Button";
+import TabButton from "@/components/TabButton";
 import { GeneralTab } from "@/pages/orchard/tabs/GeneralTab";
 import { LocationTab } from "@/pages/orchard/tabs/LocationTab";
 import { MediaTab } from "@/pages/orchard/tabs/MediaTab";
@@ -261,26 +262,6 @@ export const OrchardForm: React.FC = () => {
 		}
 	};
 
-	const TabButton = ({
-		id,
-		label,
-		icon: Icon,
-	}: {
-		id: TabType;
-		label: string;
-		icon: React.ElementType;
-	}) => (
-		<Button
-			className="px-4!"
-			size="lg"
-			type="button"
-			variant={activeTab === id ? "secondary" : "outline"}
-			onClick={() => setActiveTab(id)}
-		>
-			<Icon size={18} />
-			{activeTab === id ? <span>{label}</span> : null}
-		</Button>
-	);
 
 	if (loadingData || isMasterDataLoading) {
 		return (
@@ -308,10 +289,10 @@ export const OrchardForm: React.FC = () => {
 				{/* Tab Navigation */}
 				<div className="mb-6 overflow-x-auto scrollbar-hide">
 					<div className="flex gap-2 min-w-max">
-						<TabButton icon={Info} id="general" label="ข้อมูลทั่วไป" />
-						<TabButton icon={MapIcon} id="location" label="ที่ตั้ง & แผนที่" />
-						<TabButton icon={Image} id="media" label="รูปภาพ & สื่อ" />
-						<TabButton icon={Layers} id="services" label="บริการเสริม" />
+						<TabButton<TabType> activeTab={activeTab} setActiveTab={setActiveTab} icon={Info} id="general" label="ข้อมูลทั่วไป" />
+						<TabButton<TabType> activeTab={activeTab} setActiveTab={setActiveTab} icon={MapIcon} id="location" label="ที่ตั้ง & แผนที่" />
+						<TabButton<TabType> activeTab={activeTab} setActiveTab={setActiveTab} icon={Image} id="media" label="รูปภาพ & สื่อ" />
+						<TabButton<TabType> activeTab={activeTab} setActiveTab={setActiveTab} icon={Layers} id="services" label="บริการเสริม" />
 					</div>
 				</div>
 

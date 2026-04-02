@@ -171,7 +171,7 @@ export const userService = {
 	/**
 	 * Check if user has valid token
 	 */
-	isAuthenticated: (): boolean => {
+	updateProfile: async (data: Partial<User>, options?: ApiOptions): Promise<User> => { const response = await apiRequest<UserProfileResponse>(() => apiClient.put<UserProfileResponse>('/auth/profile', data), options); const user: User = { id: response.data.id, email: response.data.email, name: response.data.name, role: response.data.role }; localStorage.setItem('durian_user', JSON.stringify(user)); return user; }, isAuthenticated: (): boolean => {
 		return !!tokenManager.getToken();
 	},
 };
