@@ -44,8 +44,10 @@ const PIN_PATH = "M26,4 C14,4 4,14 4,26 C4,40 26,64 26,64 C26,64 48,40 48,26 C48
 const userLocationIcon = L.divIcon({
 	className: "bg-transparent border-none",
 	html: `
-		<div class="relative w-full h-full flex items-center justify-center">
-			<div class="relative w-4 h-4 bg-blue-600 border-2 border-white rounded-full shadow-lg ring-1 ring-black/5"></div>
+		<div class="relative flex items-center justify-center">
+			<div class="absolute w-10 h-10 bg-blue-500/20 rounded-full animate-ping"></div>
+			<div class="absolute w-8 h-8 bg-blue-500/40 rounded-full animate-pulse"></div>
+			<div class="w-5 h-5 bg-blue-600 border-[3px] border-white rounded-full shadow-[0_0_15px_rgba(37,99,235,0.8)] z-20"></div>
 		</div>
 	`,
 	iconSize: [32, 32],
@@ -129,7 +131,7 @@ const MapUpdater = ({
 
 			if (!offsetForMobile) {
 				// Desktop: Shift center NORTH so marker appears in BOTTOM half (to accommodate popup above)
-				target = [center[0] + 0.025, center[1]];
+				target = [center[0] + 0.029, center[1]];
 			}
 
 			map.flyTo(target, 14, { duration: 1.5 });
@@ -270,7 +272,6 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 			>
 				<path d="${PIN_PATH}" fill="${style.pin}"/>
 				<path d="${PIN_PATH}" fill="none" stroke="rgba(0,0,0,0.12)" stroke-width="1.5"/>
-				<ellipse cx="20" cy="17" rx="5.5" ry="8" fill="rgba(255,255,255,0.22)" transform="rotate(-22 20 17)"/>
 				<circle cx="26" cy="26" r="16" fill="#ffffff"/>
 				<circle cx="26" cy="26" r="13.5" fill="${style.circle}"/>
 				<circle cx="26" cy="26" r="13.5" fill="none" stroke="${style.pin}" stroke-width="0.8" stroke-opacity="0.2"/>

@@ -15,6 +15,7 @@ import { useWindowSize } from "@/hooks/useWindowSize";
 import { SearchBar } from "@/pages/home/SearchBar";
 import { ListView } from "@/pages/home/ListView";
 import { MapView } from "@/pages/home/MapView";
+import { Z_INDEX } from "@/utils/zIndex";
 
 export const HomePage: React.FC = () => {
 	const { getStatus } = useMasterData();
@@ -342,7 +343,10 @@ export const HomePage: React.FC = () => {
 			/>
 
 			{/* Mobile Sticky Header */}
-			<div className="flex-initial md:hidden z-20 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sm:px-6 shadow-sm">
+			<div 
+				className="flex-initial md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sm:px-6 shadow-sm"
+				style={{ zIndex: Z_INDEX.mobileHeader }}
+			>
 				<SearchBar
 					showViewToggle
 					activeFilterCount={activeFilterCount}
