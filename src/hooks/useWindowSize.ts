@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
  * Hook to detect window size changes
  * @returns Object with current window width
  */
-export const useWindowSize = () => {
+export default function useWindowSize() {
 	const [size, setSize] = useState({ width: window.innerWidth });
 
 	useEffect(() => {
@@ -16,4 +16,4 @@ export const useWindowSize = () => {
 	}, []);
 
 	return size;
-};
+}

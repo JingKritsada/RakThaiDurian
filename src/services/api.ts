@@ -1,6 +1,6 @@
-import axios, { AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
+import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from "axios";
 
-import { loadingManager } from "@/utils/loadingManager";
+import loadingManager from "@/utils/loadingManager";
 
 // Import tokenManager - use dynamic import to avoid circular dependency
 let getToken: () => string | null = () => localStorage.getItem("durian_token");
@@ -108,7 +108,7 @@ export async function apiRequest<T>(
 
 	try {
 		if (showLoading) {
-			loadingManager.show();
+			loadingManager.getInstance().show();
 		}
 
 		const response = await requestFn();
@@ -116,7 +116,7 @@ export async function apiRequest<T>(
 		return response.data;
 	} finally {
 		if (showLoading) {
-			loadingManager.hide();
+			loadingManager.getInstance().hide();
 		}
 	}
 }

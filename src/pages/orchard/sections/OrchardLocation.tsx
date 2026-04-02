@@ -1,18 +1,18 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
+import type L from "leaflet";
 
 import React, { useRef } from "react";
 import { MapPin, Navigation, RotateCcw } from "lucide-react";
-import L from "leaflet";
 
-import { Button } from "@/components/Button";
-import { OrchardMap } from "@/components/OrchardMap";
-import { SocialLinks } from "@/components/SocialLinks";
+import Button from "@/components/Button";
+import OrchardMap from "@/components/OrchardMap";
+import SocialLinks from "@/components/SocialLinks";
 
 interface OrchardLocationProps {
 	orchard: Orchard;
 }
 
-export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => {
+export default function OrchardLocation({ orchard }: OrchardLocationProps) {
 	const mapRef = useRef<L.Map | null>(null);
 
 	return (
@@ -97,4 +97,4 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 			)}
 		</div>
 	);
-};
+}

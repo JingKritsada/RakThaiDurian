@@ -1,6 +1,5 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React from "react";
 import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 import { useMasterData } from "@/providers/MasterDataContext";
@@ -12,7 +11,7 @@ interface CardProps {
 	isSelected?: boolean;
 }
 
-export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
+export default function Card({ orchard, onClick, isSelected }: CardProps) {
 	const { getStatus, getServiceType } = useMasterData();
 
 	const statusInfo = getStatus(orchard.status) ?? {
@@ -106,4 +105,4 @@ export const Card: React.FC<CardProps> = ({ orchard, onClick, isSelected }) => {
 			</div>
 		</div>
 	);
-};
+}

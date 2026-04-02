@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useContext, useState, type ReactNode, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { loadingManager } from "@/utils/loadingManager";
+import loadingManager from "@/utils/loadingManager";
 import { Z_INDEX } from "@/utils/zIndex";
 
 interface LoadingContextType {
@@ -26,12 +26,12 @@ interface LoadingProviderProps {
 	children: ReactNode;
 }
 
-export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) => {
+export default function LoadingProvider({ children }: LoadingProviderProps) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Sync with LoadingManager
 	useEffect(() => {
-		const unsubscribe = loadingManager.subscribe((loading) => {
+		const unsubscribe = loadingManager.getInstance().subscribe((loading) => {
 			setIsLoading(loading);
 		});
 
@@ -45,12 +45,12 @@ export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) =>
 		// Optional: Trigger loading on route change if needed.
 		// For now, we rely on data fetching in the new page triggering loading.
 		// If instant feedback is needed before data fetch:
-		// loadingManager.show();
-		// setTimeout(() => loadingManager.hide(), 500); // Artificial delay or wait for page load
+		// loadingManager.getInstance().show();
+		// setTimeout(() => loadingManager.getInstance().hide(), 500); // Artificial delay or wait for page load
 	}, [location]);
 
-	const showLoading = () => loadingManager.show();
-	const hideLoading = () => loadingManager.hide();
+	const showLoading = () => loadingManager.getInstance().show();
+	const hideLoading = () => loadingManager.getInstance().hide();
 
 	return (
 		<LoadingContext.Provider value={{ isLoading, showLoading, hideLoading }}>
@@ -70,4 +70,4 @@ export const LoadingProvider: React.FC<LoadingProviderProps> = ({ children }) =>
 			)}
 		</LoadingContext.Provider>
 	);
-};
+}

@@ -4,10 +4,10 @@ import { Lock, Mail, AlertCircle, Eye, EyeOff } from "lucide-react";
 
 import { useAuth } from "@/providers/AuthContext";
 import { getErrorMessage } from "@/services/api";
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { InputField } from "@/components/FormInputs";
 
-export const Login: React.FC = () => {
+export default function Login() {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
@@ -103,4 +103,4 @@ export const Login: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+}

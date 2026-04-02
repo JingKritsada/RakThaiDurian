@@ -1,5 +1,5 @@
-import type { Orchard } from "./orchardInterface";
-import type { User } from "./userInterface";
+import type { Orchard } from "@/interfaces/orchardInterface";
+import type { User } from "@/interfaces/userInterface";
 
 export interface UserProfileResponse {
 	success: boolean;

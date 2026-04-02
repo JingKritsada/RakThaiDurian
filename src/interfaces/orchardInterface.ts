@@ -1,9 +1,9 @@
-import { OrchardType, DurianStatus } from "@/utils/enum";
+import type { OrchardType, DurianStatus } from "@/utils/enum";
 
 // Type aliases for backend string compatibility
 // Backend sends types as string[] and status as string
-export type OrchardTypeString = OrchardType | `${OrchardType}`;
-export type DurianStatusString = DurianStatus | `${DurianStatus}`;
+export type OrchardTypeString = typeof OrchardType;
+export type DurianStatusString = typeof DurianStatus;
 
 export interface SocialMediaLinks {
 	line?: string;
@@ -36,8 +36,8 @@ export interface OrchardFormData {
 	name: string;
 	description?: string;
 	history?: string;
-	types?: OrchardTypeString[];
-	status: DurianStatusString;
+	types?: OrchardType[];
+	status: DurianStatus;
 	lat: number;
 	lng: number;
 	images: string[];

@@ -1,6 +1,6 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 
-import { ErrorPage } from "@/pages/ErrorPage";
+import ErrorPage from "@/pages/ErrorPage";
 
 interface Props {
 	children?: ReactNode;
@@ -11,7 +11,7 @@ interface State {
 	error: Error | null;
 }
 
-export class ErrorBoundary extends Component<Props, State> {
+export default class ErrorBoundary extends Component<Props, State> {
 	public state: State = {
 		hasError: false,
 		error: null,

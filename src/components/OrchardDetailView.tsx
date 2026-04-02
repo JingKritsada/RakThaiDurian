@@ -14,9 +14,8 @@ import {
 	Info,
 } from "lucide-react";
 
-import { Button } from "./Button";
-import { SocialLinks } from "./SocialLinks";
-
+import Button from "@/components/Button";
+import SocialLinks from "@/components/SocialLinks";
 import { useMasterData } from "@/providers/MasterDataContext";
 import { getImageUrl } from "@/utils/constants";
 
@@ -27,12 +26,12 @@ interface OrchardDetailViewProps {
 	onImageLoad?: () => void;
 }
 
-export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
+export default function OrchardDetailView({
 	orchard,
 	onClose,
 	variant = "sheet",
 	onImageLoad,
-}) => {
+}: OrchardDetailViewProps) {
 	const navigate = useNavigate();
 	const { getStatus, getServiceType } = useMasterData();
 	const statusInfo = getStatus(orchard.status);
@@ -205,4 +204,4 @@ export const OrchardDetailView: React.FC<OrchardDetailViewProps> = ({
 			</div>
 		</div>
 	);
-};
+}

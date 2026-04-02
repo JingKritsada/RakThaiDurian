@@ -11,7 +11,7 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export default function ThemeProvider({ children }: { children: ReactNode }) {
 	// Initialize from local storage or default
 	const [theme, setThemeState] = useState<Theme>(() => {
 		const saved = localStorage.getItem("theme");
@@ -87,7 +87,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 			{children}
 		</ThemeContext.Provider>
 	);
-};
+}
 
 export const useTheme = () => {
 	const context = useContext(ThemeContext);

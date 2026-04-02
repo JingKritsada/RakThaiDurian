@@ -1,4 +1,4 @@
-import { CropCategory } from "@/utils/enum";
+import type { CropCategory } from "@/utils/enum";
 
 export interface ServiceTypeResponse {
 	id: string;

@@ -158,7 +158,19 @@ export default [
 
 			"no-relative-import-paths/no-relative-import-paths": [
 				"warn",
-				{ allowSameFolder: true, rootDir: "src", prefix: "@" },
+				{ allowSameFolder: false, rootDir: "src", prefix: "@" },
+			],
+			"import/prefer-default-export": "warn",
+			"react/function-component-definition": [
+				"warn",
+				{
+					namedComponents: "function-declaration",
+					unnamedComponents: "arrow-function",
+				},
+			],
+			"@typescript-eslint/consistent-type-imports": [
+				"warn",
+				{ prefer: "type-imports", fixStyle: "inline-type-imports" },
 			],
 
 			"tailwindcss/classnames-order": "warn",

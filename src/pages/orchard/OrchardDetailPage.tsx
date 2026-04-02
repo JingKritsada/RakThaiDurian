@@ -4,18 +4,18 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Layers, Sprout } from "lucide-react";
 
-import { orchardService } from "@/services/orchardService";
-import { getErrorMessage } from "@/services/api";
-import { useMasterData } from "@/providers/MasterDataContext";
 import { useAlert } from "@/providers/AlertContext";
-import { OrchardHero } from "@/pages/orchard/sections/OrchardHero";
-import { OrchardInfo } from "@/pages/orchard/sections/OrchardInfo";
-import { OrchardGallery } from "@/pages/orchard/sections/OrchardGallery";
-import { OrchardPackages } from "@/pages/orchard/sections/OrchardPackages";
-import { OrchardAccommodations } from "@/pages/orchard/sections/OrchardAccommodations";
-import { OrchardLocation } from "@/pages/orchard/sections/OrchardLocation";
+import { useMasterData } from "@/providers/MasterDataContext";
+import { getErrorMessage } from "@/services/api";
+import orchardService from "@/services/orchardService";
+import OrchardHero from "@/pages/orchard/sections/OrchardHero";
+import OrchardInfo from "@/pages/orchard/sections/OrchardInfo";
+import OrchardGallery from "@/pages/orchard/sections/OrchardGallery";
+import OrchardPackages from "@/pages/orchard/sections/OrchardPackages";
+import OrchardAccommodations from "@/pages/orchard/sections/OrchardAccommodations";
+import OrchardLocation from "@/pages/orchard/sections/OrchardLocation";
 
-export const OrchardDetailPage: React.FC = () => {
+export default function OrchardDetailPage() {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 	const { showAlert } = useAlert();
@@ -48,7 +48,7 @@ export const OrchardDetailPage: React.FC = () => {
 			if (!id) return;
 			try {
 				setIsLoading(true);
-				const data = await orchardService.getOrchardById(parseInt(id));
+				const data = await orchardService().getOrchardById(parseInt(id));
 
 				if (data) {
 					setOrchard(data);
@@ -301,4 +301,4 @@ export const OrchardDetailPage: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+}

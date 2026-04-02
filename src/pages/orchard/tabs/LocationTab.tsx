@@ -3,8 +3,8 @@ import type { OrchardFormData } from "@/interfaces/orchardInterface";
 import React from "react";
 import { MapPin, Locate } from "lucide-react";
 
-import { Button } from "@/components/Button";
-import { LocationPicker } from "@/components/LocationPicker";
+import Button from "@/components/Button";
+import LocationPicker from "@/components/LocationPicker";
 import { TextAreaField } from "@/components/FormInputs";
 
 interface LocationTabProps {
@@ -14,12 +14,12 @@ interface LocationTabProps {
 	handleSetCurrentLocation: () => void;
 }
 
-export const LocationTab: React.FC<LocationTabProps> = ({
+export default function LocationTab({
 	formData,
 	setFormData,
 	isLocating,
 	handleSetCurrentLocation,
-}) => {
+}: LocationTabProps) {
 	const handleLocationChange = (lat: number, lng: number) => {
 		setFormData((prev) => ({ ...prev, lat, lng }));
 	};
@@ -85,4 +85,4 @@ export const LocationTab: React.FC<LocationTabProps> = ({
 			</div>
 		</div>
 	);
-};
+}

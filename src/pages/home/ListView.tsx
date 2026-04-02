@@ -3,9 +3,9 @@ import type { Orchard } from "@/interfaces/orchardInterface";
 import React from "react";
 import { Search, MapPin, Route } from "lucide-react";
 
-import { Card } from "@/components/Card";
-import { Button } from "@/components/Button";
-import { SearchBar } from "@/pages/home/SearchBar";
+import Card from "@/components/Card";
+import Button from "@/components/Button";
+import SearchBar from "@/pages/home/SearchBar";
 
 interface ListViewProps {
 	filteredOrchards: Orchard[];
@@ -22,7 +22,7 @@ interface ListViewProps {
 	onClearFilters: () => void;
 }
 
-export const ListView: React.FC<ListViewProps> = ({
+export default function ListView({
 	filteredOrchards,
 	isLoading,
 	isRouteMode,
@@ -35,7 +35,7 @@ export const ListView: React.FC<ListViewProps> = ({
 	onOrchardClick,
 	onOpenFilter,
 	onClearFilters,
-}) => {
+}: ListViewProps) {
 	return (
 		<div
 			className={`absolute inset-0 z-10 flex transform flex-col bg-white transition-transform duration-300 md:relative md:z-0 md:w-90 md:shrink-0 md:translate-x-0 md:border-r md:border-slate-200 lg:w-120 xl:w-150 dark:bg-slate-900 md:dark:border-slate-800 ${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} `}
@@ -196,4 +196,4 @@ export const ListView: React.FC<ListViewProps> = ({
 			</div>
 		</div>
 	);
-};
+}

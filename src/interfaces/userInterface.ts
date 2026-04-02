@@ -1,10 +1,10 @@
-import { UserRole } from "@/utils/enum";
+import type { UserRole } from "@/utils/enum";
 
 export interface User {
 	id: string;
 	username?: string;
 	email: string;
 	name?: string;
-	role?: UserRole;
+	role?: typeof UserRole;
 	is_active?: boolean;
 }

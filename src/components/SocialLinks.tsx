@@ -12,12 +12,12 @@ interface SocialLinksProps {
 	showUrl?: boolean;
 }
 
-export const SocialLinks: React.FC<SocialLinksProps> = ({
+export default function SocialLinks({
 	links,
 	className = "flex gap-3",
 	itemClassName = "",
 	showUrl = false,
-}) => {
+}: SocialLinksProps) {
 	if (!links) return null;
 
 	const socialItems = [
@@ -108,4 +108,4 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 			))}
 		</div>
 	);
-};
+}

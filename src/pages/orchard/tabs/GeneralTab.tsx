@@ -3,7 +3,7 @@ import type { OrchardFormData } from "@/interfaces/orchardInterface";
 import React from "react";
 import { Home, Phone, AlignLeft, BookOpen, Info } from "lucide-react";
 
-import { OrchardType, DurianStatus } from "@/utils/enum";
+import { type OrchardType, type DurianStatus } from "@/utils/enum";
 import { InputField, TextAreaField } from "@/components/FormInputs";
 
 interface StatusOption {
@@ -26,14 +26,14 @@ interface GeneralTabProps {
 	serviceTypes: ServiceTypeOption[];
 }
 
-export const GeneralTab: React.FC<GeneralTabProps> = ({
+export default function GeneralTab({
 	formData,
 	setFormData,
 	selectedTypes,
 	toggleType,
 	statuses,
 	serviceTypes,
-}) => {
+}: GeneralTabProps) {
 	return (
 		<div className="animate-in slide-in-from-left-2 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
 			<h2 className="mt-1 mb-4 flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
@@ -166,4 +166,4 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 			</div>
 		</div>
 	);
-};
+}

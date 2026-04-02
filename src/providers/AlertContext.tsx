@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, type ReactNode, useCallback } from "react";
 
-import { ModalAlert, type AlertType } from "@/components/ModalAlert";
+import ModalAlert, { type AlertType } from "@/components/ModalAlert";
 
 interface AlertState {
 	isOpen: boolean;
@@ -27,7 +27,7 @@ interface AlertContextType {
 
 const AlertContext = createContext<AlertContextType | undefined>(undefined);
 
-export const AlertProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export default function AlertProvider({ children }: { children: ReactNode }) {
 	const [alertState, setAlertState] = useState<AlertState>({
 		isOpen: false,
 		type: "info",
@@ -83,7 +83,7 @@ export const AlertProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 			<ModalAlert {...alertState} onClose={closeAlert} />
 		</AlertContext.Provider>
 	);
-};
+}
 
 export const useAlert = () => {
 	const context = useContext(AlertContext);

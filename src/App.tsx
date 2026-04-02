@@ -1,14 +1,13 @@
 import { Routes, Route } from "react-router-dom";
 
-import { Header } from "./components/Header";
-import { HomePage } from "./pages/home/HomePage";
-import { OrchardDetailPage } from "./pages/orchard/OrchardDetailPage";
-import { Login } from "./pages/Login";
-import { OrchardForm } from "./pages/orchard/OrchardForm";
-import { PrivateRoute } from "./routes/PrivateRoute";
-import { NotFoundPage } from "./pages/NotFoundPage";
-import { Providers } from "./providers/Providers";
-
+import Header from "@/components/Header";
+import HomePage from "@/pages/home/HomePage";
+import OrchardDetailPage from "@/pages/orchard/OrchardDetailPage";
+import Login from "@/pages/Login";
+import OrchardForm from "@/pages/orchard/OrchardForm";
+import PrivateRoute from "@/routes/PrivateRoute";
+import NotFoundPage from "@/pages/NotFoundPage";
+import Providers from "@/providers/Providers";
 import ProfilePage from "@/pages/profile/ProfilePage";
 
 function App() {

@@ -1,8 +1,7 @@
 import React from "react";
 import { CheckCircle, AlertCircle, AlertTriangle, Info, X } from "lucide-react";
 
-import { Button } from "./Button";
-
+import Button from "@/components/Button";
 import { Z_INDEX } from "@/utils/zIndex";
 
 export type AlertType = "success" | "error" | "warning" | "info";
@@ -33,7 +32,7 @@ const bgColors = {
 	info: "bg-blue-50 dark:bg-blue-900/20",
 };
 
-export const ModalAlert: React.FC<ModalAlertProps> = ({
+export default function ModalAlert({
 	isOpen,
 	type,
 	title,
@@ -43,7 +42,7 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 	onConfirm,
 	confirmText = "ตกลง",
 	cancelText = "ยกเลิก",
-}) => {
+}: ModalAlertProps) {
 	if (!isOpen) return null;
 
 	return (
@@ -115,4 +114,4 @@ export const ModalAlert: React.FC<ModalAlertProps> = ({
 			</div>
 		</div>
 	);
-};
+}

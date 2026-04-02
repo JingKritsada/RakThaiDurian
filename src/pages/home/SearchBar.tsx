@@ -2,7 +2,7 @@ import React from "react";
 import { Search, Filter, List, Map as MapIcon } from "lucide-react";
 
 import { InputField } from "@/components/FormInputs";
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 
 interface SearchBarProps {
 	searchQuery: string;
@@ -16,7 +16,7 @@ interface SearchBarProps {
 	onSwitchViewMode?: (mode: "map" | "list") => void;
 }
 
-export const SearchBar: React.FC<SearchBarProps> = ({
+export default function SearchBar({
 	searchQuery,
 	onSearchChange,
 	isRouteMode,
@@ -26,7 +26,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 	showViewToggle = false,
 	viewMode,
 	onSwitchViewMode,
-}) => {
+}: SearchBarProps) {
 	return (
 		<div className="flex flex-row gap-2">
 			<InputField
@@ -82,4 +82,4 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 			</Button>
 		</div>
 	);
-};
+}

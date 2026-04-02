@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { X, ArrowUpDown, Check, MapPin, RefreshCw } from "lucide-react";
 
-import { Button } from "./Button";
-
-import { OrchardType } from "@/utils/enum";
+import Button from "@/components/Button";
+import { type OrchardType } from "@/utils/enum";
 import { useMasterData } from "@/providers/MasterDataContext";
 import { Z_INDEX } from "@/utils/zIndex";
 
@@ -16,14 +15,14 @@ interface FilterSheetProps {
 	onReset?: () => void;
 }
 
-export const FilterSheet: React.FC<FilterSheetProps> = ({
+export default function FilterSheet({
 	isOpen,
 	onClose,
 	currentSort,
 	currentFilters,
 	onApply,
 	onReset,
-}) => {
+}: FilterSheetProps) {
 	const { serviceTypes, isLoading } = useMasterData();
 	const [tempSort, setTempSort] = useState<"default" | "nearest">(currentSort);
 	const [tempFilters, setTempFilters] = useState<OrchardType[]>(currentFilters);
@@ -222,10 +221,12 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 			</div>
 		</div>
 	);
-};
+}
 
-const CheckCircleIcon = () => (
-	<div className="flex h-6 w-6 items-center justify-center rounded-full bg-forest-500 text-white">
-		<Check size={14} strokeWidth={3} />
-	</div>
-);
+function CheckCircleIcon() {
+	return (
+		<div className="flex h-6 w-6 items-center justify-center rounded-full bg-forest-500 text-white">
+			<Check size={14} strokeWidth={3} />
+		</div>
+	);
+}

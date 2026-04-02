@@ -4,12 +4,12 @@ import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
 
-import { orchardService } from "@/services/orchardService";
+import orchardService from "@/services/orchardService";
 import { getErrorMessage } from "@/services/api";
 import { useAuth } from "@/providers/AuthContext";
 import { useAlert } from "@/providers/AlertContext";
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
+import Button from "@/components/Button";
+import Card from "@/components/Card";
 
 export default function ManageOrchardsTab() {
 	const navigate = useNavigate();
@@ -22,7 +22,7 @@ export default function ManageOrchardsTab() {
 		if (!user) return;
 		setIsLoading(true);
 		try {
-			const data = await orchardService.getOrchardsByOwner(user.id);
+			const data = await orchardService().getOrchardsByOwner(user.id);
 
 			setOrchards(data);
 		} catch (error) {
@@ -44,7 +44,7 @@ export default function ManageOrchardsTab() {
 			"คุณต้องการลบข้อมูลสวนนี้ใช่หรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้",
 			async () => {
 				try {
-					await orchardService.deleteOrchard(id);
+					await orchardService().deleteOrchard(id);
 					showAlert("สำเร็จ", "ลบข้อมูลสวนเรียบร้อยแล้ว", "success");
 					loadData();
 				} catch (error) {

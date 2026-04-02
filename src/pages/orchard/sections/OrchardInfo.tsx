@@ -8,7 +8,7 @@ interface OrchardInfoProps {
 	getServiceType: (id: string | number) => { label: string } | null | undefined;
 }
 
-export const OrchardInfo: React.FC<OrchardInfoProps> = ({ orchard, getServiceType }) => {
+export default function OrchardInfo({ orchard, getServiceType }: OrchardInfoProps) {
 	return (
 		<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-800">
 			<h2 className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900 dark:border-slate-700 dark:text-white">
@@ -76,4 +76,4 @@ export const OrchardInfo: React.FC<OrchardInfoProps> = ({ orchard, getServiceTyp
 			</div>
 		</section>
 	);
-};
+}

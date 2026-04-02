@@ -12,7 +12,7 @@ interface FuzzyTextProps {
 	className?: string;
 }
 
-export const FuzzyText: React.FC<FuzzyTextProps> = ({
+export default function FuzzyText({
 	children,
 	fontSize = "clamp(2rem, 8vw, 8rem)",
 	fontWeight = 900,
@@ -22,7 +22,7 @@ export const FuzzyText: React.FC<FuzzyTextProps> = ({
 	baseIntensity = 0.18,
 	hoverIntensity = 0.5,
 	className = "",
-}) => {
+}: FuzzyTextProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const [isHovering, setIsHovering] = useState(false);
 	const intensityRef = useRef(baseIntensity);
@@ -129,4 +129,4 @@ export const FuzzyText: React.FC<FuzzyTextProps> = ({
 			/>
 		</div>
 	);
-};
+}

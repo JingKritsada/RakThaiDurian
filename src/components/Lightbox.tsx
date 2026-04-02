@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { X } from "lucide-react";
 
-import { Button } from "./Button";
-
+import Button from "@/components/Button";
 import { getImageUrl } from "@/utils/constants";
 import { Z_INDEX } from "@/utils/zIndex";
 
@@ -14,13 +13,13 @@ interface LightboxProps {
 	setIndex: (index: number) => void;
 }
 
-export const Lightbox: React.FC<LightboxProps> = ({
+export default function Lightbox({
 	isOpen,
 	onClose,
 	images,
 	currentIndex,
 	setIndex,
-}) => {
+}: LightboxProps) {
 	// Handle locking body scroll
 	useEffect(() => {
 		if (isOpen) {
@@ -125,4 +124,4 @@ export const Lightbox: React.FC<LightboxProps> = ({
 			</div>
 		</div>
 	);
-};
+}

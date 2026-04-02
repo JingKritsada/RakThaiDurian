@@ -1,8 +1,8 @@
 import React from "react";
 import { ChevronLeft, ChevronRight, Image } from "lucide-react";
 
-import { Button } from "@/components/Button";
-import { Lightbox } from "@/components/Lightbox";
+import Button from "@/components/Button";
+import Lightbox from "@/components/Lightbox";
 import { getImageUrl } from "@/utils/constants";
 
 interface OrchardGalleryProps {
@@ -19,7 +19,7 @@ interface OrchardGalleryProps {
 	renderVideo: (url: string) => React.ReactNode;
 }
 
-export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
+export default function OrchardGallery({
 	images,
 	videos,
 	currentVideoIndex,
@@ -31,7 +31,7 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 	onCloseLightbox,
 	setLightboxIndex,
 	renderVideo,
-}) => {
+}: OrchardGalleryProps) {
 	return (
 		<>
 			<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-800">
@@ -131,4 +131,4 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 			/>
 		</>
 	);
-};
+}

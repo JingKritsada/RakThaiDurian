@@ -3,17 +3,17 @@ import type { Orchard } from "@/interfaces/orchardInterface";
 import React from "react";
 import { Home } from "lucide-react";
 
-import { MiniCarousel } from "@/components/MiniCarousel";
+import MiniCarousel from "@/components/MiniCarousel";
 
 interface OrchardAccommodationsProps {
 	orchard: Orchard;
 	hasPrecedingContent?: boolean;
 }
 
-export const OrchardAccommodations: React.FC<OrchardAccommodationsProps> = ({
+export default function OrchardAccommodations({
 	orchard,
 	hasPrecedingContent = false,
-}) => {
+}: OrchardAccommodationsProps) {
 	if (!orchard.accommodations || orchard.accommodations.length === 0) return null;
 
 	return (
@@ -59,4 +59,4 @@ export const OrchardAccommodations: React.FC<OrchardAccommodationsProps> = ({
 			</div>
 		</div>
 	);
-};
+}

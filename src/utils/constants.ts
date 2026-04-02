@@ -1,5 +1,5 @@
-import { DurianStatus, OrchardType } from "./enum";
-import { CONFIG } from "./config";
+import { DurianStatus, OrchardType } from "@/utils/enum";
+import CONFIG from "@/utils/config";
 
 export const ORCHARD_TYPE_LABELS: Record<OrchardType, string> = {
 	[OrchardType.SELL]: "ซื้อผลผลิต",

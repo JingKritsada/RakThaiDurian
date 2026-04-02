@@ -14,7 +14,7 @@ import {
 	Polyline,
 } from "react-leaflet";
 
-import { OrchardDetailView } from "./OrchardDetailView";
+import OrchardDetailView from "@/components/OrchardDetailView";
 
 const ICON_COMPONENTS: Record<string, React.FC<any>> = {
 	check: Check,
@@ -71,7 +71,7 @@ interface MapProps {
 	onUserLocationFound?: (lat: number, lng: number) => void;
 }
 
-const MapInvalidator = () => {
+function MapInvalidator() {
 	const map = useMap();
 
 	useEffect(() => {
@@ -83,9 +83,9 @@ const MapInvalidator = () => {
 	}, [map]);
 
 	return null;
-};
+}
 
-const InitialUserLocator = ({ onFound }: { onFound?: (lat: number, lng: number) => void }) => {
+function InitialUserLocator({ onFound }: { onFound?: (lat: number, lng: number) => void }) {
 	const map = useMap();
 	const initialized = useRef(false);
 
@@ -100,10 +100,10 @@ const InitialUserLocator = ({ onFound }: { onFound?: (lat: number, lng: number) 
 	}, [map, onFound]);
 
 	return null;
-};
+}
 
 // Component to expose Map instance to parent
-const MapReferenceHandler = ({ setMapRef }: { setMapRef?: (map: L.Map) => void }) => {
+function MapReferenceHandler({ setMapRef }: { setMapRef?: (map: L.Map) => void }) {
 	const map = useMap();
 
 	useEffect(() => {
@@ -113,9 +113,9 @@ const MapReferenceHandler = ({ setMapRef }: { setMapRef?: (map: L.Map) => void }
 	}, [map, setMapRef]);
 
 	return null;
-};
+}
 
-const MapUpdater = ({
+function MapUpdater({
 	center,
 	offsetForMobile,
 	isRouteMode,
@@ -123,7 +123,7 @@ const MapUpdater = ({
 	center?: [number, number];
 	offsetForMobile?: boolean;
 	isRouteMode: boolean;
-}) => {
+}) {
 	const map = useMap();
 
 	useEffect(() => {
@@ -142,10 +142,10 @@ const MapUpdater = ({
 	}, [center, map, offsetForMobile, isRouteMode]);
 
 	return null;
-};
+}
 
 // Handles fitting the map to show all route points and the path
-const RouteBoundsHandler = ({
+function RouteBoundsHandler({
 	routePath,
 	routePoints,
 	isRouteMode,
@@ -153,7 +153,7 @@ const RouteBoundsHandler = ({
 	routePath?: [number, number][];
 	routePoints: [number, number][];
 	isRouteMode: boolean;
-}) => {
+}) {
 	const map = useMap();
 
 	useEffect(() => {
@@ -183,9 +183,9 @@ const RouteBoundsHandler = ({
 	}, [map, routePath, routePoints, isRouteMode]);
 
 	return null;
-};
+}
 
-const MapClickHandler = ({ onMapClick }: { onMapClick?: () => void }) => {
+function MapClickHandler({ onMapClick }: { onMapClick?: () => void }) {
 	useMapEvents({
 		click: () => {
 			onMapClick?.();
@@ -193,7 +193,7 @@ const MapClickHandler = ({ onMapClick }: { onMapClick?: () => void }) => {
 	});
 
 	return null;
-};
+}
 
 interface OrchardMarkerProps {
 	orchard: Orchard;
@@ -203,13 +203,13 @@ interface OrchardMarkerProps {
 	routeIndex?: number;
 }
 
-const OrchardMarker: React.FC<OrchardMarkerProps> = ({
+function OrchardMarker({
 	orchard,
 	isSelected,
 	onSelect,
 	disablePopup,
 	routeIndex,
-}) => {
+}: OrchardMarkerProps) {
 	const markerRef = useRef<L.Marker>(null);
 
 	useEffect(() => {
@@ -323,9 +323,9 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 			)}
 		</Marker>
 	);
-};
+}
 
-export const OrchardMap: React.FC<MapProps> = ({
+export default function OrchardMap({
 	orchards,
 	selectedOrchardId,
 	onSelectOrchard,
@@ -337,7 +337,7 @@ export const OrchardMap: React.FC<MapProps> = ({
 	setMapRef,
 	userLocation,
 	onUserLocationFound,
-}) => {
+}: MapProps) {
 	const defaultCenter: [number, number] = [13.7563, 100.5018]; // Default to Bangkok
 
 	// Filter orchards with valid coordinates
@@ -425,4 +425,4 @@ export const OrchardMap: React.FC<MapProps> = ({
 			</MapContainer>
 		</div>
 	);
-};
+}

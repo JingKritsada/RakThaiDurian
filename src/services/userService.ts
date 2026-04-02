@@ -1,7 +1,7 @@
 import type { User } from "@/interfaces/userInterface";
 import type { AuthResponse, UserProfileResponse } from "@/interfaces/responseInterface";
 
-import { apiClient, apiRequest, type ApiOptions, setTokenGetter } from "./api";
+import { apiClient, apiRequest, type ApiOptions, setTokenGetter } from "@/services/api";
 
 // Token manager for handling token storage with fallback
 let memoryToken: string | null = null;

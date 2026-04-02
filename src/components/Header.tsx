@@ -4,14 +4,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Sun, Moon, Monitor, LogOut, User as UserIcon, Type } from "lucide-react";
 
-import { Button } from "./Button";
-
+import Button from "@/components/Button";
 import { useAuth } from "@/providers/AuthContext";
 import { useTheme } from "@/providers/ThemeContext";
 import { useAlert } from "@/providers/AlertContext";
 import { Z_INDEX } from "@/utils/zIndex";
 
-const ThemeIcon = ({ theme }: { theme: string }) => {
+function ThemeIcon({ theme }: { theme: string }) {
 	switch (theme) {
 		case "light":
 			return <Sun size={20} />;
@@ -22,43 +21,45 @@ const ThemeIcon = ({ theme }: { theme: string }) => {
 		default:
 			return <Sun size={20} />;
 	}
-};
-const FontSizeControls = ({
+}
+function FontSizeControls({
 	fontSize,
 	setFontSize,
 }: {
 	fontSize: FontSize;
 	setFontSize: (size: FontSize) => void;
-}) => (
-	<div className="flex h-full items-center gap-0.5 rounded-xl border border-slate-300 bg-transparent p-0.5 text-slate-700 dark:border-slate-600 dark:text-slate-200">
-		<Button
-			className={`rounded-ld flex aspect-square h-full min-h-0! items-center justify-center p-0! transition-all ${fontSize === "small" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
-			title="ขนาดตัวอักษรเล็ก"
-			variant="none"
-			onClick={() => setFontSize("small")}
-		>
-			<span className="text-xs">ก</span>
-		</Button>
-		<Button
-			className={`rounded-ld flex aspect-square h-full min-h-0! items-center justify-center p-0! transition-all ${fontSize === "medium" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
-			title="ขนาดตัวอักษรปกติ"
-			variant="none"
-			onClick={() => setFontSize("medium")}
-		>
-			<span className="text-sm">ก</span>
-		</Button>
-		<Button
-			className={`flex aspect-square h-full min-h-0! items-center justify-center rounded-lg p-0! transition-all ${fontSize === "large" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
-			title="ขนาดตัวอักษรใหญ่"
-			variant="none"
-			onClick={() => setFontSize("large")}
-		>
-			<span className="text-lg">ก</span>
-		</Button>
-	</div>
-);
+}) {
+	return (
+		<div className="flex h-full items-center gap-0.5 rounded-xl border border-slate-300 bg-transparent p-0.5 text-slate-700 dark:border-slate-600 dark:text-slate-200">
+			<Button
+				className={`rounded-ld flex aspect-square h-full min-h-0! items-center justify-center p-0! transition-all ${fontSize === "small" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
+				title="ขนาดตัวอักษรเล็ก"
+				variant="none"
+				onClick={() => setFontSize("small")}
+			>
+				<span className="text-xs">ก</span>
+			</Button>
+			<Button
+				className={`rounded-ld flex aspect-square h-full min-h-0! items-center justify-center p-0! transition-all ${fontSize === "medium" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
+				title="ขนาดตัวอักษรปกติ"
+				variant="none"
+				onClick={() => setFontSize("medium")}
+			>
+				<span className="text-sm">ก</span>
+			</Button>
+			<Button
+				className={`flex aspect-square h-full min-h-0! items-center justify-center rounded-lg p-0! transition-all ${fontSize === "large" ? "bg-slate-200 font-bold text-forest-800 shadow-sm dark:bg-slate-600 dark:text-white" : "text-slate-400"}`}
+				title="ขนาดตัวอักษรใหญ่"
+				variant="none"
+				onClick={() => setFontSize("large")}
+			>
+				<span className="text-lg">ก</span>
+			</Button>
+		</div>
+	);
+}
 
-export const Header: React.FC = () => {
+export default function Header() {
 	const { user, logout } = useAuth();
 	const { theme, toggleTheme, fontSize, setFontSize } = useTheme();
 	const { showConfirm } = useAlert();
@@ -242,4 +243,4 @@ export const Header: React.FC = () => {
 			</header>
 		</>
 	);
-};
+}

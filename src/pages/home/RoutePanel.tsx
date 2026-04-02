@@ -1,7 +1,7 @@
 import React from "react";
 import { Navigation, Flag, Timer } from "lucide-react";
 
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { Z_INDEX } from "@/utils/zIndex";
 
 interface RoutePanelProps {
@@ -13,14 +13,14 @@ interface RoutePanelProps {
 	onClearRoute: () => void;
 }
 
-export const RoutePanel: React.FC<RoutePanelProps> = ({
+export default function RoutePanel({
 	routeIds,
 	routeStats,
 	isRouting,
 	showMapControls,
 	openGoogleMapsRoute,
 	onClearRoute,
-}) => {
+}: RoutePanelProps) {
 	if (!showMapControls || routeIds.length === 0) return null;
 
 	return (
@@ -81,4 +81,4 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 			</div>
 		</div>
 	);
-};
+}

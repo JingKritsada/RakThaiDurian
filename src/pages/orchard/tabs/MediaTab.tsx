@@ -14,7 +14,7 @@ import {
 	Trash2,
 } from "lucide-react";
 
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { InputField } from "@/components/FormInputs";
 import { LineIcon, TiktokIcon } from "@/utils/icons";
 import { getImageUrl } from "@/utils/constants";
@@ -27,12 +27,12 @@ interface MediaTabProps {
 	setTempVideoUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const MediaTab: React.FC<MediaTabProps> = ({
+export default function MediaTab({
 	formData,
 	setFormData,
 	tempVideoUrl,
 	setTempVideoUrl,
-}) => {
+}: MediaTabProps) {
 	const { showAlert } = useAlert();
 	const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -295,4 +295,4 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 			</div>
 		</div>
 	);
-};
+}

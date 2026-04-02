@@ -5,23 +5,23 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Save, Image, Layers, Map as MapIcon, Info, ArrowRight } from "lucide-react";
 
-import { orchardService } from "@/services/orchardService";
-import { getErrorMessage } from "@/services/api";
 import { useAuth } from "@/providers/AuthContext";
 import { useMasterData } from "@/providers/MasterDataContext";
 import { useAlert } from "@/providers/AlertContext";
-import { OrchardType, DurianStatus } from "@/utils/enum";
-import { Button } from "@/components/Button";
+import { getErrorMessage } from "@/services/api";
+import { DurianStatus, type OrchardType } from "@/utils/enum";
+import orchardService from "@/services/orchardService";
+import Button from "@/components/Button";
 import TabButton from "@/components/TabButton";
-import { GeneralTab } from "@/pages/orchard/tabs/GeneralTab";
-import { LocationTab } from "@/pages/orchard/tabs/LocationTab";
-import { MediaTab } from "@/pages/orchard/tabs/MediaTab";
-import { ServicesTab } from "@/pages/orchard/tabs/ServicesTab";
+import GeneralTab from "@/pages/orchard/tabs/GeneralTab";
+import LocationTab from "@/pages/orchard/tabs/LocationTab";
+import MediaTab from "@/pages/orchard/tabs/MediaTab";
+import ServicesTab from "@/pages/orchard/tabs/ServicesTab";
 
 type TabType = "general" | "location" | "media" | "services";
 const TABS: TabType[] = ["general", "location", "media", "services"];
 
-export const OrchardForm: React.FC = () => {
+export default function OrchardForm() {
 	const { user } = useAuth();
 	const { statuses, serviceTypes, cropOptions, isLoading: isMasterDataLoading } = useMasterData();
 	const { showAlert } = useAlert();
@@ -42,7 +42,7 @@ export const OrchardForm: React.FC = () => {
 		phoneNumber: "",
 		lat: 0,
 		lng: 0,
-		status: DurianStatus.AVAILABLE as DurianStatus,
+		status: DurianStatus.AVAILABLE,
 		additionalCrops: [] as string[],
 		images: [] as string[],
 		videos: [] as string[],
@@ -70,7 +70,7 @@ export const OrchardForm: React.FC = () => {
 		if (isEditMode && id) {
 			const loadOrchard = async () => {
 				try {
-					const orchard = await orchardService.getOrchardById(parseInt(id));
+					const orchard = await orchardService().getOrchardById(parseInt(id));
 
 					if (orchard) {
 						if (user && orchard.ownerId !== user.id) {
@@ -239,11 +239,11 @@ export const OrchardForm: React.FC = () => {
 			};
 
 			if (isEditMode && id) {
-				await orchardService.updateOrchard(parseInt(id), payload, imagePayload, {
+				await orchardService().updateOrchard(parseInt(id), payload, imagePayload, {
 					skipGlobalLoading: true,
 				});
 			} else {
-				await orchardService.addOrchard(
+				await orchardService().addOrchard(
 					{
 						...payload,
 						ownerId: user.id,
@@ -427,4 +427,4 @@ export const OrchardForm: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+}

@@ -4,7 +4,7 @@ import { User, Mail, Shield, CheckCircle, XCircle } from "lucide-react";
 import { useAuth } from "@/providers/AuthContext";
 import { useAlert } from "@/providers/AlertContext";
 import { userService } from "@/services/userService";
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { InputField } from "@/components/FormInputs";
 import { getErrorMessage } from "@/services/api";
 

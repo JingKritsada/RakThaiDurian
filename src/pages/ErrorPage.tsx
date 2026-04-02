@@ -1,14 +1,14 @@
 import React from "react";
 
-import { Button } from "@/components/Button";
-import { FuzzyText } from "@/components/FuzzyText";
+import Button from "@/components/Button";
+import FuzzyText from "@/components/FuzzyText";
 
 interface ErrorPageProps {
 	error: Error;
 	reset: () => void;
 }
 
-export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
+export default function ErrorPage({ error, reset }: ErrorPageProps) {
 	return (
 		<div className="flex h-[calc(100vh-120px)] w-full flex-col items-center justify-between p-6">
 			<div className="flex h-full w-full max-w-lg flex-col items-center justify-center gap-12 text-center">
@@ -67,4 +67,4 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 			</div>
 		</div>
 	);
-};
+}

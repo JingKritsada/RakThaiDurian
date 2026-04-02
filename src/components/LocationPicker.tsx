@@ -11,7 +11,7 @@ interface LocationPickerProps {
 }
 
 // Marker component that updates when map is clicked
-const MapEvents = ({ onChange }: { onChange: (lat: number, lng: number) => void }) => {
+function MapEvents({ onChange }: { onChange: (lat: number, lng: number) => void }) {
 	useMapEvents({
 		click(e) {
 			onChange(e.latlng.lat, e.latlng.lng);
@@ -19,10 +19,10 @@ const MapEvents = ({ onChange }: { onChange: (lat: number, lng: number) => void 
 	});
 
 	return null;
-};
+}
 
 // Fix for map not rendering tiles correctly in some layouts
-const MapInvalidator = () => {
+function MapInvalidator() {
 	const map = useMap();
 
 	useEffect(() => {
@@ -34,16 +34,16 @@ const MapInvalidator = () => {
 	}, [map]);
 
 	return null;
-};
+}
 
 // Component to handle initial relocation to current user location
-const CurrentLocationHandler = ({
+function CurrentLocationHandler({
 	hasLocation,
 	onFound,
 }: {
 	hasLocation: boolean;
 	onFound: (lat: number, lng: number) => void;
-}) => {
+}) {
 	const map = useMap();
 
 	useEffect(() => {
@@ -57,10 +57,10 @@ const CurrentLocationHandler = ({
 	}, [map, hasLocation, onFound]);
 
 	return null;
-};
+}
 
 // Component to update map view when coordinates change
-const MapUpdater = ({ lat, lng }: { lat: number; lng: number }) => {
+function MapUpdater({ lat, lng }: { lat: number; lng: number }) {
 	const map = useMap();
 
 	useEffect(() => {
@@ -70,9 +70,9 @@ const MapUpdater = ({ lat, lng }: { lat: number; lng: number }) => {
 	}, [lat, lng, map]);
 
 	return null;
-};
+}
 
-export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChange }) => {
+export default function LocationPicker({ lat, lng, onChange }: LocationPickerProps) {
 	// Default center Thailand if no coordinates provided
 	const center: [number, number] = lat && lng ? [lat, lng] : [13.7563, 100.5018];
 	const hasValidLocation = !!(lat && lng);
@@ -115,4 +115,4 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 			</div>
 		</div>
 	);
-};
+}

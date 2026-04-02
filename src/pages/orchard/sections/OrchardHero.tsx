@@ -3,7 +3,7 @@ import type { Orchard } from "@/interfaces/orchardInterface";
 import React from "react";
 import { ArrowLeft, Share2, ChevronLeft, ChevronRight, Image as ImageIcon } from "lucide-react";
 
-import { Button } from "@/components/Button";
+import Button from "@/components/Button";
 import { getImageUrl } from "@/utils/constants";
 
 interface OrchardHeroProps {
@@ -17,7 +17,7 @@ interface OrchardHeroProps {
 	onShare: () => void;
 }
 
-export const OrchardHero: React.FC<OrchardHeroProps> = ({
+export default function OrchardHero({
 	orchard,
 	images,
 	currentImageIndex,
@@ -26,7 +26,7 @@ export const OrchardHero: React.FC<OrchardHeroProps> = ({
 	onNextImage,
 	onBack,
 	onShare,
-}) => {
+}: OrchardHeroProps) {
 	const renderImageGrid = () => {
 		if (images.length === 0) {
 			return (
@@ -206,4 +206,4 @@ export const OrchardHero: React.FC<OrchardHeroProps> = ({
 			</div>
 		</>
 	);
-};
+}

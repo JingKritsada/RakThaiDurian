@@ -1,23 +1,23 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
+import type L from "leaflet";
 
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import L from "leaflet";
 
-import { orchardService } from "@/services/orchardService";
-import { getErrorMessage } from "@/services/api";
-import { OrchardType } from "@/utils/enum";
-import { useMasterData } from "@/providers/MasterDataContext";
-import { useAlert } from "@/providers/AlertContext";
-import { FilterSheet } from "@/components/FilterSheet";
-import { calculateDistance } from "@/utils/geo";
-import { useWindowSize } from "@/hooks/useWindowSize";
-import { SearchBar } from "@/pages/home/SearchBar";
-import { ListView } from "@/pages/home/ListView";
-import { MapView } from "@/pages/home/MapView";
 import { Z_INDEX } from "@/utils/zIndex";
+import { type OrchardType } from "@/utils/enum";
+import calculateDistance from "@/utils/geo";
+import { useAlert } from "@/providers/AlertContext";
+import { useMasterData } from "@/providers/MasterDataContext";
+import { getErrorMessage } from "@/services/api";
+import MapView from "@/pages/home/MapView";
+import ListView from "@/pages/home/ListView";
+import SearchBar from "@/pages/home/SearchBar";
+import useWindowSize from "@/hooks/useWindowSize";
+import FilterSheet from "@/components/FilterSheet";
+import orchardService from "@/services/orchardService";
 
-export const HomePage: React.FC = () => {
+export default function HomePage() {
 	const { getStatus } = useMasterData();
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [orchards, setOrchards] = useState<Orchard[]>([]);
@@ -60,7 +60,7 @@ export const HomePage: React.FC = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const data = await orchardService.getOrchards();
+				const data = await orchardService().getOrchards();
 
 				setOrchards(data);
 			} catch (error) {
@@ -411,4 +411,4 @@ export const HomePage: React.FC = () => {
 			</div>
 		</div>
 	);
-};
+}

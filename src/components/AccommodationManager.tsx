@@ -13,9 +13,8 @@ import {
 	Edit2,
 } from "lucide-react";
 
-import { Button } from "./Button";
-import { InputField } from "./FormInputs";
-
+import Button from "@/components/Button";
+import { InputField } from "@/components/FormInputs";
 import { useAlert } from "@/providers/AlertContext";
 import { getImageUrl } from "@/utils/constants";
 
@@ -24,10 +23,10 @@ interface AccommodationManagerProps {
 	onChange: (accommodations: Accommodation[]) => void;
 }
 
-export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
+export default function AccommodationManager({
 	accommodations,
 	onChange,
-}) => {
+}: AccommodationManagerProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [isAdding, setIsAdding] = useState(false);
 	const [editingId, setEditingId] = useState<string | null>(null);
@@ -365,4 +364,4 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 			)}
 		</div>
 	);
-};
+}

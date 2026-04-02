@@ -4,8 +4,8 @@ import React from "react";
 import { Layers } from "lucide-react";
 
 import { MultiSelectField, ToggleSwitch } from "@/components/FormInputs";
-import { AccommodationManager } from "@/components/AccommodationManager";
-import { PackageManager } from "@/components/PackageManager";
+import AccommodationManager from "@/components/AccommodationManager";
+import PackageManager from "@/components/PackageManager";
 
 interface CropOption {
 	id: string;
@@ -24,7 +24,7 @@ interface ServicesTabProps {
 	cropOptions: CropOption[];
 }
 
-export const ServicesTab: React.FC<ServicesTabProps> = ({
+export default function ServicesTab({
 	formData,
 	setFormData,
 	isMixedAgro,
@@ -34,7 +34,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 	hasPackage,
 	setHasPackage,
 	cropOptions,
-}) => {
+}: ServicesTabProps) {
 	return (
 		<div className="animate-in slide-in-from-right-2 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
 			<h2 className="mt-1 mb-4 flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
@@ -119,4 +119,4 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 			</div>
 		</div>
 	);
-};
+}

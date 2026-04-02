@@ -14,9 +14,8 @@ import {
 	Edit2,
 } from "lucide-react";
 
-import { Button } from "./Button";
-import { InputField, TextAreaField } from "./FormInputs";
-
+import Button from "@/components/Button";
+import { InputField, TextAreaField } from "@/components/FormInputs";
 import { useAlert } from "@/providers/AlertContext";
 import { getImageUrl } from "@/utils/constants";
 
@@ -25,7 +24,7 @@ interface PackageManagerProps {
 	onChange: (packages: Package[]) => void;
 }
 
-export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChange }) => {
+export default function PackageManager({ packages, onChange }: PackageManagerProps) {
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [isAdding, setIsAdding] = useState(false);
 	const [editingId, setEditingId] = useState<string | null>(null);
@@ -427,4 +426,4 @@ export const PackageManager: React.FC<PackageManagerProps> = ({ packages, onChan
 			)}
 		</div>
 	);
-};
+}

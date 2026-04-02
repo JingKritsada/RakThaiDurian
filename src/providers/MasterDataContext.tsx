@@ -1,15 +1,15 @@
+import type { OrchardType, DurianStatus } from "@/utils/enum";
 import type { CropOption, ServiceTypeOption, StatusOption } from "@/interfaces/dropdownInterface";
 
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-import { dropdownService } from "@/services/dropdownService";
+import dropdownService from "@/services/dropdownService";
 import {
 	ORCHARD_TYPE_LABELS,
 	ORCHARD_TYPE_ICONS,
 	STATUS_LABELS,
 	STATUS_COLORS,
 } from "@/utils/constants";
-import { OrchardType, DurianStatus } from "@/utils/enum";
 
 interface MasterDataContextType {
 	serviceTypes: ServiceTypeOption[];
@@ -23,7 +23,7 @@ interface MasterDataContextType {
 
 const MasterDataContext = createContext<MasterDataContextType | undefined>(undefined);
 
-export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export default function MasterDataProvider({ children }: { children: ReactNode }) {
 	const [serviceTypes, setServiceTypes] = useState<ServiceTypeOption[]>([]);
 	const [statuses, setStatuses] = useState<StatusOption[]>([]);
 	const [cropOptions, setCropOptions] = useState<CropOption[]>([]);
@@ -33,9 +33,9 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 		const loadMasterData = async () => {
 			try {
 				const [typesData, statusesData, cropsData] = await Promise.all([
-					dropdownService.getServiceTypes(),
-					dropdownService.getOrchardStatuses(),
-					dropdownService.getAdditionalCrops(),
+					dropdownService().getServiceTypes(),
+					dropdownService().getOrchardStatuses(),
+					dropdownService().getAdditionalCrops(),
 				]);
 
 				const hydratedServiceTypes: ServiceTypeOption[] = typesData.map((item) => {
@@ -91,7 +91,7 @@ export const MasterDataProvider: React.FC<{ children: ReactNode }> = ({ children
 			{children}
 		</MasterDataContext.Provider>
 	);
-};
+}
 
 export const useMasterData = () => {
 	const context = useContext(MasterDataContext);

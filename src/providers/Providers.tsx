@@ -1,15 +1,14 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import { HashRouter } from "react-router-dom";
 
-import { MasterDataProvider } from "./MasterDataContext";
-import { ThemeProvider } from "./ThemeContext";
-import { LoadingProvider } from "./LoadingContext";
-import { AuthProvider } from "./AuthContext";
-import { AlertProvider } from "./AlertContext";
+import AuthProvider from "@/providers/AuthContext";
+import ThemeProvider from "@/providers/ThemeContext";
+import AlertProvider from "@/providers/AlertContext";
+import ErrorBoundary from "@/components/ErrorBoundary";
+import LoadingProvider from "@/providers/LoadingContext";
+import MasterDataProvider from "@/providers/MasterDataContext";
 
-import { ErrorBoundary } from "@/components/ErrorBoundary";
-
-export const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
+export default function Providers({ children }: { children: ReactNode }) {
 	return (
 		<ThemeProvider>
 			<AlertProvider>
@@ -25,4 +24,4 @@ export const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
 			</AlertProvider>
 		</ThemeProvider>
 	);
-};
+}

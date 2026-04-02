@@ -1,14 +1,14 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
+import type L from "leaflet";
 
 import React from "react";
 import { LocateFixed, Route } from "lucide-react";
-import L from "leaflet";
 
-import { OrchardMap } from "@/components/OrchardMap";
-import { OrchardDetailView } from "@/components/OrchardDetailView";
-import { Button } from "@/components/Button";
+import OrchardMap from "@/components/OrchardMap";
+import OrchardDetailView from "@/components/OrchardDetailView";
+import Button from "@/components/Button";
 import { Z_INDEX } from "@/utils/zIndex";
-import { RoutePanel } from "@/pages/home/RoutePanel";
+import RoutePanel from "@/pages/home/RoutePanel";
 
 interface MapViewProps {
 	filteredOrchards: Orchard[];
@@ -35,7 +35,7 @@ interface MapViewProps {
 	onCloseDetail: () => void;
 }
 
-export const MapView: React.FC<MapViewProps> = ({
+export default function MapView({
 	filteredOrchards,
 	selectedOrchardId,
 	isRouteMode,
@@ -58,7 +58,7 @@ export const MapView: React.FC<MapViewProps> = ({
 	openGoogleMapsRoute,
 	onClearRoute,
 	onCloseDetail,
-}) => {
+}: MapViewProps) {
 	return (
 		<>
 			{isMobile && selectedOrchard && (
@@ -145,4 +145,4 @@ export const MapView: React.FC<MapViewProps> = ({
 			</div>
 		</>
 	);
-};
+}

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import { Button } from "./Button";
-
+import Button from "@/components/Button";
 import { getImageUrl } from "@/utils/constants";
 
 interface MiniCarouselProps {
@@ -11,7 +10,7 @@ interface MiniCarouselProps {
 	className?: string;
 }
 
-export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, className }) => {
+export default function MiniCarousel({ images, alt, className }: MiniCarouselProps) {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
 	const handleNext = (e: React.MouseEvent) => {
@@ -80,4 +79,4 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 			<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
 		</div>
 	);
-};
+}

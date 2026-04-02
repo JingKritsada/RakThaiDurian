@@ -8,11 +8,9 @@ import type {
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, X, Check, ChevronUp } from "lucide-react";
 
-import { Button } from "./Button";
+import Button from "@/components/Button";
 
-// --- Components ---
-
-export const InputField: React.FC<InputFieldProps> = ({
+export function InputField({
 	label,
 	error,
 	className = "",
@@ -20,7 +18,7 @@ export const InputField: React.FC<InputFieldProps> = ({
 	icon: Icon,
 	suffix,
 	...props
-}) => {
+}: InputFieldProps) {
 	return (
 		<div className={className}>
 			{label && (
@@ -44,16 +42,16 @@ export const InputField: React.FC<InputFieldProps> = ({
 			{error && <p className="mt-1 ml-1 text-xs text-red-500">{error}</p>}
 		</div>
 	);
-};
+}
 
-export const TextAreaField: React.FC<TextAreaFieldProps> = ({
+export function TextAreaField({
 	label,
 	error,
 	className = "",
 	inputClassName = "",
 	icon: Icon,
 	...props
-}) => {
+}: TextAreaFieldProps) {
 	return (
 		<div className={className}>
 			<label className="mb-2 ml-1 block text-sm font-bold text-slate-700 dark:text-slate-300">
@@ -73,15 +71,15 @@ export const TextAreaField: React.FC<TextAreaFieldProps> = ({
 			{error && <p className="mt-1 ml-1 text-xs text-red-500">{error}</p>}
 		</div>
 	);
-};
+}
 
-export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
+export function ToggleSwitch({
 	label,
 	description,
 	checked,
 	onChange,
 	className = "",
-}) => {
+}: ToggleSwitchProps) {
 	return (
 		<div
 			className={`flex items-center justify-between rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900/50 ${className}`}
@@ -107,9 +105,9 @@ export const ToggleSwitch: React.FC<ToggleSwitchProps> = ({
 			</button>
 		</div>
 	);
-};
+}
 
-export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
+export function MultiSelectField({
 	label,
 	options,
 	value,
@@ -117,7 +115,7 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 	placeholder = "เลือกรายการ...",
 	error,
 	className = "",
-}) => {
+}: MultiSelectFieldProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -241,4 +239,4 @@ export const MultiSelectField: React.FC<MultiSelectFieldProps> = ({
 			{error && <p className="mt-1 ml-1 text-xs text-red-500">{error}</p>}
 		</div>
 	);
-};
+}

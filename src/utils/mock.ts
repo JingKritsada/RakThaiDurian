@@ -6,7 +6,7 @@ import type {
 	StatusResponse,
 } from "@/interfaces/dropdownInterface";
 
-import { DurianStatus, OrchardType, CropCategory } from "./enum";
+import { DurianStatus, OrchardType, CropCategory } from "@/utils/enum";
 
 export const MOCK_OWNER: User = {
 	id: "owner1",
