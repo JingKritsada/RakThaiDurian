@@ -70,7 +70,7 @@ export const MapView: React.FC<MapViewProps> = ({
 				/>
 			)}
 
-			<div className="grow h-full w-full relative bg-slate-100 dark:bg-slate-800">
+			<div className="relative h-full w-full grow bg-slate-100 dark:bg-slate-800">
 				<OrchardMap
 					disablePopup={isMobile || isRouteMode}
 					isRouteMode={isRouteMode}
@@ -88,12 +88,12 @@ export const MapView: React.FC<MapViewProps> = ({
 				{/* Top Right Controls */}
 				{showMapControls && (
 					<div
-						className="absolute top-4 right-4 sm:right-6 flex flex-col gap-3 items-end"
+						className="absolute top-4 right-4 flex flex-col items-end gap-3 sm:right-6"
 						style={{ zIndex: Z_INDEX.mapButtons }}
 					>
 						<div className="flex items-center gap-3">
 							<Button
-								className={`h-12 px-5! shadow-lg border-none transition-all ${isRouteMode ? "bg-blue-600! hover:bg-blue-700!" : ""}`}
+								className={`h-12 border-none px-5! shadow-lg transition-all ${isRouteMode ? "bg-blue-600! hover:bg-blue-700!" : ""}`}
 								variant={isRouteMode ? "primary" : "secondary"}
 								onClick={toggleRouteMode}
 							>
@@ -102,13 +102,13 @@ export const MapView: React.FC<MapViewProps> = ({
 							</Button>
 
 							<Button
-								className="h-12 w-12 p-0! border-none"
+								className="h-12 w-12 border-none p-0!"
 								title="ตำแหน่งปัจจุบัน"
 								variant="secondary"
 								onClick={handleLocate}
 							>
 								{isLocating ? (
-									<div className="animate-spin rounded-full h-5 w-5 border-2 border-forest-500 border-t-transparent" />
+									<div className="h-5 w-5 animate-spin rounded-full border-2 border-forest-500 border-t-transparent" />
 								) : (
 									<LocateFixed size={28} />
 								)}
@@ -132,7 +132,7 @@ export const MapView: React.FC<MapViewProps> = ({
 				{/* Mobile Bottom Sheet Detail */}
 				{isMobile && !isRouteMode && selectedOrchard && statusInfo && (
 					<div
-						className="absolute bottom-0 left-0 right-0 rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.12)] animate-in slide-in-from-bottom duration-500 border-t border-slate-100 dark:border-slate-800 max-h-[75vh] overflow-y-auto custom-scrollbar"
+						className="animate-in slide-in-from-bottom custom-scrollbar absolute right-0 bottom-0 left-0 max-h-[75vh] overflow-y-auto rounded-t-3xl border-t border-slate-100 shadow-[0_-8px_30px_rgba(0,0,0,0.12)] duration-500 dark:border-slate-800"
 						style={{ zIndex: Z_INDEX.mobileSheet }}
 					>
 						<OrchardDetailView

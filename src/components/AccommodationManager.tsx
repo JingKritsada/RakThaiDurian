@@ -168,35 +168,33 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 	};
 
 	return (
-		<div className="space-y-4 animate-in slide-in-from-top-2 fade-in duration-300">
+		<div className="animate-in slide-in-from-top-2 fade-in space-y-4 duration-300">
 			{/* List of Existing Accommodations */}
 			{accommodations.length > 0 && (
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+				<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 					{accommodations.map((item) => (
 						<div
 							key={item.id}
-							className={`bg-white dark:bg-slate-800 rounded-xl p-4 border shadow-sm flex gap-4 relative group transition-all
-								${editingId === item.id ? "border-forest-500 ring-2 ring-forest-100 dark:ring-forest-900" : "border-slate-200 dark:border-slate-700"}
-							`}
+							className={`group relative flex gap-4 rounded-xl border bg-white p-4 shadow-sm transition-all dark:bg-slate-800 ${editingId === item.id ? "border-forest-500 ring-2 ring-forest-100 dark:ring-forest-900" : "border-slate-200 dark:border-slate-700"} `}
 						>
-							<div className="w-24 h-24 shrink-0 bg-slate-100 dark:bg-slate-700 rounded-lg overflow-hidden">
+							<div className="h-24 w-24 shrink-0 overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-700">
 								{item.images.length > 0 ? (
 									<img
 										alt={item.name}
-										className="w-full h-full object-cover"
+										className="h-full w-full object-cover"
 										src={getImageUrl(item.images[0])}
 									/>
 								) : (
-									<div className="w-full h-full flex items-center justify-center text-slate-400">
+									<div className="flex h-full w-full items-center justify-center text-slate-400">
 										<Bed size={24} />
 									</div>
 								)}
 							</div>
-							<div className="grow min-w-0 pr-20">
-								<h4 className="font-bold text-sm text-slate-900 dark:text-white truncate">
+							<div className="min-w-0 grow pr-20">
+								<h4 className="truncate text-sm font-bold text-slate-900 dark:text-white">
 									{item.name}
 								</h4>
-								<div className="text-sm text-slate-500 dark:text-slate-400 mt-1 flex flex-col gap-1">
+								<div className="mt-1 flex flex-col gap-1 text-sm text-slate-500 dark:text-slate-400">
 									<span className="flex items-center gap-1 font-semibold text-forest-600 dark:text-forest-400">
 										<Banknote size={14} /> ฿{item.price.toLocaleString()} / คืน
 									</span>
@@ -237,7 +235,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 			{/* Add/Edit Section */}
 			{!isAdding ? (
 				<Button
-					className="w-full border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-xl"
+					className="w-full rounded-xl border-2 border-dashed border-slate-300 dark:border-slate-600"
 					size="md"
 					type="button"
 					variant="ghost"
@@ -249,9 +247,9 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 					<Plus size={20} /> เพิ่มประเภทที่พัก
 				</Button>
 			) : (
-				<div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-6 border border-slate-200 dark:border-slate-700 animate-in zoom-in-95 duration-200">
-					<div className="flex justify-between items-center mb-4">
-						<h4 className="font-bold text-slate-800 dark:text-white flex items-center gap-2">
+				<div className="animate-in zoom-in-95 rounded-xl border border-slate-200 bg-slate-50 p-6 duration-200 dark:border-slate-700 dark:bg-slate-900/50">
+					<div className="mb-4 flex items-center justify-between">
+						<h4 className="flex items-center gap-2 font-bold text-slate-800 dark:text-white">
 							{editingId ? (
 								<>
 									<Edit2 className="text-forest-600" size={18} />{" "}
@@ -305,21 +303,21 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 						</div>
 
 						<div>
-							<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+							<span className="mb-2 ml-1 block text-sm font-bold text-slate-700 dark:text-slate-300">
 								รูปตัวอย่างห้องพัก
 							</span>
-							<p className="text-xs text-slate-500 dark:text-slate-400 mb-3 ml-1">
+							<p className="mb-3 ml-1 text-xs text-slate-500 dark:text-slate-400">
 								รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 							</p>
-							<div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
+							<div className="grid grid-cols-3 gap-4 sm:grid-cols-4 md:grid-cols-5">
 								{newItem.images.map((img, idx) => (
 									<div
 										key={idx}
-										className="w-full h-full aspect-square rounded-lg overflow-hidden relative group"
+										className="group relative aspect-square h-full w-full overflow-hidden rounded-lg"
 									>
 										<img
 											alt="preview"
-											className="w-full h-full object-cover"
+											className="h-full w-full object-cover"
 											src={getImageUrl(img)}
 										/>
 										<Button
@@ -335,13 +333,13 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 								))}
 
 								<Button
-									className="w-full h-full aspect-square rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center"
+									className="flex aspect-square h-full w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600"
 									type="button"
 									variant="ghost"
 									onClick={() => fileInputRef.current?.click()}
 								>
 									<Upload size={20} strokeWidth={3} />
-									<span className="text-xs mt-1">เพิ่มรูป</span>
+									<span className="mt-1 text-xs">เพิ่มรูป</span>
 								</Button>
 							</div>
 							<input
@@ -354,7 +352,7 @@ export const AccommodationManager: React.FC<AccommodationManagerProps> = ({
 							/>
 						</div>
 
-						<div className="pt-2 flex justify-end gap-2">
+						<div className="flex justify-end gap-2 pt-2">
 							<Button size="md" type="button" variant="ghost" onClick={resetForm}>
 								ยกเลิก
 							</Button>

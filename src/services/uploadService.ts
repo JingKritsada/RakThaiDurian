@@ -1,11 +1,11 @@
-import { apiClient, apiRequest, type ApiOptions } from "./api";
-
-import  type {
+import type {
 	ImageFile,
 	ImagePayload,
 	ImageUploadResult,
 	UploadResponse,
 } from "@/interfaces/imageInterface";
+
+import { apiClient, apiRequest, type ApiOptions } from "./api";
 
 /**
  * Convert base64 string to File object

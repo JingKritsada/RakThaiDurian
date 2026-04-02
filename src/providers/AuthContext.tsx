@@ -1,6 +1,13 @@
 import type { User } from "@/interfaces/userInterface";
 
-import React, { createContext, useContext, useState, type ReactNode, useMemo, useCallback } from "react";
+import React, {
+	createContext,
+	useContext,
+	useState,
+	type ReactNode,
+	useMemo,
+	useCallback,
+} from "react";
 
 import { userService, tokenManager } from "@/services/userService";
 

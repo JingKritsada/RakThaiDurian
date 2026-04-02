@@ -12,8 +12,8 @@ export default function ProfilePage() {
 
 	return (
 		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-900">
-			<div className="max-w-7xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
-				<div className="flex space-x-2 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+			<div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+				<div className="scrollbar-hide mb-8 flex space-x-2 overflow-x-auto pb-2">
 					<TabButton<ProfileTab>
 						activeTab={activeTab}
 						icon={User}

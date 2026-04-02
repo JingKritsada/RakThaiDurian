@@ -25,30 +25,30 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 
 	return (
 		<div
-			className="absolute bottom-8 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-auto md:min-w-105"
+			className="absolute right-4 bottom-8 left-4 md:left-1/2 md:w-auto md:min-w-105 md:-translate-x-1/2"
 			style={{ zIndex: Z_INDEX.mapPanel }}
 		>
-			<div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl p-5 border border-slate-200 dark:border-slate-800 animate-in slide-in-from-bottom duration-300">
-				<div className="flex justify-between items-center mb-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+			<div className="animate-in slide-in-from-bottom rounded-2xl border border-slate-200 bg-white p-5 shadow-xl duration-300 dark:border-slate-800 dark:bg-slate-900">
+				<div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-4 dark:border-slate-800">
 					<div>
-						<h3 className="font-bold text-slate-900 dark:text-white flex items-center text-lg">
-							<Flag className="w-5 h-5 mr-2 text-blue-500 fill-blue-500" />
+						<h3 className="flex items-center text-lg font-bold text-slate-900 dark:text-white">
+							<Flag className="mr-2 h-5 w-5 fill-blue-500 text-blue-500" />
 							ทริปของคุณ
 						</h3>
-						<div className="text-xs text-slate-500 mt-1 pl-7">
+						<div className="mt-1 pl-7 text-xs text-slate-500">
 							{routeIds.length} จุดแวะพัก
 						</div>
 					</div>
 					<div className="text-right">
 						{isRouting ? (
 							<div className="flex items-center gap-2 text-sm text-slate-400">
-								<div className="w-4 h-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+								<div className="h-4 w-4 animate-spin rounded-full border-2 border-slate-400 border-t-transparent" />
 								กำลังคำนวณ...
 							</div>
 						) : (
 							<>
-								<div className="flex items-center justify-end gap-2 font-bold text-slate-900 dark:text-white text-lg">
-									<Timer className="w-5 h-5 text-forest-600" />
+								<div className="flex items-center justify-end gap-2 text-lg font-bold text-slate-900 dark:text-white">
+									<Timer className="h-5 w-5 text-forest-600" />
 									<span>
 										{Math.floor(routeStats.time / 60) > 0
 											? `${Math.floor(routeStats.time / 60)} ชม. `
@@ -56,7 +56,7 @@ export const RoutePanel: React.FC<RoutePanelProps> = ({
 										{Math.round(routeStats.time % 60)} นาที
 									</span>
 								</div>
-								<div className="text-xs text-slate-500 mt-1">
+								<div className="mt-1 text-xs text-slate-500">
 									ระยะทางรวม {routeStats.distance.toFixed(1)} กม.
 								</div>
 							</>

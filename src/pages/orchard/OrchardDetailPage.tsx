@@ -163,11 +163,11 @@ export const OrchardDetailPage: React.FC = () => {
 
 		if (videoId) {
 			return (
-				<div className="w-full aspect-video rounded-2xl overflow-hidden shadow-sm border border-slate-100 dark:border-slate-700">
+				<div className="aspect-video w-full overflow-hidden rounded-2xl border border-slate-100 shadow-sm dark:border-slate-700">
 					<iframe
 						allowFullScreen
 						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-						className="w-full h-full"
+						className="h-full w-full"
 						src={`https://www.youtube.com/embed/${videoId}`}
 						title="YouTube video player"
 					/>
@@ -176,7 +176,7 @@ export const OrchardDetailPage: React.FC = () => {
 		}
 
 		return (
-			<div className="w-full p-4 bg-slate-100 dark:bg-slate-900 rounded-2xl text-center">
+			<div className="w-full rounded-2xl bg-slate-100 p-4 text-center dark:bg-slate-900">
 				<a className="text-blue-600 underline" href={url} rel="noreferrer" target="_blank">
 					Watch Video ({url})
 				</a>
@@ -186,8 +186,8 @@ export const OrchardDetailPage: React.FC = () => {
 
 	if (isLoading) {
 		return (
-			<div className="flex justify-center items-center min-h-screen bg-slate-50 dark:bg-slate-950">
-				<div className="animate-spin rounded-full h-12 w-12 border-4 border-forest-500 border-t-transparent" />
+			<div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950">
+				<div className="h-12 w-12 animate-spin rounded-full border-4 border-forest-500 border-t-transparent" />
 			</div>
 		);
 	}
@@ -214,10 +214,10 @@ export const OrchardDetailPage: React.FC = () => {
 			/>
 
 			{/* Main Content Layout */}
-			<div className="max-w-7xl mx-auto px-6 py-6 relative z-10">
-				<div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+			<div className="relative z-10 mx-auto max-w-7xl px-6 py-6">
+				<div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 					{/* Left Column (Main Info) */}
-					<div className="lg:col-span-2 space-y-6">
+					<div className="space-y-6 lg:col-span-2">
 						<OrchardInfo
 							getServiceType={(id: string | number) => getServiceType(String(id))}
 							orchard={orchard}
@@ -239,8 +239,8 @@ export const OrchardDetailPage: React.FC = () => {
 
 						{/* Services Section */}
 						{hasServices && (
-							<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-								<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+							<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+								<h2 className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900 dark:border-slate-700 dark:text-white">
 									<Layers className="text-forest-600" /> บริการเสริมและสินค้าอื่น
 								</h2>
 
@@ -248,13 +248,13 @@ export const OrchardDetailPage: React.FC = () => {
 									{/* Mixed Agro */}
 									{(orchard.additionalCrops?.length ?? 0) > 0 && (
 										<div>
-											<div className="flex items-center gap-2 mb-3">
+											<div className="mb-3 flex items-center gap-2">
 												<Sprout className="text-forest-500" size={20} />
 												<h3 className="font-bold text-slate-800 dark:text-slate-200">
 													สวนเกษตรผสมผสาน
 												</h3>
 											</div>
-											<p className="text-sm text-slate-500 mb-3">
+											<p className="mb-3 text-sm text-slate-500">
 												นอกจากทุเรียนแล้ว ยังมีพืชผลอื่นๆ:
 											</p>
 											<div className="flex flex-wrap gap-2">
@@ -264,7 +264,7 @@ export const OrchardDetailPage: React.FC = () => {
 													return (
 														<span
 															key={idx}
-															className="px-3 py-1 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-300 rounded-lg text-sm border border-green-100 dark:border-green-800"
+															className="rounded-lg border border-green-100 bg-green-50 px-3 py-1 text-sm text-green-700 dark:border-green-800 dark:bg-green-900/20 dark:text-green-300"
 														>
 															{cropInfo?.label || CropOption}
 														</span>

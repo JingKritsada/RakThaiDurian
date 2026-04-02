@@ -32,6 +32,7 @@ export default function ManageProfileTab() {
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
+
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
 
@@ -57,14 +58,14 @@ export default function ManageProfileTab() {
 		}
 	};
 
-	const inputClass = 
+	const inputClass =
 		"w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:ring-2 focus:ring-forest-500 disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-800 transition-colors";
 
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl p-8 shadow-sm border border-slate-100 dark:border-slate-700">
-			<div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+		<div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+			<div className="mb-8 flex flex-col justify-between gap-6 md:flex-row md:items-center">
 				<div>
-					<h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+					<h2 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
 						ข้อมูลส่วนตัว
 					</h2>
 					<p className="text-slate-500 dark:text-slate-400">
@@ -76,6 +77,7 @@ export default function ManageProfileTab() {
 				) : (
 					<div className="flex gap-3">
 						<Button
+							disabled={isLoading}
 							variant="outline"
 							onClick={() => {
 								setIsEditing(false);
@@ -88,39 +90,70 @@ export default function ManageProfileTab() {
 									});
 								}
 							}}
-							disabled={isLoading}
 						>
 							ยกเลิก
 						</Button>
-						<Button onClick={handleSubmit} disabled={isLoading}>
+						<Button disabled={isLoading} onClick={handleSubmit}>
 							{isLoading ? "กำลังบันทึก..." : "บันทึกข้อมูล"}
 						</Button>
 					</div>
 				)}
 			</div>
 
-			<form className="space-y-6 max-w-2xl" onSubmit={handleSubmit}>
-				<InputField name="name" type="text" label="ชื่อ-นามสกุล" icon={User} value={formData.name} onChange={handleChange} disabled={!isEditing || isLoading} placeholder="กรุณากรอกชื่อ-นามสกุล" inputClassName={inputClass} />
+			<form className="max-w-2xl space-y-6" onSubmit={handleSubmit}>
+				<InputField
+					disabled={!isEditing || isLoading}
+					icon={User}
+					inputClassName={inputClass}
+					label="ชื่อ-นามสกุล"
+					name="name"
+					placeholder="กรุณากรอกชื่อ-นามสกุล"
+					type="text"
+					value={formData.name}
+					onChange={handleChange}
+				/>
 
-				<InputField name="username" type="text" label="ชื่อผู้ใช้ (Username)" icon={User} value={formData.username} onChange={handleChange} disabled={!isEditing || isLoading} placeholder="กรุณากรอกชื่อผู้ใช้" inputClassName={inputClass} />
+				<InputField
+					disabled={!isEditing || isLoading}
+					icon={User}
+					inputClassName={inputClass}
+					label="ชื่อผู้ใช้ (Username)"
+					name="username"
+					placeholder="กรุณากรอกชื่อผู้ใช้"
+					type="text"
+					value={formData.username}
+					onChange={handleChange}
+				/>
 
-				<InputField name="email" type="email" label="อีเมล" icon={Mail} value={formData.email} onChange={handleChange} disabled={!isEditing || isLoading} placeholder="email@example.com" inputClassName={inputClass} />
+				<InputField
+					disabled={!isEditing || isLoading}
+					icon={Mail}
+					inputClassName={inputClass}
+					label="อีเมล"
+					name="email"
+					placeholder="email@example.com"
+					type="email"
+					value={formData.email}
+					onChange={handleChange}
+				/>
 
-				<div className="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700">
-					<div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl flex items-center gap-4">
-						<div className="bg-white dark:bg-slate-800 p-3 rounded-full shadow-sm">
+				<div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4 dark:border-slate-700">
+					<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
+						<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
 							<Shield className="text-forest-600" size={24} />
 						</div>
 						<div>
-							<p className="text-xs text-slate-500 dark:text-slate-400 font-medium">ระดับสิทธิ์</p>
-							<p className="font-semibold text-slate-900 dark:text-white capitalize">
+							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+								ระดับสิทธิ์
+							</p>
+							<p className="font-semibold text-slate-900 capitalize dark:text-white">
 								{user?.role || "Owner"}
 							</p>
 						</div>
 					</div>
-					
-					<div className="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-2xl flex items-center gap-4">
-						<div className="bg-white dark:bg-slate-800 p-3 rounded-full shadow-sm">
+
+					<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
+						<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
 							{user?.is_active !== false ? (
 								<CheckCircle className="text-green-500" size={24} />
 							) : (
@@ -128,7 +161,9 @@ export default function ManageProfileTab() {
 							)}
 						</div>
 						<div>
-							<p className="text-xs text-slate-500 dark:text-slate-400 font-medium">สถานะบัญชี</p>
+							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+								สถานะบัญชี
+							</p>
 							<p className="font-semibold text-slate-900 dark:text-white">
 								{user?.is_active !== false ? "เปิดใช้งาน" : "ระงับการใช้งาน"}
 							</p>

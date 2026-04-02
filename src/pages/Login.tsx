@@ -34,13 +34,13 @@ export const Login: React.FC = () => {
 
 	return (
 		<div className="h-full overflow-y-auto">
-			<div className="min-h-full flex items-center justify-center p-4 sm:p-6 transition-colors">
-				<div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 sm:p-10 border border-slate-100 dark:border-slate-700 my-8">
-					<div className="text-center mb-10">
-						<div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-forest-100 dark:bg-forest-900/50 text-forest-700 dark:text-forest-400 mb-4">
+			<div className="flex min-h-full items-center justify-center p-4 transition-colors sm:p-6">
+				<div className="my-8 w-full max-w-md rounded-3xl border border-slate-100 bg-white p-8 shadow-xl sm:p-10 dark:border-slate-700 dark:bg-slate-800">
+					<div className="mb-10 text-center">
+						<div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-forest-100 text-forest-700 dark:bg-forest-900/50 dark:text-forest-400">
 							<Lock size={32} />
 						</div>
-						<h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+						<h1 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
 							เข้าสู่ระบบเจ้าของสวน
 						</h1>
 						<p className="text-slate-500 dark:text-slate-400">
@@ -49,13 +49,13 @@ export const Login: React.FC = () => {
 					</div>
 
 					{error && (
-						<div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-800 rounded-xl flex items-start gap-3 text-red-700 dark:text-red-300">
-							<AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+						<div className="mb-8 flex items-start gap-3 rounded-xl border border-red-100 bg-red-50 p-4 text-red-700 dark:border-red-800 dark:bg-red-900/20 dark:text-red-300">
+							<AlertCircle className="mt-0.5 h-5 w-5 shrink-0" />
 							<span className="text-sm font-medium">{error}</span>
 						</div>
 					)}
 
-					<form className="space-y-6 mb-0" onSubmit={handleSubmit}>
+					<form className="mb-0 space-y-6" onSubmit={handleSubmit}>
 						<InputField
 							required
 							icon={Mail}
@@ -73,7 +73,7 @@ export const Login: React.FC = () => {
 							placeholder="ระบุรหัสผ่าน"
 							suffix={
 								<Button
-									className="transition-colors p-2! rounded-full!"
+									className="rounded-full! p-2! transition-colors"
 									tabIndex={-1}
 									type="button"
 									variant="ghost"

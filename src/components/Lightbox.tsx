@@ -57,7 +57,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
 	return (
 		<div
-			className="fixed inset-0 bg-black/95 flex flex-col pt-9 animate-in fade-in duration-200"
+			className="animate-in fade-in fixed inset-0 flex flex-col bg-black/95 pt-9 duration-200"
 			role="button"
 			style={{ zIndex: Z_INDEX.lightbox }}
 			tabIndex={0}
@@ -70,7 +70,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 		>
 			{/* Main Image Area */}
 			<div
-				className="flex-1 min-h-0 w-full flex items-center justify-center p-4 relative"
+				className="relative flex min-h-0 w-full flex-1 items-center justify-center p-4"
 				role="button"
 				tabIndex={0}
 				onClick={(e) => {
@@ -84,15 +84,15 @@ export const Lightbox: React.FC<LightboxProps> = ({
 					}
 				}}
 			>
-				<div className=" relative max-w-full max-h-full flex justify-center items-center">
+				<div className="relative flex max-h-full max-w-full items-center justify-center">
 					<img
 						alt={`Gallery ${currentIndex + 1}`}
-						className="max-w-[90vw] h-[80vh] object-cover rounded-xl shadow-2xl"
+						className="h-[80vh] max-w-[90vw] rounded-xl object-cover shadow-2xl"
 						src={getImageUrl(images[currentIndex])}
 					/>
 
 					<Button
-						className="absolute right-4 top-4 p-3! bg-opacity-50 dark:bg-opacity-50 backdrop-blur-md border-none!"
+						className="bg-opacity-50 dark:bg-opacity-50 absolute top-4 right-4 border-none! p-3! backdrop-blur-md"
 						variant="secondary"
 						onClick={onClose}
 					>
@@ -102,21 +102,21 @@ export const Lightbox: React.FC<LightboxProps> = ({
 			</div>
 
 			{/* Thumbnails Footer */}
-			<div className="bg-black/90 w-full p-4 flex justify-center overflow-x-auto gap-3 shrink-0 backdrop-blur-md border-t border-white/10">
-				<div className="flex gap-2 min-w-min px-4">
+			<div className="flex w-full shrink-0 justify-center gap-3 overflow-x-auto border-t border-white/10 bg-black/90 p-4 backdrop-blur-md">
+				<div className="flex min-w-min gap-2 px-4">
 					{images.map((img, idx) => (
 						<button
 							key={idx}
-							className={`relative w-16 h-16 rounded-lg overflow-hidden shrink-0 transition-all duration-200 border-2 ${
+							className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-lg border-2 transition-all duration-200 ${
 								idx === currentIndex
-									? "border-forest-500 scale-105 opacity-100 ring-2 ring-forest-500/50"
-									: "border-transparent opacity-50 hover:opacity-80 hover:scale-105"
+									? "scale-105 border-forest-500 opacity-100 ring-2 ring-forest-500/50"
+									: "border-transparent opacity-50 hover:scale-105 hover:opacity-80"
 							}`}
 							onClick={() => setIndex(idx)}
 						>
 							<img
 								alt={`Thumbnail ${idx + 1}`}
-								className="w-full h-full object-cover"
+								className="h-full w-full object-cover"
 								src={getImageUrl(img)}
 							/>
 						</button>

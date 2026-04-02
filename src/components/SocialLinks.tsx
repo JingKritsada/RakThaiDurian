@@ -1,7 +1,8 @@
+import type { SocialMediaLinks } from "@/interfaces/orchardInterface";
+
 import React from "react";
 import { Facebook, Instagram, Youtube } from "lucide-react";
 
-import type { SocialMediaLinks } from "@/interfaces/orchardInterface";
 import { LineIcon, TiktokIcon } from "@/utils/icons";
 
 interface SocialLinksProps {
@@ -67,21 +68,21 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 				{validItems.map((item) => (
 					<a
 						key={item.key}
-						className="flex items-center gap-3 p-2 rounded-xl group hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors"
+						className="group flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-slate-50 dark:hover:bg-slate-700/50"
 						href={item.url}
 						rel="noopener noreferrer"
 						target="_blank"
 					>
 						<div
-							className={`flex items-center justify-center w-10 h-10 rounded-full shadow-sm group-hover:scale-110 transition-transform shrink-0 ${item.color}`}
+							className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full shadow-sm transition-transform group-hover:scale-110 ${item.color}`}
 						>
-							<item.icon className="w-5 h-5" />
+							<item.icon className="h-5 w-5" />
 						</div>
-						<div className="flex flex-col min-w-0">
-							<span className="text-md tracking-wider font-bold text-slate-700 dark:text-slate-300 group-hover:text-forest-600 dark:group-hover:text-forest-400">
+						<div className="flex min-w-0 flex-col">
+							<span className="text-md font-bold tracking-wider text-slate-700 group-hover:text-forest-600 dark:text-slate-300 dark:group-hover:text-forest-400">
 								{item.label}
 							</span>
-							<span className="text-sm font-mono text-slate-500 truncate group-hover:underline">
+							<span className="truncate font-mono text-sm text-slate-500 group-hover:underline">
 								{item.url}
 							</span>
 						</div>
@@ -96,13 +97,13 @@ export const SocialLinks: React.FC<SocialLinksProps> = ({
 			{validItems.map((item) => (
 				<a
 					key={item.key}
-					className={`flex items-center justify-center w-8 h-8 aspect-square rounded-full shadow-sm hover:scale-110 transition-transform ${item.color} ${itemClassName}`}
+					className={`flex aspect-square h-8 w-8 items-center justify-center rounded-full shadow-sm transition-transform hover:scale-110 ${item.color} ${itemClassName}`}
 					href={item.url}
 					rel="noopener noreferrer"
 					target="_blank"
 					title={item.label}
 				>
-					<item.icon className="w-4 h-4" />
+					<item.icon className="h-4 w-4" />
 				</a>
 			))}
 		</div>

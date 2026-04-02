@@ -41,9 +41,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 			/>
 
 			{showViewToggle && onSwitchViewMode && (
-				<div className="flex bg-slate-100 dark:bg-slate-800 rounded-xl p-1 border border-slate-300 dark:border-slate-700 h-12.5 items-center shrink-0">
+				<div className="flex h-12.5 shrink-0 items-center rounded-xl border border-slate-300 bg-slate-100 p-1 dark:border-slate-700 dark:bg-slate-800">
 					<Button
-						className={`w-auto h-full aspect-square p-0! flex items-center justify-center rounded-lg transition-all border-none hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "list" ? "bg-white dark:bg-slate-600 shadow-md" : ""}`}
+						className={`flex aspect-square h-full w-auto items-center justify-center rounded-lg border-none p-0! transition-all hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "list" ? "bg-white shadow-md dark:bg-slate-600" : ""}`}
 						title="แสดงรายชื่อ"
 						variant="ghost"
 						onClick={() => onSwitchViewMode("list")}
@@ -51,7 +51,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 						<List size={20} />
 					</Button>
 					<Button
-						className={`w-auto h-full aspect-square p-0! flex items-center justify-center rounded-lg transition-all border-none hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "map" ? "bg-white dark:bg-slate-600 shadow-md" : ""}`}
+						className={`flex aspect-square h-full w-auto items-center justify-center rounded-lg border-none p-0! transition-all hover:bg-slate-50 dark:hover:bg-slate-900 ${viewMode === "map" ? "bg-white shadow-md dark:bg-slate-600" : ""}`}
 						title="แสดงแผนที่"
 						variant="ghost"
 						onClick={() => onSwitchViewMode("map")}
@@ -62,7 +62,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 			)}
 
 			<Button
-				className={`relative ${showViewToggle ? "w-12.5 h-12.5 p-0!" : "p-4!"} flex items-center justify-center shrink-0 ${isRouteMode ? "opacity-50 cursor-not-allowed" : ""} border border-slate-300 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm transition-all outline-none`}
+				className={`relative ${showViewToggle ? "h-12.5 w-12.5 p-0!" : "p-4!"} flex shrink-0 items-center justify-center ${isRouteMode ? "cursor-not-allowed opacity-50" : ""} rounded-xl border border-slate-300 bg-slate-50 text-slate-900 shadow-sm transition-all outline-none dark:border-slate-700 dark:bg-slate-800 dark:text-white`}
 				disabled={isRouteMode}
 				variant="ghost"
 				onClick={onOpenFilter}
@@ -72,7 +72,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 					size={20}
 				/>
 				{showFilterLabel && (
-					<span className="text-nowrap ml-2 hidden lg:block">ตัวกรอง</span>
+					<span className="ml-2 hidden text-nowrap lg:block">ตัวกรอง</span>
 				)}
 				{activeFilterCount > 0 && (
 					<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-white dark:ring-slate-900">

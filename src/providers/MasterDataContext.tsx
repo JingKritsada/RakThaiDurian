@@ -1,6 +1,7 @@
+import type { CropOption, ServiceTypeOption, StatusOption } from "@/interfaces/dropdownInterface";
+
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
 
-import type { CropOption, ServiceTypeOption, StatusOption } from "@/interfaces/dropdownInterface";
 import { dropdownService } from "@/services/dropdownService";
 import {
 	ORCHARD_TYPE_LABELS,

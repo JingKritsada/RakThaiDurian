@@ -18,14 +18,14 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 	return (
 		<div className="sticky top-6 space-y-6">
 			{/* Location Map */}
-			<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
-				<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+			<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+				<h2 className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900 dark:border-slate-700 dark:text-white">
 					<MapPin className="text-forest-600" /> ที่อยู่ของสวน
 				</h2>
 
 				<div className="space-y-6">
 					<div className="flex items-start gap-3">
-						<p className="text-slate-700 dark:text-slate-300 text-sm">
+						<p className="text-sm text-slate-700 dark:text-slate-300">
 							{orchard.address}
 						</p>
 					</div>
@@ -34,7 +34,7 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 						orchard.lng !== undefined &&
 						!isNaN(orchard.lat) &&
 						!isNaN(orchard.lng) && (
-							<div className="h-62.5 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-700 relative group">
+							<div className="group relative h-62.5 w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-700">
 								<OrchardMap
 									disablePopup
 									orchards={[orchard]}
@@ -43,10 +43,10 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 										mapRef.current = map;
 									}}
 								/>
-								<div className="absolute bottom-4 right-4 flex gap-2">
+								<div className="absolute right-4 bottom-4 flex gap-2">
 									<Button
 										aria-label="รีเซ็ตตำแหน่งแผนที่"
-										className="transition-transform hover:scale-105 border-none px-3!"
+										className="border-none px-3! transition-transform hover:scale-105"
 										size="md"
 										title="รีเซ็ตตำแหน่งแผนที่"
 										type="button"
@@ -65,7 +65,7 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 									</Button>
 
 									<Button
-										className="bg-blue-600 hover:bg-blue-700 h-full"
+										className="h-full bg-blue-600 hover:bg-blue-700"
 										size="md"
 										variant="primary"
 										onClick={() =>
@@ -86,8 +86,8 @@ export const OrchardLocation: React.FC<OrchardLocationProps> = ({ orchard }) => 
 
 			{/* Social Media */}
 			{orchard.socialMedia && (
-				<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
-					<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+				<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
+					<h2 className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900 dark:border-slate-700 dark:text-white">
 						<MapPin className="text-blue-500" /> ช่องทางติดตาม
 					</h2>
 					<div className="-mx-2">

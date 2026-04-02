@@ -113,32 +113,32 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 	};
 
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 animate-in slide-in-from-right-2 duration-300">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-1 flex items-center gap-3">
+		<div className="animate-in slide-in-from-right-2 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
+			<h2 className="mt-1 mb-4 flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
 				<Image className="text-forest-600" /> รูปภาพและโซเชียล
 			</h2>
 
 			<div className="space-y-8">
 				{/* Images */}
-				<div className="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-700">
+				<div className="space-y-4 border-t border-slate-100 pt-6 dark:border-slate-700">
 					<div>
-						<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-2 ml-1">
+						<span className="mb-2 ml-1 block text-sm font-bold text-slate-700 dark:text-slate-300">
 							รูปภาพบรรยากาศสวน
 						</span>
-						<p className="text-xs text-slate-500 dark:text-slate-400 mb-4 ml-1">
+						<p className="mb-4 ml-1 text-xs text-slate-500 dark:text-slate-400">
 							รองรับไฟล์รูปภาพ (JPG, PNG) ขนาดไม่เกิน 10MB ต่อรูป ไม่จำกัดจำนวน
 						</p>
 					</div>
 
-					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+					<div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 						{formData.images.map((img, index) => (
 							<div
 								key={index}
-								className="relative group aspect-square rounded-xl overflow-hidden bg-slate-100 border border-slate-200"
+								className="group relative aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-100"
 							>
 								<img
 									alt={`Preview ${index}`}
-									className="w-full h-full object-cover"
+									className="h-full w-full object-cover"
 									src={getImageUrl(img)}
 								/>
 								<Button
@@ -155,12 +155,12 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 						))}
 
 						<Button
-							className="h-full! w-full aspect-square border-2 border-dashed border-slate-300 dark:border-slate-600 flex flex-col items-center justify-center gap-2 text-slate-500 dark:text-slate-400 hover:border-forest-500 hover:text-forest-500 dark:hover:border-forest-400 dark:hover:text-forest-400 transition-colors bg-slate-50 dark:bg-slate-900/50"
+							className="flex aspect-square h-full! w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 bg-slate-50 text-slate-500 transition-colors hover:border-forest-500 hover:text-forest-500 dark:border-slate-600 dark:bg-slate-900/50 dark:text-slate-400 dark:hover:border-forest-400 dark:hover:text-forest-400"
 							type="button"
 							variant="ghost"
 							onClick={() => imageInputRef.current?.click()}
 						>
-							<div className="p-3 bg-white dark:bg-slate-800 rounded-full shadow-sm">
+							<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
 								<Upload size={20} />
 							</div>
 							<span className="text-xs font-medium">เพิ่มรูปภาพ</span>
@@ -177,17 +177,17 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 				</div>
 
 				{/* Videos */}
-				<div className="pt-4 border-t border-slate-100 dark:border-slate-700">
-					<div className="flex items-center gap-2 mb-2 ml-1">
+				<div className="border-t border-slate-100 pt-4 dark:border-slate-700">
+					<div className="mb-2 ml-1 flex items-center gap-2">
 						<Video className="text-slate-700 dark:text-slate-300" size={18} />
 						<h3 className="text-sm font-bold text-slate-700 dark:text-slate-300">
 							วิดีโอ (ลิงก์จาก YouTube, TikTok)
 						</h3>
 					</div>
 
-					<div className="flex gap-2 mb-4">
+					<div className="mb-4 flex gap-2">
 						<input
-							className="grow px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700/50 text-slate-900 dark:text-white shadow-sm outline-none"
+							className="grow rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 shadow-sm outline-none dark:border-slate-600 dark:bg-slate-700/50 dark:text-white"
 							placeholder="วางลิงก์วิดีโอที่นี่..."
 							type="text"
 							value={tempVideoUrl}
@@ -210,18 +210,18 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 					</div>
 
 					{(formData.videos?.length ?? 0) > 0 && (
-						<div className="space-y-2 bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-200 dark:border-slate-700">
+						<div className="space-y-2 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900/50">
 							{formData.videos?.map((video, index) => (
 								<div
 									key={index}
-									className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm"
+									className="flex items-center justify-between rounded-lg bg-white p-3 shadow-sm dark:bg-slate-800"
 								>
 									<div className="flex items-center gap-3 overflow-hidden">
-										<div className="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center shrink-0 text-red-600 dark:text-red-400">
+										<div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400">
 											<Youtube size={16} />
 										</div>
 										<a
-											className="text-sm text-slate-600 dark:text-slate-300 truncate hover:text-blue-500 hover:underline"
+											className="truncate text-sm text-slate-600 hover:text-blue-500 hover:underline dark:text-slate-300"
 											href={video}
 											rel="noreferrer"
 											target="_blank"
@@ -230,7 +230,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 										</a>
 									</div>
 									<Button
-										className="text-slate-400 hover:text-red-500 transition-colors p-1 w-auto! h-auto! min-h-0"
+										className="h-auto! min-h-0 w-auto! p-1 text-slate-400 transition-colors hover:text-red-500"
 										type="button"
 										variant="ghost"
 										onClick={() => handleRemoveVideo(index)}
@@ -244,14 +244,14 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 				</div>
 
 				{/* Social Media */}
-				<div className="pt-6 border-t border-slate-100 dark:border-slate-700">
-					<div className="flex items-center gap-2 mb-4 ml-1">
+				<div className="border-t border-slate-100 pt-6 dark:border-slate-700">
+					<div className="mb-4 ml-1 flex items-center gap-2">
 						<Share2 className="text-forest-600 dark:text-forest-400" size={20} />
 						<h3 className="text-lg font-bold text-slate-800 dark:text-white">
 							ช่องทางการติดตาม (Social Media)
 						</h3>
 					</div>
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 						<InputField
 							icon={LineIcon}
 							label="Line (Link to Profile)"
@@ -288,7 +288,7 @@ export const MediaTab: React.FC<MediaTabProps> = ({
 							onChange={(e) => handleSocialChange("youtube", e.target.value)}
 						/>
 					</div>
-					<p className="text-xs text-slate-500 mt-2 ml-1">
+					<p className="mt-2 ml-1 text-xs text-slate-500">
 						* ใส่ลิงก์เต็ม (URL) ของโปรไฟล์เพื่อให้ลูกค้ากดไปที่แอปพลิเคชันได้ทันที
 					</p>
 				</div>

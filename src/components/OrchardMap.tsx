@@ -1,6 +1,6 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React,  { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Check, AlertTriangle, Clock, X } from "lucide-react";
 import L from "leaflet";
@@ -27,13 +27,16 @@ type PinStyle = { pin: string; circle: string; icon: string; glow: string };
 
 const STATUS_STYLES: Record<string, PinStyle> = {
 	available: { pin: "#16a34a", circle: "#dcfce7", icon: "#15803d", glow: "rgba(22,163,74,0.45)" },
-	low:       { pin: "#d97706", circle: "#fef9c3", icon: "#92400e", glow: "rgba(217,119,6,0.45)" },
-	reserved:  { pin: "#2563eb", circle: "#dbeafe", icon: "#1e40af", glow: "rgba(37,99,235,0.45)" },
-	out:       { pin: "#6b7280", circle: "#f3f4f6", icon: "#374151", glow: "rgba(107,114,128,0.35)" },
+	low: { pin: "#d97706", circle: "#fef9c3", icon: "#92400e", glow: "rgba(217,119,6,0.45)" },
+	reserved: { pin: "#2563eb", circle: "#dbeafe", icon: "#1e40af", glow: "rgba(37,99,235,0.45)" },
+	out: { pin: "#6b7280", circle: "#f3f4f6", icon: "#374151", glow: "rgba(107,114,128,0.35)" },
 };
 
 const ROUTE_STYLE: PinStyle = {
-	pin: "#7c3aed", circle: "#ede9fe", icon: "#4c1d95", glow: "rgba(124,58,237,0.5)",
+	pin: "#7c3aed",
+	circle: "#ede9fe",
+	icon: "#4c1d95",
+	glow: "rgba(124,58,237,0.5)",
 };
 
 const W = 52;
@@ -232,18 +235,18 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 
 	const getStatusIcon = (status: string, rIndex?: number): L.DivIcon => {
 		const isRoute = rIndex !== undefined;
-		const style   = isRoute ? ROUTE_STYLE : (STATUS_STYLES[status] ?? STATUS_STYLES["out"]);
+		const style = isRoute ? ROUTE_STYLE : (STATUS_STYLES[status] ?? STATUS_STYLES["out"]);
 
 		// Choose the icon path based on status
 		let iconPathKey = "check";
-		if (status === "low")      iconPathKey = "alert";
+
+		if (status === "low") iconPathKey = "alert";
 		if (status === "reserved") iconPathKey = "clock";
-		if (status === "out")      iconPathKey = "x";
+		if (status === "out") iconPathKey = "x";
 		const Icon = ICON_COMPONENTS[iconPathKey];
 
 		const innerContent = isRoute
-		?
-			`<text
+			? `<text
 				x="26" y="25"
 				text-anchor="middle" dominant-baseline="central"
 				font-family="'Helvetica Neue', Arial, sans-serif"
@@ -252,10 +255,17 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 			>
 				${rIndex! + 1}
 			</text>`
-		:
-			renderToStaticMarkup(
-				<Icon x="15" y="15" width="22" height="22" color={style.icon} strokeWidth={2.5} style={{ overflow: 'visible' }} />
-			);
+			: renderToStaticMarkup(
+					<Icon
+						color={style.icon}
+						height="22"
+						strokeWidth={2.5}
+						style={{ overflow: "visible" }}
+						width="22"
+						x="15"
+						y="15"
+					/>
+				);
 
 		const svgHTML = `
 			<svg
@@ -281,11 +291,11 @@ const OrchardMarker: React.FC<OrchardMarkerProps> = ({
 		`;
 
 		return L.divIcon({
-			className:    "bg-transparent border-none",
-			html:         svgHTML,
-			iconSize:     [W, H],
-			iconAnchor:   [W / 2, H],
-			popupAnchor:  [0, -H],
+			className: "bg-transparent border-none",
+			html: svgHTML,
+			iconSize: [W, H],
+			iconAnchor: [W / 2, H],
+			popupAnchor: [0, -H],
 		});
 	};
 
@@ -347,7 +357,7 @@ export const OrchardMap: React.FC<MapProps> = ({
 		.map((o) => [o.lat, o.lng] as [number, number]);
 
 	return (
-		<div className="w-full h-full relative z-0">
+		<div className="relative z-0 h-full w-full">
 			<MapContainer
 				center={defaultCenter}
 				style={{ height: "100%", width: "100%" }}

@@ -10,10 +10,10 @@ interface ErrorPageProps {
 
 export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 	return (
-		<div className="flex flex-col items-center justify-between w-full h-[calc(100vh-120px)] p-6">
-			<div className="flex flex-col items-center justify-center w-full h-full max-w-lg gap-12 text-center">
+		<div className="flex h-[calc(100vh-120px)] w-full flex-col items-center justify-between p-6">
+			<div className="flex h-full w-full max-w-lg flex-col items-center justify-center gap-12 text-center">
 				{/* Error Title Section */}
-				<div className="flex flex-col items-center justify-center w-full font-mono">
+				<div className="flex w-full flex-col items-center justify-center font-mono">
 					<div className="relative w-full">
 						<FuzzyText
 							baseIntensity={0.15}
@@ -40,16 +40,16 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 				</div>
 
 				{/* Error Message Section */}
-				<div className="w-full px-6 py-4 border rounded-lg bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
-					<p className="text-xs font-medium leading-relaxed warp-break-words sm:text-sm md:text-md text-red-700 dark:text-red-300">
+				<div className="w-full rounded-lg border border-red-200 bg-red-50 px-6 py-4 dark:border-red-800 dark:bg-red-900/20">
+					<p className="warp-break-words md:text-md text-xs leading-relaxed font-medium text-red-700 sm:text-sm dark:text-red-300">
 						{error.message || "An unexpected error occurred."}
 					</p>
 				</div>
 
 				{/* Action Button */}
-				<div className="flex justify-center w-full">
+				<div className="flex w-full justify-center">
 					<Button
-						className="w-full transition-all duration-200 transform hover:scale-105"
+						className="w-full transform transition-all duration-200 hover:scale-105"
 						size="lg"
 						variant="danger"
 						onClick={() => reset()}
@@ -60,7 +60,7 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({ error, reset }) => {
 			</div>
 
 			{/* Additional Info */}
-			<div className="w-full text-xs text-center sm:text-sm text-slate-500/50 dark:text-slate-400/50">
+			<div className="w-full text-center text-xs text-slate-500/50 sm:text-sm dark:text-slate-400/50">
 				<p>
 					หากยังพบปัญหานี้อยู่ กรุณาติดต่อฝ่ายสนับสนุน หรือรีเฟรชหน้าเว็บเพื่อแก้ไขปัญหา
 				</p>

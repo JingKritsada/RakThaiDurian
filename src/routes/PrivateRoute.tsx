@@ -8,8 +8,8 @@ export const PrivateRoute: React.FC = () => {
 
 	if (isLoading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
-				<div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-durian-500" />
+			<div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-900">
+				<div className="border-durian-500 h-12 w-12 animate-spin rounded-full border-t-2 border-b-2" />
 			</div>
 		);
 	}

@@ -29,16 +29,16 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 	if (!images || images.length === 0) return null;
 
 	return (
-		<div className={`relative overflow-hidden group/carousel ${className}`}>
+		<div className={`group/carousel relative overflow-hidden ${className}`}>
 			<div
 				className="flex h-full w-full transition-transform duration-500 ease-in-out"
 				style={{ transform: `translateX(-${currentIndex * 100}%)` }}
 			>
 				{images.map((img, index) => (
-					<div key={index} className="w-full h-full shrink-0 relative">
+					<div key={index} className="relative h-full w-full shrink-0">
 						<img
 							alt={`${alt} ${index + 1}`}
-							className="w-full h-full object-cover"
+							className="h-full w-full object-cover"
 							src={getImageUrl(img)}
 						/>
 					</div>
@@ -49,14 +49,14 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 			{images.length > 1 && (
 				<>
 					<Button
-						className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-md p-1! opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 backdrop-blur-sm w-auto! h-auto! min-h-0 z-10"
+						className="absolute top-1/2 left-2 z-10 h-auto! min-h-0 w-auto! -translate-y-1/2 rounded-md bg-black/30 p-1! text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover/carousel:opacity-100 hover:bg-black/50"
 						variant="ghost"
 						onClick={handlePrev}
 					>
 						<ChevronLeft size={24} />
 					</Button>
 					<Button
-						className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-md p-1! opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-200 backdrop-blur-sm w-auto! h-auto! min-h-0 z-10"
+						className="absolute top-1/2 right-2 z-10 h-auto! min-h-0 w-auto! -translate-y-1/2 rounded-md bg-black/30 p-1! text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover/carousel:opacity-100 hover:bg-black/50"
 						variant="ghost"
 						onClick={handleNext}
 					>
@@ -64,12 +64,12 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 					</Button>
 
 					{/* Dots */}
-					<div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 z-10 pointer-events-none">
+					<div className="pointer-events-none absolute bottom-2 left-1/2 z-10 flex -translate-x-1/2 gap-1">
 						{images.map((_, idx) => (
 							<div
 								key={idx}
-								className={`w-1.5 h-1.5 rounded-full transition-all duration-300 shadow-sm ${
-									idx === currentIndex ? "bg-white scale-125" : "bg-white/50"
+								className={`h-1.5 w-1.5 rounded-full shadow-sm transition-all duration-300 ${
+									idx === currentIndex ? "scale-125 bg-white" : "bg-white/50"
 								}`}
 							/>
 						))}
@@ -77,7 +77,7 @@ export const MiniCarousel: React.FC<MiniCarouselProps> = ({ images, alt, classNa
 				</>
 			)}
 
-			<div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+			<div className="pointer-events-none absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
 		</div>
 	);
 };

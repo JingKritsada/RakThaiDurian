@@ -59,12 +59,12 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 
 	return (
 		<div
-			className="fixed inset-0 flex items-end sm:items-center justify-center sm:p-4"
+			className="fixed inset-0 flex items-end justify-center sm:items-center sm:p-4"
 			style={{ zIndex: Z_INDEX.filterModal }}
 		>
 			{/* Backdrop */}
 			<div
-				className="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity animate-in fade-in duration-200"
+				className="animate-in fade-in absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-200"
 				role="button"
 				tabIndex={0}
 				onClick={onClose}
@@ -74,9 +74,9 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 			/>
 
 			{/* Modal Content */}
-			<div className="relative w-full sm:max-w-md bg-white dark:bg-slate-900 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col max-h-[90vh] animate-in slide-in-from-bottom duration-300 sm:zoom-in-95">
+			<div className="animate-in slide-in-from-bottom sm:zoom-in-95 relative flex max-h-[90vh] w-full flex-col rounded-t-3xl bg-white shadow-2xl duration-300 sm:max-w-md sm:rounded-3xl dark:bg-slate-900">
 				{/* Header */}
-				<div className="flex items-center justify-between px-5 pb-4 pt-6 border-b border-slate-100 dark:border-slate-800">
+				<div className="flex items-center justify-between border-b border-slate-100 px-5 pt-6 pb-4 dark:border-slate-800">
 					<h3 className="text-xl font-bold text-slate-900 dark:text-white">
 						ตัวกรองและจัดเรียง
 					</h3>
@@ -86,26 +86,23 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 				</div>
 
 				{/* Scrollable Content */}
-				<div className="grow overflow-y-auto p-5 space-y-8">
+				<div className="grow space-y-8 overflow-y-auto p-5">
 					{/* Section 1: Sort */}
 					<div>
-						<h4 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
+						<h4 className="mb-3 text-sm font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
 							จัดเรียงตาม (Sort By)
 						</h4>
 						<div className="space-y-3">
 							<label
-								className={`
-									flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
-									${
-										tempSort === "default"
-											? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
-											: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-									}
-								`}
+								className={`flex cursor-pointer items-center justify-between rounded-xl border-2 p-4 transition-all ${
+									tempSort === "default"
+										? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
+										: "border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
+								} `}
 							>
 								<div className="flex items-center gap-3">
 									<div
-										className={`p-2 rounded-full ${tempSort === "default" ? "bg-forest-500 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"}`}
+										className={`rounded-full p-2 ${tempSort === "default" ? "bg-forest-500 text-white" : "bg-slate-100 text-slate-500 dark:bg-slate-800"}`}
 									>
 										<ArrowUpDown size={20} />
 									</div>
@@ -129,18 +126,15 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 							</label>
 
 							<label
-								className={`
-									flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
-									${
-										tempSort === "nearest"
-											? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
-											: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-									}
-								`}
+								className={`flex cursor-pointer items-center justify-between rounded-xl border-2 p-4 transition-all ${
+									tempSort === "nearest"
+										? "border-forest-500 bg-forest-50 dark:bg-forest-900/20"
+										: "border-slate-200 hover:border-slate-300 dark:border-slate-700 dark:hover:border-slate-600"
+								} `}
 							>
 								<div className="flex items-center gap-3">
 									<div
-										className={`p-2 rounded-full ${tempSort === "nearest" ? "bg-forest-500 text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-500"}`}
+										className={`rounded-full p-2 ${tempSort === "nearest" ? "bg-forest-500 text-white" : "bg-slate-100 text-slate-500 dark:bg-slate-800"}`}
 									>
 										<MapPin size={20} />
 									</div>
@@ -167,12 +161,12 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 
 					{/* Section 2: Filter */}
 					<div>
-						<h4 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3">
+						<h4 className="mb-3 text-sm font-bold tracking-wider text-slate-500 uppercase dark:text-slate-400">
 							ประเภทบริการ (Filter)
 						</h4>
 
 						{isLoading ? (
-							<div className="animate-pulse h-20 bg-slate-200 rounded-xl" />
+							<div className="h-20 animate-pulse rounded-xl bg-slate-200" />
 						) : (
 							<div className="grid grid-cols-2 gap-3">
 								{serviceTypes.map((type) => {
@@ -181,14 +175,11 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 									return (
 										<Button
 											key={type.id}
-											className={`
-												relative flex flex-col items-center justify-center gap-2 p-3 rounded-xl border-2 transition-all h-18
-												${
-													isSelected
-														? "border-forest-500 bg-forest-50 dark:bg-forest-900/20 text-forest-800 dark:text-forest-300"
-														: "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 text-slate-600 dark:text-slate-400"
-												}
-											`}
+											className={`relative flex h-18 flex-col items-center justify-center gap-2 rounded-xl border-2 p-3 transition-all ${
+												isSelected
+													? "border-forest-500 bg-forest-50 text-forest-800 dark:bg-forest-900/20 dark:text-forest-300"
+													: "border-slate-200 text-slate-600 hover:border-slate-300 dark:border-slate-700 dark:text-slate-400 dark:hover:border-slate-600"
+											} `}
 											variant="ghost"
 											onClick={() => toggleFilter(type.id as OrchardType)}
 										>
@@ -197,7 +188,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 													<Check size={16} strokeWidth={3} />
 												</div>
 											)}
-											<span className="font-semibold text-md text-center">
+											<span className="text-md text-center font-semibold">
 												{type.label}
 											</span>
 										</Button>
@@ -209,10 +200,10 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 				</div>
 
 				{/* Footer */}
-				<div className="p-5 border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 rounded-b-3xl">
+				<div className="rounded-b-3xl border-t border-slate-100 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
 					<div className="flex gap-3">
 						<Button
-							className="flex-1 py-3! rounded-xl!"
+							className="flex-1 rounded-xl! py-3!"
 							size="lg"
 							variant="secondary"
 							onClick={handleLocalReset}
@@ -220,7 +211,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 							<RefreshCw className="mr-2" size={18} /> ล้างค่า
 						</Button>
 						<Button
-							className="flex-1 py-3! rounded-xl! text-lg! shadow-lg shadow-forest-900/20"
+							className="flex-1 rounded-xl! py-3! text-lg! shadow-lg shadow-forest-900/20"
 							size="lg"
 							onClick={handleApply}
 						>
@@ -234,7 +225,7 @@ export const FilterSheet: React.FC<FilterSheetProps> = ({
 };
 
 const CheckCircleIcon = () => (
-	<div className="w-6 h-6 rounded-full bg-forest-500 flex items-center justify-center text-white">
+	<div className="flex h-6 w-6 items-center justify-center rounded-full bg-forest-500 text-white">
 		<Check size={14} strokeWidth={3} />
 	</div>
 );

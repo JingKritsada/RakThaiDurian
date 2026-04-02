@@ -4,18 +4,19 @@ import { Header } from "./components/Header";
 import { HomePage } from "./pages/home/HomePage";
 import { OrchardDetailPage } from "./pages/orchard/OrchardDetailPage";
 import { Login } from "./pages/Login";
-import ProfilePage from "@/pages/profile/ProfilePage";
 import { OrchardForm } from "./pages/orchard/OrchardForm";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { Providers } from "./providers/Providers";
+
+import ProfilePage from "@/pages/profile/ProfilePage";
 
 function App() {
 	return (
 		<Providers>
 			<div className="flex h-dvh flex-col overflow-hidden">
 				<Header />
-				<main className="grow overflow-hidden relative">
+				<main className="relative grow overflow-hidden">
 					<Routes>
 						{/* Public Routes */}
 						<Route element={<HomePage />} path="/" />

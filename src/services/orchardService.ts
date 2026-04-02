@@ -5,7 +5,6 @@ import type { OrchardsListResponse, OrchardResponse } from "@/interfaces/respons
 import { apiClient, apiRequest, type ApiOptions } from "./api";
 import { uploadService } from "./uploadService";
 
-
 const attachOrchardImages = (urls: string[]): { images: string[] } => ({
 	images: urls,
 });

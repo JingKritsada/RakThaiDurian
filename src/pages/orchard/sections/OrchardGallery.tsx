@@ -34,35 +34,35 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 }) => {
 	return (
 		<>
-			<section className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-6 sm:p-8">
-				<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2 pb-4 border-b border-slate-100 dark:border-slate-700">
+			<section className="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 dark:border-slate-700 dark:bg-slate-800">
+				<h2 className="mb-6 flex items-center gap-2 border-b border-slate-100 pb-4 text-xl font-bold text-slate-900 dark:border-slate-700 dark:text-white">
 					<Image className="text-forest-600" /> วิดีโอและสื่อ
 				</h2>
 
 				<div className="flex flex-col gap-6">
 					{/* Main Video Display */}
 					{videos.length > 0 && (
-						<div className="relative group rounded-2xl overflow-hidden bg-black">
+						<div className="group relative overflow-hidden rounded-2xl bg-black">
 							{renderVideo(videos[currentVideoIndex])}
 
 							{videos.length > 1 && (
 								<>
 									<Button
-										className="absolute left-4 top-1/2 -translate-y-1/2 p-2! border-none"
+										className="absolute top-1/2 left-4 -translate-y-1/2 border-none p-2!"
 										variant="secondary"
 										onClick={onPrevVideo}
 									>
 										<ChevronLeft size={30} />
 									</Button>
 									<Button
-										className="absolute right-4 top-1/2 -translate-y-1/2 p-2! border-none"
+										className="absolute top-1/2 right-4 -translate-y-1/2 border-none p-2!"
 										variant="secondary"
 										onClick={onNextVideo}
 									>
 										<ChevronRight size={30} />
 									</Button>
 
-									<div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-md pointer-events-none">
+									<div className="pointer-events-none absolute right-4 bottom-4 rounded-full bg-black/60 px-3 py-1 text-sm font-medium text-white backdrop-blur-md">
 										{currentVideoIndex + 1} / {videos.length}
 									</div>
 								</>
@@ -72,11 +72,11 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 
 					{/* Pictures Thumbnail Grid */}
 					{images.length > 0 ? (
-						<div className="grid grid-cols-5 md:grid-cols-6 gap-2 md:gap-4">
+						<div className="grid grid-cols-5 gap-2 md:grid-cols-6 md:gap-4">
 							{images.slice(0, 6).map((img, idx) => (
 								<div
 									key={idx}
-									className={`relative rounded-xl overflow-hidden cursor-pointer group w-full h-full aspect-square border-2 border-transparent hover:border-forest-500 transition-all${idx === 5 ? " hidden md:block" : ""}`}
+									className={`group relative aspect-square h-full w-full cursor-pointer overflow-hidden rounded-xl border-2 border-transparent transition-all hover:border-forest-500${idx === 5 ? "hidden md:block" : ""}`}
 									role="button"
 									tabIndex={0}
 									onClick={() => onOpenLightbox(idx)}
@@ -88,20 +88,20 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 								>
 									<img
 										alt={`Thumbnail ${idx + 1}`}
-										className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+										className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
 										src={getImageUrl(img)}
 									/>
 
 									{/* Overlay for +More images on mobile (5-col grid) */}
 									{idx === 4 && images.length > 5 && (
-										<div className="md:hidden absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
+										<div className="absolute inset-0 flex items-center justify-center bg-black/60 text-xl font-bold text-white backdrop-blur-sm md:hidden">
 											+{images.length - 5}
 										</div>
 									)}
 
 									{/* Overlay for +More images on desktop (6-col grid) */}
 									{idx === 5 && images.length > 6 && (
-										<div className="absolute inset-0 bg-black/60 flex items-center justify-center text-white font-bold text-xl backdrop-blur-sm">
+										<div className="absolute inset-0 flex items-center justify-center bg-black/60 text-xl font-bold text-white backdrop-blur-sm">
 											+{images.length - 6}
 										</div>
 									)}
@@ -109,11 +109,11 @@ export const OrchardGallery: React.FC<OrchardGalleryProps> = ({
 							))}
 						</div>
 					) : (
-						<div className="flex flex-col items-center justify-center py-10 bg-white dark:bg-slate-800 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
-							<div className="bg-forest-50 dark:bg-forest-900/30 p-6 rounded-full mb-6">
+						<div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-10 dark:border-slate-700 dark:bg-slate-800">
+							<div className="mb-6 rounded-full bg-forest-50 p-6 dark:bg-forest-900/30">
 								<Image className="text-forest-600 dark:text-forest-400" size={36} />
 							</div>
-							<span className="text-lg font-medium text-slate-900 dark:text-white mb-2">
+							<span className="mb-2 text-lg font-medium text-slate-900 dark:text-white">
 								ยังไม่มีข้อมูลรูปภาพในสวน
 							</span>
 						</div>

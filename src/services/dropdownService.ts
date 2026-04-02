@@ -1,6 +1,11 @@
+import type {
+	CropOption,
+	ServiceTypeResponse,
+	StatusResponse,
+} from "@/interfaces/dropdownInterface";
+
 import { apiClient, apiRequest, type ApiOptions } from "./api";
 
-import type { CropOption, ServiceTypeResponse, StatusResponse } from "@/interfaces/dropdownInterface";
 import { MOCK_SERVICE_TYPES, MOCK_STATUSES, MOCK_CROPS } from "@/utils/mock";
 import { loadingManager } from "@/utils/loadingManager";
 

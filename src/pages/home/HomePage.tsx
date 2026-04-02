@@ -327,7 +327,7 @@ export const HomePage: React.FC = () => {
 	const activeFilterCount = selectedTypes.length + (sortBy !== "default" ? 1 : 0);
 
 	return (
-		<div className="flex flex-col h-full overflow-hidden bg-slate-100 dark:bg-slate-950">
+		<div className="flex h-full flex-col overflow-hidden bg-slate-100 dark:bg-slate-950">
 			{/* New Filter Sheet Modal */}
 			<FilterSheet
 				currentFilters={selectedTypes}
@@ -343,8 +343,8 @@ export const HomePage: React.FC = () => {
 			/>
 
 			{/* Mobile Sticky Header */}
-			<div 
-				className="flex-initial md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sm:px-6 shadow-sm"
+			<div
+				className="flex-initial border-b border-slate-200 bg-white px-4 py-2 shadow-sm sm:px-6 md:hidden dark:border-slate-800 dark:bg-slate-900"
 				style={{ zIndex: Z_INDEX.mobileHeader }}
 			>
 				<SearchBar
@@ -359,7 +359,7 @@ export const HomePage: React.FC = () => {
 				/>
 			</div>
 
-			<div className="flex grow overflow-hidden relative">
+			<div className="relative flex grow overflow-hidden">
 				{/* Sidebar with list */}
 				<ListView
 					activeFilterCount={activeFilterCount}

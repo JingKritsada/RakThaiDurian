@@ -38,14 +38,9 @@ export const ListView: React.FC<ListViewProps> = ({
 }) => {
 	return (
 		<div
-			className={`
-				absolute inset-0 z-10 bg-white dark:bg-slate-900 transition-transform duration-300 transform flex flex-col 
-				md:relative md:translate-x-0 md:shrink-0 md:border-r md:border-slate-200 md:dark:border-slate-800 md:z-0
-				md:w-90 lg:w-120 xl:w-150 
-				${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
-			`}
+			className={`absolute inset-0 z-10 flex transform flex-col bg-white transition-transform duration-300 md:relative md:z-0 md:w-90 md:shrink-0 md:translate-x-0 md:border-r md:border-slate-200 lg:w-120 xl:w-150 dark:bg-slate-900 md:dark:border-slate-800 ${viewMode === "list" ? "translate-x-0" : "-translate-x-full lg:translate-x-0"} `}
 		>
-			<div className="hidden md:block px-4 py-4 border-b border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 z-10 shadow-sm shrink-0">
+			<div className="z-10 hidden shrink-0 border-b border-slate-100 bg-white px-4 py-4 shadow-sm md:block dark:border-slate-800 dark:bg-slate-900">
 				<div className="mb-4">
 					<SearchBar
 						showFilterLabel
@@ -59,8 +54,8 @@ export const ListView: React.FC<ListViewProps> = ({
 
 				{!isRouteMode ? (
 					<>
-						<div className="mt-2 flex justify-between items-center">
-							<div className="text-sm font-medium text-slate-500 dark:text-slate-400 ml-1">
+						<div className="mt-2 flex items-center justify-between">
+							<div className="ml-1 text-sm font-medium text-slate-500 dark:text-slate-400">
 								ผลลัพธ์:{" "}
 								<span className="text-forest-700 dark:text-forest-400">
 									{filteredOrchards.length}
@@ -71,15 +66,15 @@ export const ListView: React.FC<ListViewProps> = ({
 					</>
 				) : (
 					<div>
-						<div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-xl border border-blue-100 dark:border-blue-800 mb-4">
-							<h3 className="font-bold text-blue-800 dark:text-blue-300 mb-2 flex items-center">
+						<div className="mb-4 rounded-xl border border-blue-100 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-900/20">
+							<h3 className="mb-2 flex items-center font-bold text-blue-800 dark:text-blue-300">
 								<Route className="mr-2" size={20} /> โหมดจัดเส้นทาง
 							</h3>
 							<p className="text-sm text-blue-600 dark:text-blue-400">
 								แตะเลือกสวนจากรายการหรือแผนที่เพื่อนับเป็นจุดแวะพักตามลำดับ
 							</p>
 						</div>
-						<div className="flex justify-between items-center px-1">
+						<div className="flex items-center justify-between px-1">
 							<div className="text-sm font-medium text-slate-500 dark:text-slate-400">
 								{routeIds.length > 0
 									? `เลือกแล้ว ${routeIds.length} แห่ง`
@@ -90,20 +85,20 @@ export const ListView: React.FC<ListViewProps> = ({
 				)}
 			</div>
 
-			<div className="grow overflow-y-auto px-4 py-4 md:py-4 space-y-4 custom-scrollbar bg-slate-100 dark:bg-slate-950">
+			<div className="custom-scrollbar grow space-y-4 overflow-y-auto bg-slate-100 px-4 py-4 md:py-4 dark:bg-slate-950">
 				{/* Mobile Sort/Count Header */}
-				<div className="md:hidden flex flex-col gap-2 mb-2">
+				<div className="mb-2 flex flex-col gap-2 md:hidden">
 					{isRouteMode && (
-						<div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-xl border border-blue-100 dark:border-blue-800">
-							<h3 className="font-bold text-blue-800 dark:text-blue-300 text-sm flex items-center">
+						<div className="rounded-xl border border-blue-100 bg-blue-50 p-3 dark:border-blue-800 dark:bg-blue-900/20">
+							<h3 className="flex items-center text-sm font-bold text-blue-800 dark:text-blue-300">
 								<Route className="mr-2" size={16} /> โหมดจัดเส้นทาง
 							</h3>
-							<p className="text-xs text-blue-600 dark:text-blue-400 mt-1">
+							<p className="mt-1 text-xs text-blue-600 dark:text-blue-400">
 								เลือกสวนเพื่อเพิ่มในเส้นทาง
 							</p>
 						</div>
 					)}
-					<div className="flex justify-between items-center">
+					<div className="flex items-center justify-between">
 						<span className="text-sm font-medium text-slate-500 dark:text-slate-400">
 							{isRouteMode
 								? routeIds.length > 0
@@ -119,7 +114,7 @@ export const ListView: React.FC<ListViewProps> = ({
 						{[1, 2, 3].map((i) => (
 							<div
 								key={i}
-								className="h-44 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse"
+								className="h-44 animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800"
 							/>
 						))}
 					</div>
@@ -133,14 +128,11 @@ export const ListView: React.FC<ListViewProps> = ({
 								return (
 									<div
 										key={orchard.id}
-										className={`
-											relative p-4 rounded-xl border-2 transition-all cursor-pointer flex items-center gap-4 group
-											${
-												isSelectedInRoute
-													? "bg-blue-50 dark:bg-blue-900/20 border-blue-500 shadow-md"
-													: "bg-white dark:bg-slate-800 border-transparent hover:border-slate-200 dark:hover:border-slate-700"
-											}
-										`}
+										className={`group relative flex cursor-pointer items-center gap-4 rounded-xl border-2 p-4 transition-all ${
+											isSelectedInRoute
+												? "border-blue-500 bg-blue-50 shadow-md dark:bg-blue-900/20"
+												: "border-transparent bg-white hover:border-slate-200 dark:bg-slate-800 dark:hover:border-slate-700"
+										} `}
 										role="button"
 										tabIndex={0}
 										onClick={() => onOrchardClick(orchard.id)}
@@ -150,27 +142,24 @@ export const ListView: React.FC<ListViewProps> = ({
 										}}
 									>
 										<div
-											className={`
-												w-10 h-10 rounded-xl flex items-center justify-center font-bold text-white shrink-0 transition-colors
-												${isSelectedInRoute ? "bg-blue-600" : "bg-slate-200 dark:bg-slate-700 group-hover:bg-slate-300 dark:group-hover:bg-slate-600"}
-											`}
+											className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl font-bold text-white transition-colors ${isSelectedInRoute ? "bg-blue-600" : "bg-slate-200 group-hover:bg-slate-300 dark:bg-slate-700 dark:group-hover:bg-slate-600"} `}
 										>
 											{isSelectedInRoute ? (
 												routeIndex + 1
 											) : (
-												<div className="w-3 h-3 rounded-full bg-slate-400" />
+												<div className="h-3 w-3 rounded-full bg-slate-400" />
 											)}
 										</div>
 										<div className="min-w-0 flex-1">
-											<h4 className="font-bold text-slate-900 dark:text-white truncate">
+											<h4 className="truncate font-bold text-slate-900 dark:text-white">
 												{orchard.name}
 											</h4>
-											<div className="flex items-center gap-1 text-xs text-slate-500 mt-0.5 truncate">
+											<div className="mt-0.5 flex items-center gap-1 truncate text-xs text-slate-500">
 												<MapPin size={12} /> {orchard.address}
 											</div>
 										</div>
 										{!isSelectedInRoute && (
-											<div className="text-xs font-semibold px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded text-slate-500 group-hover:bg-blue-100 group-hover:text-blue-700 transition-colors">
+											<div className="rounded bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-500 transition-colors group-hover:bg-blue-100 group-hover:text-blue-700 dark:bg-slate-700">
 												เลือก
 											</div>
 										)}
@@ -189,8 +178,8 @@ export const ListView: React.FC<ListViewProps> = ({
 						})}
 					</div>
 				) : (
-					<div className="flex flex-col items-center text-center py-20">
-						<div className="bg-slate-100 dark:bg-slate-800 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+					<div className="flex flex-col items-center py-20 text-center">
+						<div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800">
 							<Search className="text-slate-400" size={32} />
 						</div>
 						<h3 className="text-lg font-medium text-slate-900 dark:text-white">

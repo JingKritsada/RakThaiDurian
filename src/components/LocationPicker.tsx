@@ -92,7 +92,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 	});
 
 	return (
-		<div className="h-64 w-full rounded-lg overflow-hidden relative z-0 text-slate-800">
+		<div className="relative z-0 h-64 w-full overflow-hidden rounded-lg text-slate-800">
 			<MapContainer
 				center={center}
 				style={{ height: "100%", width: "100%" }}
@@ -108,7 +108,7 @@ export const LocationPicker: React.FC<LocationPickerProps> = ({ lat, lng, onChan
 			</MapContainer>
 
 			<div
-				className="absolute bottom-2 right-2 bg-white/80 dark:bg-slate-800/80 p-1 text-xs rounded pointer-events-none text-slate-600 dark:text-slate-300"
+				className="pointer-events-none absolute right-2 bottom-2 rounded bg-white/80 p-1 text-xs text-slate-600 dark:bg-slate-800/80 dark:text-slate-300"
 				style={{ zIndex: Z_INDEX.locationAttribution }}
 			>
 				แตะที่แผนที่เพื่อปักหมุด

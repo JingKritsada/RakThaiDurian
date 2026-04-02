@@ -36,14 +36,14 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 	cropOptions,
 }) => {
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 animate-in slide-in-from-right-2 duration-300">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-1 flex items-center gap-3">
+		<div className="animate-in slide-in-from-right-2 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
+			<h2 className="mt-1 mb-4 flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
 				<Layers className="text-forest-600" /> บริการเสริมและสินค้าอื่น
 			</h2>
 
 			<div className="space-y-8">
 				{/* Mixed Agriculture */}
-				<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+				<div className="space-y-4 border-t border-slate-100 pt-4 dark:border-slate-700">
 					<ToggleSwitch
 						checked={isMixedAgro}
 						description="หากสวนของคุณมีการปลูกพืชผักหรือผลไม้อื่นๆ แซมในสวนทุเรียน"
@@ -52,7 +52,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 					/>
 
 					{isMixedAgro && (
-						<div className="animate-in slide-in-from-top-2 fade-in duration-300 pl-4 border-l-4 border-forest-100 dark:border-forest-900/50">
+						<div className="animate-in slide-in-from-top-2 fade-in border-l-4 border-forest-100 pl-4 duration-300 dark:border-forest-900/50">
 							<MultiSelectField
 								label="พืชที่ปลูกเพิ่มเติม (ผัก/ผลไม้)"
 								options={cropOptions}
@@ -65,7 +65,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 									})
 								}
 							/>
-							<p className="text-xs text-slate-500 mt-2 ml-1">
+							<p className="mt-2 ml-1 text-xs text-slate-500">
 								* สามารถเลือกได้มากกว่า 1 รายการ
 							</p>
 						</div>
@@ -73,7 +73,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 				</div>
 
 				{/* Accommodation */}
-				<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+				<div className="space-y-4 border-t border-slate-100 pt-4 dark:border-slate-700">
 					<ToggleSwitch
 						checked={hasAccommodation}
 						description="เปิดให้บริหารที่พักแก่นักท่องเที่ยว"
@@ -82,7 +82,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 					/>
 
 					{hasAccommodation && (
-						<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
+						<div className="pl-0 sm:border-l-4 sm:border-forest-100 sm:pl-4 dark:sm:border-forest-900/50">
 							<AccommodationManager
 								accommodations={formData.accommodations ?? []}
 								onChange={(updated) =>
@@ -97,7 +97,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 				</div>
 
 				{/* Packages */}
-				<div className="space-y-4 pt-4 border-t border-slate-100 dark:border-slate-700">
+				<div className="space-y-4 border-t border-slate-100 pt-4 dark:border-slate-700">
 					<ToggleSwitch
 						checked={hasPackage}
 						description="กิจกรรมบุฟเฟต์, Workshop หรือแพ็กเกจท่องเที่ยว"
@@ -106,7 +106,7 @@ export const ServicesTab: React.FC<ServicesTabProps> = ({
 					/>
 
 					{hasPackage && (
-						<div className="pl-0 sm:pl-4 sm:border-l-4 sm:border-forest-100 dark:sm:border-forest-900/50">
+						<div className="pl-0 sm:border-l-4 sm:border-forest-100 sm:pl-4 dark:sm:border-forest-900/50">
 							<PackageManager
 								packages={formData.packages ?? []}
 								onChange={(updated) =>

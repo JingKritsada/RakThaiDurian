@@ -1,3 +1,5 @@
+import type { Orchard } from "@/interfaces/orchardInterface";
+
 import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Trash2, Edit2, Sprout } from "lucide-react";
@@ -8,7 +10,6 @@ import { useAuth } from "@/providers/AuthContext";
 import { useAlert } from "@/providers/AlertContext";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
-import type { Orchard } from "@/interfaces/orchardInterface";
 
 export default function ManageOrchardsTab() {
 	const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function ManageOrchardsTab() {
 		setIsLoading(true);
 		try {
 			const data = await orchardService.getOrchardsByOwner(user.id);
+
 			setOrchards(data);
 		} catch (error) {
 			showAlert("ข้อผิดพลาด", getErrorMessage(error), "error");
@@ -57,18 +59,18 @@ export default function ManageOrchardsTab() {
 
 	return (
 		<div className="space-y-6">
-			<div className="bg-forest-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden">
-				<div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16" />
-				<div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+			<div className="relative overflow-hidden rounded-3xl bg-forest-900 p-8 text-white shadow-xl">
+				<div className="absolute top-0 right-0 -mt-16 -mr-16 h-64 w-64 rounded-full bg-white/5 blur-3xl" />
+				<div className="relative z-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
 					<div>
-						<h1 className="text-3xl font-bold mb-2">ระบบจัดการสวน</h1>
-						<p className="text-forest-100 text-lg opacity-90">
+						<h1 className="mb-2 text-3xl font-bold">ระบบจัดการสวน</h1>
+						<p className="text-lg text-forest-100 opacity-90">
 							ดูแลข้อมูลและแก้ไขสวนของคุณ
 						</p>
 					</div>
 					<Link to="/owner/add">
 						<Button
-							className="dark:bg-opacity-50 dark:border-none shadow-xl transition-transform transform hover:scale-105 whitespace-nowrap font-semibold!"
+							className="dark:bg-opacity-50 transform font-semibold! whitespace-nowrap shadow-xl transition-transform hover:scale-105 dark:border-none"
 							size="lg"
 							variant="secondary"
 						>
@@ -80,23 +82,23 @@ export default function ManageOrchardsTab() {
 			</div>
 
 			{isLoading ? (
-				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				<div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
 					{[1, 2, 3].map((i) => (
 						<div
 							key={i}
-							className="h-64 bg-slate-200 dark:bg-slate-800 rounded-2xl animate-pulse"
+							className="h-64 animate-pulse rounded-2xl bg-slate-200 dark:bg-slate-800"
 						/>
 					))}
 				</div>
 			) : orchards.length === 0 ? (
-				<div className="flex flex-col items-center justify-center py-24 bg-white dark:bg-slate-800 rounded-3xl border-2 border-dashed border-slate-200 dark:border-slate-700">
-					<div className="bg-forest-50 dark:bg-forest-900/30 p-6 rounded-full mb-6">
+				<div className="flex flex-col items-center justify-center rounded-3xl border-2 border-dashed border-slate-200 bg-white py-24 dark:border-slate-700 dark:bg-slate-800">
+					<div className="mb-6 rounded-full bg-forest-50 p-6 dark:bg-forest-900/30">
 						<Sprout className="text-forest-600 dark:text-forest-400" size={48} />
 					</div>
-					<h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+					<h3 className="mb-2 text-2xl font-bold text-slate-900 dark:text-white">
 						ยังไม่มีข้อมูลสวนในระบบ
 					</h3>
-					<p className="text-slate-500 dark:text-slate-400 mb-8 text-center max-w-md">
+					<p className="mb-8 max-w-md text-center text-slate-500 dark:text-slate-400">
 						เริ่มต้นสร้างตัวตนออนไลน์ให้สวนทุเรียนของคุณ
 						เพื่อให้นักท่องเที่ยวและลูกค้าค้นพบได้ง่ายขึ้น
 					</p>
@@ -105,11 +107,11 @@ export default function ManageOrchardsTab() {
 					</Link>
 				</div>
 			) : (
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+				<div className="grid grid-cols-1 gap-8 md:grid-cols-2">
 					{orchards.map((orchard) => (
 						<div
 							key={orchard.id}
-							className="relative group bg-white dark:bg-slate-800 rounded-2xl p-1 shadow-sm hover:shadow-md transition-shadow h-full flex flex-col"
+							className="group relative flex h-full flex-col rounded-2xl bg-white p-1 shadow-sm transition-shadow hover:shadow-md dark:bg-slate-800"
 						>
 							<div className="grow">
 								<Card
@@ -118,16 +120,13 @@ export default function ManageOrchardsTab() {
 								/>
 							</div>
 
-							<div className="mt-1 sm:mt-0 sm:absolute sm:top-4 sm:right-4 flex justify-end gap-3 px-4 py-2 sm:p-0 sm:opacity-80 sm:group-hover:opacity-100 transition-opacity duration-200 z-10">
+							<div className="z-10 mt-1 flex justify-end gap-3 px-4 py-2 transition-opacity duration-200 sm:absolute sm:top-4 sm:right-4 sm:mt-0 sm:p-0 sm:opacity-80 sm:group-hover:opacity-100">
 								<Link to={`/owner/edit/${orchard.id}`}>
 									<Button variant="secondary">
 										<Edit2 size={16} /> แก้ไข
 									</Button>
 								</Link>
-								<Button
-									variant="danger"
-									onClick={() => handleDelete(orchard.id)}
-								>
+								<Button variant="danger" onClick={() => handleDelete(orchard.id)}>
 									<Trash2 size={16} /> ลบ
 								</Button>
 							</div>

@@ -35,30 +35,27 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 	serviceTypes,
 }) => {
 	return (
-		<div className="bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 p-4 sm:p-6 animate-in slide-in-from-left-2 duration-300">
-			<h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4 mt-1 flex items-center gap-3">
+		<div className="animate-in slide-in-from-left-2 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
+			<h2 className="mt-1 mb-4 flex items-center gap-3 text-xl font-bold text-slate-900 dark:text-white">
 				<Info className="text-forest-600" /> ข้อมูลพื้นฐาน
 			</h2>
 
 			<div className="space-y-8">
 				{/* Status Section */}
-				<div className="pt-6 border-t border-slate-100 dark:border-slate-700">
-					<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-3 ml-1">
+				<div className="border-t border-slate-100 pt-6 dark:border-slate-700">
+					<span className="mb-3 ml-1 block text-sm font-bold text-slate-700 dark:text-slate-300">
 						สถานะผลผลิตปัจจุบัน
 					</span>
-					<div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+					<div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
 						{statuses.map((statusOption) => (
 							<div
 								key={statusOption.id}
 								aria-checked={formData.status === statusOption.id}
-								className={`
-                                cursor-pointer rounded-xl border-2 p-4 flex items-center justify-center text-center transition-all h-full
-                                ${
+								className={`flex h-full cursor-pointer items-center justify-center rounded-xl border-2 p-4 text-center transition-all ${
 									formData.status === statusOption.id
-										? `bg-white dark:bg-slate-800 border-forest-500 shadow-md transform`
-										: "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
-								}
-                            `}
+										? `transform border-forest-500 bg-white shadow-md dark:bg-slate-800`
+										: "border-slate-100 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-800 dark:hover:border-slate-600"
+								} `}
 								role="radio"
 								tabIndex={0}
 								onClick={() =>
@@ -78,10 +75,10 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 							>
 								<div className="flex flex-col items-center gap-2">
 									<div
-										className={`w-3 h-3 rounded-full ${statusOption.color.split(" ")[0]}`}
+										className={`h-3 w-3 rounded-full ${statusOption.color.split(" ")[0]}`}
 									/>
 									<span
-										className={`font-semibold text-sm ${formData.status === statusOption.id ? "text-forest-700 dark:text-forest-400" : "text-slate-600 dark:text-slate-400"}`}
+										className={`text-sm font-semibold ${formData.status === statusOption.id ? "text-forest-700 dark:text-forest-400" : "text-slate-600 dark:text-slate-400"}`}
 									>
 										{statusOption.label}
 									</span>
@@ -91,7 +88,7 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 					</div>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-slate-100 dark:border-slate-700">
+				<div className="grid grid-cols-1 gap-6 border-t border-slate-100 pt-6 md:grid-cols-2 dark:border-slate-700">
 					<InputField
 						required
 						icon={Home}
@@ -139,23 +136,20 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 				</div>
 
 				{/* Service Types */}
-				<div className="col-span-1 md:col-span-2 pt-6 border-t border-slate-100 dark:border-slate-700">
-					<span className="block text-sm font-bold text-slate-700 dark:text-slate-300 mb-4 ml-1">
+				<div className="col-span-1 border-t border-slate-100 pt-6 md:col-span-2 dark:border-slate-700">
+					<span className="mb-4 ml-1 block text-sm font-bold text-slate-700 dark:text-slate-300">
 						ประเภทบริการ (เลือกได้มากกว่า 1 ข้อ)
 					</span>
-					<div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+					<div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
 						{serviceTypes.map((type) => (
 							<div
 								key={type.id}
 								aria-checked={selectedTypes.includes(type.id as OrchardType)}
-								className={`
-									cursor-pointer rounded-2xl border-2 p-4 flex flex-col items-center justify-center gap-3 text-center transition-all
-									${
-										selectedTypes.includes(type.id as OrchardType)
-											? "bg-forest-50 dark:bg-forest-900/30 border-forest-500 text-forest-800 dark:text-forest-300 shadow-sm"
-											: "bg-white dark:bg-slate-700 border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-400 hover:border-forest-200"
-									}
-								`}
+								className={`flex cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 p-4 text-center transition-all ${
+									selectedTypes.includes(type.id as OrchardType)
+										? "border-forest-500 bg-forest-50 text-forest-800 shadow-sm dark:bg-forest-900/30 dark:text-forest-300"
+										: "border-slate-200 bg-white text-slate-500 hover:border-forest-200 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-400"
+								} `}
 								role="checkbox"
 								tabIndex={0}
 								onClick={() => toggleType(type.id as OrchardType)}
@@ -164,7 +158,7 @@ export const GeneralTab: React.FC<GeneralTabProps> = ({
 										toggleType(type.id as OrchardType);
 								}}
 							>
-								<span className="font-semibold text-sm">{type.label}</span>
+								<span className="text-sm font-semibold">{type.label}</span>
 							</div>
 						))}
 					</div>
