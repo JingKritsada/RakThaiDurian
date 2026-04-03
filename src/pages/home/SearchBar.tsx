@@ -1,4 +1,3 @@
-import React from "react";
 import { Search, Filter, List, Map as MapIcon } from "lucide-react";
 
 import { InputField } from "@/components/FormInputs";

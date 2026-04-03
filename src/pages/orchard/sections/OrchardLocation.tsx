@@ -1,7 +1,7 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 import type L from "leaflet";
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { MapPin, Navigation, RotateCcw } from "lucide-react";
 
 import Button from "@/components/Button";

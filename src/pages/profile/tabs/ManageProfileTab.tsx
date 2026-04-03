@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { User, Mail, Shield, CheckCircle, XCircle } from "lucide-react";
 
 import { useAuth } from "@/providers/AuthContext";
@@ -147,7 +147,7 @@ export default function ManageProfileTab() {
 								ระดับสิทธิ์
 							</p>
 							<p className="font-semibold text-slate-900 capitalize dark:text-white">
-								{user?.role || "Owner"}
+								Owner
 							</p>
 						</div>
 					</div>

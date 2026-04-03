@@ -10,7 +10,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import Providers from "@/providers/Providers";
 import ProfilePage from "@/pages/profile/ProfilePage";
 
-function App() {
+export default function App() {
 	return (
 		<Providers>
 			<div className="flex h-dvh flex-col overflow-hidden">
@@ -37,5 +37,3 @@ function App() {
 		</Providers>
 	);
 }
-
-export default App;

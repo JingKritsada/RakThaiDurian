@@ -1,6 +1,5 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React from "react";
 import { Search, MapPin, Route } from "lucide-react";
 
 import Card from "@/components/Card";

@@ -1,6 +1,6 @@
 import type { FontSize } from "@/interfaces/themeInterface";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, Sun, Moon, Monitor, LogOut, User as UserIcon, Type } from "lucide-react";
 

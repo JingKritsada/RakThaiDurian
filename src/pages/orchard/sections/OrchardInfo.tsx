@@ -1,6 +1,5 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React from "react";
 import { Phone, Info } from "lucide-react";
 
 interface OrchardInfoProps {

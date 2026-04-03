@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigation, Flag, Timer } from "lucide-react";
 
 import Button from "@/components/Button";

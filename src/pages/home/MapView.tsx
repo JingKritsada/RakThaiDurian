@@ -1,7 +1,6 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 import type L from "leaflet";
 
-import React from "react";
 import { LocateFixed, Route } from "lucide-react";
 
 import OrchardMap from "@/components/OrchardMap";

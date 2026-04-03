@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { User, Sprout } from "lucide-react";
 
 import ManageProfileTab from "@/pages/profile/tabs/ManageProfileTab";
@@ -11,7 +11,7 @@ export default function ProfilePage() {
 	const [activeTab, setActiveTab] = useState<ProfileTab>("profile");
 
 	return (
-		<div className="h-full overflow-y-auto bg-slate-50 dark:bg-slate-900">
+		<div className="h-full overflow-y-auto">
 			<div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
 				<div className="scrollbar-hide mb-8 flex space-x-2 overflow-x-auto pb-2">
 					<TabButton<ProfileTab>

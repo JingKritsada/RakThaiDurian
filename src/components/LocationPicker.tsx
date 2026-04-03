@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from "react-leaflet";
 

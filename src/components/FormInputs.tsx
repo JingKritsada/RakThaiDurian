@@ -5,7 +5,7 @@ import type {
 	MultiSelectFieldProps,
 } from "@/interfaces/inputInterface";
 
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown, X, Check, ChevronUp } from "lucide-react";
 
 import Button from "@/components/Button";

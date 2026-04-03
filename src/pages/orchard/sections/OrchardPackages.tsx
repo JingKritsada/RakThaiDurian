@@ -1,6 +1,5 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
 
-import React from "react";
 import { Users } from "lucide-react";
 
 import MiniCarousel from "@/components/MiniCarousel";
