@@ -1,6 +1,6 @@
 type Listener = (isLoading: boolean) => void;
 
-export default class LoadingManager {
+class LoadingManager {
 	private static instance: LoadingManager;
 	private isLoading = false;
 	private count = 0;
@@ -48,3 +48,7 @@ export default class LoadingManager {
 		this.listeners.forEach((listener) => listener(this.isLoading));
 	}
 }
+
+const loadingManager = LoadingManager.getInstance();
+
+export default loadingManager;

@@ -108,7 +108,7 @@ export async function apiRequest<T>(
 
 	try {
 		if (showLoading) {
-			loadingManager.getInstance().show();
+			loadingManager.show();
 		}
 
 		const response = await requestFn();
@@ -116,7 +116,9 @@ export async function apiRequest<T>(
 		return response.data;
 	} finally {
 		if (showLoading) {
-			loadingManager.getInstance().hide();
+			setTimeout(() => {
+				loadingManager.hide();
+			}, 200);
 		}
 	}
 }

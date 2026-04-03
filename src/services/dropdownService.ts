@@ -11,11 +11,11 @@ import loadingManager from "@/utils/loadingManager";
 const USE_MOCK = import.meta.env.VITE_USE_MOCK !== "false";
 
 const mockWithDelay = <T>(data: T, options?: ApiOptions): Promise<T> => {
-	if (!options?.skipGlobalLoading) loadingManager.getInstance().show();
+	if (!options?.skipGlobalLoading) loadingManager.show();
 
 	return new Promise((resolve) => {
 		setTimeout(() => {
-			if (!options?.skipGlobalLoading) loadingManager.getInstance().hide();
+			if (!options?.skipGlobalLoading) loadingManager.hide();
 			resolve(data);
 		}, 300);
 	});

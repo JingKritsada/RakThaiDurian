@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, type ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, type ReactNode, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import loadingManager from "@/utils/loadingManager";
@@ -26,12 +26,12 @@ interface LoadingProviderProps {
 	children: ReactNode;
 }
 
-export default function LoadingProvider({ children }: LoadingProviderProps) {
+export function LoadingProvider({ children }: LoadingProviderProps) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Sync with LoadingManager
 	useEffect(() => {
-		const unsubscribe = loadingManager.getInstance().subscribe((loading) => {
+		const unsubscribe = loadingManager.subscribe((loading) => {
 			setIsLoading(loading);
 		});
 
@@ -40,17 +40,25 @@ export default function LoadingProvider({ children }: LoadingProviderProps) {
 
 	// Listen for route changes
 	const location = useLocation();
+	const prevLocation = React.useRef(location.pathname);
 
 	useEffect(() => {
-		// Optional: Trigger loading on route change if needed.
-		// For now, we rely on data fetching in the new page triggering loading.
-		// If instant feedback is needed before data fetch:
-		// loadingManager.getInstance().show();
-		// setTimeout(() => loadingManager.getInstance().hide(), 500); // Artificial delay or wait for page load
+		// Only trigger loading if the pathname actually changes
+		if (location.pathname !== prevLocation.current) {
+			loadingManager.show();
+
+			const timer = setTimeout(() => {
+				loadingManager.hide();
+			}, 200);
+
+			prevLocation.current = location.pathname;
+
+			return () => clearTimeout(timer);
+		}
 	}, [location]);
 
-	const showLoading = () => loadingManager.getInstance().show();
-	const hideLoading = () => loadingManager.getInstance().hide();
+	const showLoading = () => loadingManager.show();
+	const hideLoading = () => loadingManager.hide();
 
 	return (
 		<LoadingContext.Provider value={{ isLoading, showLoading, hideLoading }}>
