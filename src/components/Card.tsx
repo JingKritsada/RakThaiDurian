@@ -1,9 +1,10 @@
 import type { Orchard } from "@/interfaces/orchardInterface";
+import type { DurianStatus } from "@/utils/enum";
 
 import { MapPin, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 import { useMasterData } from "@/providers/MasterDataContext";
-import { getImageUrl } from "@/utils/constants";
+import { getImageUrl, STATUS_LABELS, STATUS_COLORS } from "@/utils/constants";
 
 interface CardProps {
 	orchard: Orchard;
@@ -16,9 +17,11 @@ export default function Card({ orchard, onClick, isSelected }: CardProps) {
 
 	const statusInfo = getStatus(orchard.status) ?? {
 		id: orchard.status,
-		label: orchard.status,
-		color: "bg-gray-100 text-gray-700 border-gray-300",
-		mapColor: "#808080",
+		label: STATUS_LABELS[orchard.status as DurianStatus] || orchard.status,
+		color:
+			STATUS_COLORS[orchard.status as DurianStatus]?.tailwind ||
+			"bg-gray-100 text-gray-700 border-gray-300",
+		mapColor: STATUS_COLORS[orchard.status as DurianStatus]?.map || "#808080",
 	};
 
 	const coverImage = orchard.images.length > 0 ? orchard.images[0] : null;
