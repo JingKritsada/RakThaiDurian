@@ -19,10 +19,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
-	xs: "px-3 py-1 text-xs gap-1 rounded-md",
-	sm: "px-4 py-1.5 text-sm gap-1.5 rounded-lg",
-	md: "px-5 py-2.5 text-base gap-2 rounded-xl",
-	lg: "px-6 py-3 text-lg gap-2 rounded-xl",
+	xs: "px-3 py-1 text-xs gap-1.5 rounded-md",
+	sm: "px-4 py-1.5 text-sm gap-2 rounded-lg",
+	md: "px-5 py-2.5 text-base gap-2.5 rounded-xl",
+	lg: "px-6 py-3 text-lg gap-3 rounded-xl",
 };
 
 const variantStyles: Record<ButtonVariant, string> = {

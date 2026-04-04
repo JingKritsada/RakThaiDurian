@@ -70,7 +70,7 @@ export default function ManageOrchardsTab() {
 					</div>
 					<Link to="/owner/add">
 						<Button
-							className="dark:bg-opacity-50 transform font-semibold! whitespace-nowrap shadow-xl transition-transform hover:scale-105 dark:border-none"
+							className="dark:bg-opacity-50 transform font-semibold! whitespace-nowrap shadow-xl transition-transform dark:border-none"
 							size="lg"
 							variant="secondary"
 						>
