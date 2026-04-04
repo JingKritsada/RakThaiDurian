@@ -26,7 +26,7 @@ interface LoadingProviderProps {
 	children: ReactNode;
 }
 
-export function LoadingProvider({ children }: LoadingProviderProps) {
+export default function LoadingProvider({ children }: LoadingProviderProps) {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// Sync with LoadingManager
