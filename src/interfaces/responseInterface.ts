@@ -24,8 +24,10 @@ export interface AuthResponse {
 	code: number;
 	message: string;
 	error?: string | null;
-	data: User;
-	token: string;
+	data: {
+		user: User;
+		token: string;
+	};
 }
 
 // API response types based on swagger

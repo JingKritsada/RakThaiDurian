@@ -1,5 +1,10 @@
-import { DurianStatus, OrchardType } from "@/utils/enum";
+import { DurianStatus, OrchardType, UserRole } from "@/utils/enum";
 import CONFIG from "@/utils/config";
+
+export const USER_ROLE_LABELS: Record<UserRole, string> = {
+	[UserRole.OWNER]: "เจ้าของสวน",
+	[UserRole.ADMIN]: "ผู้ดูแลระบบ",
+};
 
 export const ORCHARD_TYPE_LABELS: Record<OrchardType, string> = {
 	[OrchardType.SELL]: "ซื้อผลผลิต",

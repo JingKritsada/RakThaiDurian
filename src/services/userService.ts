@@ -62,8 +62,7 @@ export const userService = {
 		);
 
 		// Extract and store token
-		const token =
-			response.token || (response as unknown as { data?: { token?: string } }).data?.token;
+		const token = response.data.token;
 
 		if (token) {
 			tokenManager.setToken(token);
@@ -91,12 +90,8 @@ export const userService = {
 
 		// Extract token - handle both possible response structures
 		// API might return token at root level or inside data
-		const token =
-			response.token || (response as unknown as { data?: { token?: string } }).data?.token;
-
-		const responseUsername =
-			response.data?.username ||
-			(response as unknown as { data?: { username?: string } }).data?.username;
+		const token = response.data.token;
+		const responseUsername = response.data.user.username || username;
 
 		if (!token) {
 			throw new Error("ไม่พบ token ในการตอบกลับจากเซิร์ฟเวอร์");
@@ -108,7 +103,7 @@ export const userService = {
 		// Fetch user profile after login
 		const profile = await userService.getProfile({ skipGlobalLoading: true });
 
-		return { user: { ...profile, username: responseUsername }, token };
+		return { user: { username: responseUsername, ...profile }, token };
 	},
 
 	/**

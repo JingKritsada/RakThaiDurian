@@ -32,8 +32,8 @@ export function InputField({
 					className={` ${
 						inputClassName
 							? inputClassName
-							: "relative h-12 w-full appearance-none rounded-xl border bg-white py-3.5 text-slate-900 shadow-sm transition-all outline-none dark:bg-slate-700 dark:text-white"
-					} ${Icon ? "pl-12" : "pl-4"} ${suffix ? "pr-12" : "pr-4"} ${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"} [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
+							: "border bg-white text-slate-900 shadow-sm outline-none dark:bg-slate-700 dark:text-white"
+					} ${Icon ? "pl-12" : "pl-4"} ${suffix ? "pr-12" : "pr-4"} ${error ? "border-red-500" : "border-slate-300 dark:border-slate-600"} relative h-12 w-full rounded-xl border bg-white py-3.5 text-slate-900 shadow-sm transition-all outline-none dark:bg-slate-700 dark:text-white [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none`}
 					{...props}
 				/>
 				{Icon && <Icon className="absolute top-3.5 left-4 text-slate-400" size={20} />}

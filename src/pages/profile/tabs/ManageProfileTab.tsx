@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Pen } from "lucide-react";
+import { CheckCircle, Mail, Pen, Shield, User, XCircle } from "lucide-react";
 
 import { useAuth } from "@/providers/AuthContext";
 import { useAlert } from "@/providers/AlertContext";
@@ -7,6 +7,7 @@ import { userService } from "@/services/userService";
 import Button from "@/components/Button";
 import { InputField } from "@/components/FormInputs";
 import { getErrorMessage } from "@/services/api";
+import { USER_ROLE_LABELS } from "@/utils/constants";
 
 export default function ManageProfileTab() {
 	const { user } = useAuth();
@@ -58,6 +59,9 @@ export default function ManageProfileTab() {
 		}
 	};
 
+	const inputClassname =
+		"border bg-white text-slate-900 shadow-sm outline-none dark:bg-slate-700 dark:text-white disabled:opacity-50 disabled:bg-slate-50 dark:disabled:bg-slate-800 transition-colors";
+
 	return (
 		<div className="space-y-6">
 			<div className="relative overflow-hidden rounded-3xl bg-forest-900 p-8 text-white shadow-xl">
@@ -103,79 +107,84 @@ export default function ManageProfileTab() {
 					)}
 				</div>
 			</div>
+
+			<div className="flex flex-col gap-6 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
+				<div className="grid grid-cols-2 gap-4 border-b border-slate-100 pb-6 dark:border-slate-700">
+					<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
+						<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
+							<Shield className="text-green-500" size={24} />
+						</div>
+						<div>
+							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+								ระดับสิทธิ์
+							</p>
+							<p className="font-semibold text-slate-900 capitalize dark:text-white">
+								{user?.role
+									? USER_ROLE_LABELS[user.role as keyof typeof USER_ROLE_LABELS]
+									: "ไม่ทราบสิทธิ์"}
+							</p>
+						</div>
+					</div>
+
+					<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
+						<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
+							{user?.is_active !== false ? (
+								<CheckCircle className="text-green-500" size={24} />
+							) : (
+								<XCircle className="text-red-500" size={24} />
+							)}
+						</div>
+						<div>
+							<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
+								สถานะบัญชี
+							</p>
+							<p className="font-semibold text-slate-900 dark:text-white">
+								{user?.is_active !== false ? "เปิดใช้งาน" : "ระงับการใช้งาน"}
+							</p>
+						</div>
+					</div>
+				</div>
+
+				<form className="space-y-6" onSubmit={handleSubmit}>
+					<InputField
+						disabled={!isEditing || isLoading}
+						icon={User}
+						inputClassName={inputClassname}
+						label="ชื่อ-นามสกุล"
+						name="name"
+						placeholder="กรุณากรอกชื่อ-นามสกุล"
+						type="text"
+						value={formData.name}
+						onChange={handleChange}
+					/>
+
+					<InputField
+						required
+						disabled={!isEditing || isLoading}
+						icon={User}
+						inputClassName={inputClassname}
+						label="ชื่อผู้ใช้ (Username)"
+						name="username"
+						placeholder="กรุณากรอกชื่อผู้ใช้"
+						type="text"
+						value={formData.username}
+						onChange={handleChange}
+					/>
+
+					<InputField
+						required
+						disabled={!isEditing || isLoading}
+						icon={Mail}
+						inputClassName={inputClassname}
+						label="อีเมล"
+						name="email"
+						placeholder="email@example.com"
+						type="email"
+						value={formData.email}
+						onChange={handleChange}
+					/>
+				</form>
+			</div>
 		</div>
-
-		// 	<form className="max-w-2xl space-y-6" onSubmit={handleSubmit}>
-		// 		<InputField
-		// 			disabled={!isEditing || isLoading}
-		// 			icon={User}
-		// 			inputClassName={inputClass}
-		// 			label="ชื่อ-นามสกุล"
-		// 			name="name"
-		// 			placeholder="กรุณากรอกชื่อ-นามสกุล"
-		// 			type="text"
-		// 			value={formData.name}
-		// 			onChange={handleChange}
-		// 		/>
-
-		// 		<InputField
-		// 			disabled={!isEditing || isLoading}
-		// 			icon={User}
-		// 			inputClassName={inputClass}
-		// 			label="ชื่อผู้ใช้ (Username)"
-		// 			name="username"
-		// 			placeholder="กรุณากรอกชื่อผู้ใช้"
-		// 			type="text"
-		// 			value={formData.username}
-		// 			onChange={handleChange}
-		// 		/>
-
-		// 		<InputField
-		// 			disabled={!isEditing || isLoading}
-		// 			icon={Mail}
-		// 			inputClassName={inputClass}
-		// 			label="อีเมล"
-		// 			name="email"
-		// 			placeholder="email@example.com"
-		// 			type="email"
-		// 			value={formData.email}
-		// 			onChange={handleChange}
-		// 		/>
-
-		// 		<div className="grid grid-cols-2 gap-4 border-t border-slate-100 pt-4 dark:border-slate-700">
-		// 			<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
-		// 				<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
-		// 					<Shield className="text-forest-600" size={24} />
-		// 				</div>
-		// 				<div>
-		// 					<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-		// 						ระดับสิทธิ์
-		// 					</p>
-		// 					<p className="font-semibold text-slate-900 capitalize dark:text-white">
-		// 						Owner
-		// 					</p>
-		// 				</div>
-		// 			</div>
-
-		// 			<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
-		// 				<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
-		// 					{user?.is_active !== false ? (
-		// 						<CheckCircle className="text-green-500" size={24} />
-		// 					) : (
-		// 						<XCircle className="text-red-500" size={24} />
-		// 					)}
-		// 				</div>
-		// 				<div>
-		// 					<p className="text-xs font-medium text-slate-500 dark:text-slate-400">
-		// 						สถานะบัญชี
-		// 					</p>
-		// 					<p className="font-semibold text-slate-900 dark:text-white">
-		// 						{user?.is_active !== false ? "เปิดใช้งาน" : "ระงับการใช้งาน"}
-		// 					</p>
-		// 				</div>
-		// 			</div>
-		// 		</div>
-		// 	</form>
-		// </div>
 	);
 }

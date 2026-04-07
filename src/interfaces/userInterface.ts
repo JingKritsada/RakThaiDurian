@@ -5,6 +5,6 @@ export interface User {
 	username?: string;
 	email: string;
 	name?: string;
-	role?: typeof UserRole;
+	role?: UserRole;
 	is_active?: boolean;
 }
