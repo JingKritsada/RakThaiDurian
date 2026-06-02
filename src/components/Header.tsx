@@ -107,9 +107,9 @@ export default function Header() {
 							</div>
 							<div className="flex flex-col">
 								<span className="font-heading text-lg font-bold text-slate-900 dark:text-white">
-									ทุเรียน
+									ไทยทุเรียน
 									<span className="font-heading text-forest-600 dark:text-forest-400">
-										รักไทย
+										พิดโลก
 									</span>
 								</span>
 								<span className="text-xs text-slate-500 dark:text-slate-400">
