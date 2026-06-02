@@ -91,7 +91,6 @@ export const userService = {
 		// Extract token - handle both possible response structures
 		// API might return token at root level or inside data
 		const token = response.data.token;
-		const responseUsername = response.data.user.username || username;
 
 		if (!token) {
 			throw new Error("ไม่พบ token ในการตอบกลับจากเซิร์ฟเวอร์");
@@ -103,7 +102,7 @@ export const userService = {
 		// Fetch user profile after login
 		const profile = await userService.getProfile({ skipGlobalLoading: true });
 
-		return { user: { username: responseUsername, ...profile }, token };
+		return { user: profile, token };
 	},
 
 	/**
@@ -118,6 +117,7 @@ export const userService = {
 
 		const user: User = {
 			id: response.data.id,
+			username: response.data.username,
 			email: response.data.email,
 			name: response.data.name,
 			role: response.data.role,
@@ -173,6 +173,7 @@ export const userService = {
 		);
 		const user: User = {
 			id: response.data.id,
+			username: response.data.username,
 			email: response.data.email,
 			name: response.data.name,
 			role: response.data.role,

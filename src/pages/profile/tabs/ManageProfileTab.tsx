@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CheckCircle, Mail, Pen, Shield, User, XCircle } from "lucide-react";
+import { CheckCircle, Eye, EyeOff, Lock, Mail, Pen, Shield, User, XCircle } from "lucide-react";
 
 import { useAuth } from "@/providers/AuthContext";
 import { useAlert } from "@/providers/AlertContext";
@@ -12,8 +12,16 @@ import { USER_ROLE_LABELS } from "@/utils/constants";
 export default function ManageProfileTab() {
 	const { user } = useAuth();
 	const { showAlert } = useAlert();
+
 	const [isEditing, setIsEditing] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [showNewPassword, setShowNewPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+	const [password, setPassword] = useState("");
+	const [newPassword, setNewPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const [formData, setFormData] = useState({
 		name: "",
@@ -108,8 +116,8 @@ export default function ManageProfileTab() {
 				</div>
 			</div>
 
-			<div className="flex flex-col gap-6 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
-				<div className="grid grid-cols-2 gap-4 border-b border-slate-100 pb-6 dark:border-slate-700">
+			<div className="flex flex-col gap-8 rounded-3xl border border-slate-100 bg-white p-4 shadow-sm duration-300 sm:p-6 dark:border-slate-700 dark:bg-slate-800">
+				<div className="grid grid-cols-1 gap-4 border-b border-slate-100 pb-8 sm:grid-cols-2 dark:border-slate-700">
 					<div className="flex items-center gap-4 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900/50">
 						<div className="rounded-full bg-white p-3 shadow-sm dark:bg-slate-800">
 							<Shield className="text-green-500" size={24} />
@@ -145,7 +153,7 @@ export default function ManageProfileTab() {
 					</div>
 				</div>
 
-				<form className="space-y-6" onSubmit={handleSubmit}>
+				<form className="space-y-4" onSubmit={handleSubmit}>
 					<InputField
 						disabled={!isEditing || isLoading}
 						icon={User}
@@ -172,7 +180,6 @@ export default function ManageProfileTab() {
 					/>
 
 					<InputField
-						required
 						disabled={!isEditing || isLoading}
 						icon={Mail}
 						inputClassName={inputClassname}
@@ -183,6 +190,83 @@ export default function ManageProfileTab() {
 						value={formData.email}
 						onChange={handleChange}
 					/>
+
+					{isEditing && (
+						<div className="mt-8 space-y-4 border-t border-slate-100 pt-8 dark:border-slate-700">
+							<InputField
+								required
+								disabled={!isEditing || isLoading}
+								icon={Lock}
+								inputClassName={inputClassname}
+								label="รหัสผ่านเดิม (Old Password)"
+								placeholder="ระบุรหัสผ่านเดิม"
+								suffix={
+									<Button
+										className="rounded-full! p-2! transition-colors"
+										tabIndex={-1}
+										type="button"
+										variant="ghost"
+										onClick={() => setShowPassword(!showPassword)}
+									>
+										{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+									</Button>
+								}
+								type={showPassword ? "text" : "password"}
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+
+							<InputField
+								required
+								disabled={!isEditing || isLoading}
+								icon={Lock}
+								inputClassName={inputClassname}
+								label="รหัสผ่านใหม่ (New Password)"
+								placeholder="ระบุรหัสผ่านใหม่"
+								suffix={
+									<Button
+										className="rounded-full! p-2! transition-colors"
+										tabIndex={-1}
+										type="button"
+										variant="ghost"
+										onClick={() => setShowNewPassword(!showNewPassword)}
+									>
+										{showNewPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+									</Button>
+								}
+								type={showNewPassword ? "text" : "password"}
+								value={newPassword}
+								onChange={(e) => setNewPassword(e.target.value)}
+							/>
+
+							<InputField
+								required
+								disabled={!isEditing || isLoading}
+								icon={Lock}
+								inputClassName={inputClassname}
+								label="ยืนยันรหัสผ่านใหม่ (Confirm New Password)"
+								placeholder="ยืนยันรหัสผ่านใหม่"
+								suffix={
+									<Button
+										className="rounded-full! p-2! transition-colors"
+										tabIndex={-1}
+										type="button"
+										variant="ghost"
+										onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+									>
+										{showConfirmPassword ? (
+											<EyeOff size={20} />
+										) : (
+											<Eye size={20} />
+										)}
+									</Button>
+								}
+								type={showConfirmPassword ? "text" : "password"}
+								value={confirmPassword}
+								onChange={(e) => setConfirmPassword(e.target.value)}
+							/>
+						</div>
+					)}
 				</form>
 			</div>
 		</div>
